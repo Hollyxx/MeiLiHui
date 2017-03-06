@@ -1,4 +1,4 @@
-package com.qf.meilihui.fargment;
+package com.qf.meilihui.fragment;
 
 
 import android.content.Context;

@@ -13,11 +13,11 @@ import android.widget.RadioGroup;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.qf.meilihui.fargment.BagFragment;
-import com.qf.meilihui.fargment.CategoryFragment;
-import com.qf.meilihui.fargment.HomeFragment;
-import com.qf.meilihui.fargment.MatchFragment;
-import com.qf.meilihui.fargment.MeFragment;
+import com.qf.meilihui.fragment.BagFragment;
+import com.qf.meilihui.fragment.CategoryFragment;
+import com.qf.meilihui.fragment.HomeFragment;
+import com.qf.meilihui.fragment.MatchFragment;
+import com.qf.meilihui.fragment.MeFragment;
 
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{

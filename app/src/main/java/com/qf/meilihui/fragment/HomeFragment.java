@@ -1,4 +1,4 @@
-package com.qf.meilihui.fargment;
+package com.qf.meilihui.fragment;
 
 
 import android.graphics.Color;
@@ -149,7 +149,6 @@ public class HomeFragment extends Fragment {
         //此方法用来显示tab上的名字
         @Override
         public CharSequence getPageTitle(int position) {
-            Log.i("ff",list_Title.get(position));
             return list_Title.get(position);
         }
     }

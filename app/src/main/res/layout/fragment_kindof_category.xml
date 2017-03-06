@@ -2,12 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.qf.meilihui.fragment.MeFragment">
+    android:background="#fff"
+    tools:context="com.qf.meilihui.basefragment.KindofCategoryFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/list_kind_category"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:divider="#dadada"
+        android:dividerHeight="10dp"/>
 
 </FrameLayout>

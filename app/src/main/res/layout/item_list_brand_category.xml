@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/image_item_list_brand_category"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@mipmap/sort_brand_women" />
+
+    <com.qf.meilihui.customview.CustomGridView
+        android:id="@+id/grid_item_list_brand_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:horizontalSpacing="4dp"
+        android:verticalSpacing="4dp"/>
+</LinearLayout>
