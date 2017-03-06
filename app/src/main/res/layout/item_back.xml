@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/black"
+        android:text="确定退出魅力惠？"
+        android:layout_gravity="center_horizontal"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:gravity="center_horizontal"
+        >
+
+        <Button
+            android:background="#00000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textSize="17sp"
+            android:id="@+id/btn1"
+            android:onClick="click"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+        <Button
+            android:background="#00000000"
+            android:layout_toRightOf="@id/btn1"
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最小化"
+            android:textSize="17sp"
+            android:id="@+id/btn3"
+            android:onClick="click"
+            />
+        <Button
+            android:background="#00000000"
+            android:layout_toRightOf="@id/btn3"
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出应用"
+            android:textSize="17sp"
+            android:id="@+id/btn2"
+            android:onClick="click"
+            />
+    </RelativeLayout>
+</LinearLayout>

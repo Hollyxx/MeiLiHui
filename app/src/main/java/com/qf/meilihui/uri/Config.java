@@ -1,0 +1,29 @@
+package com.qf.meilihui.uri;
+
+/**
+ * Created by 肖 on 2017/3/1.
+ */
+
+public class Config {
+    //今日热门内容
+    public static final String TODAY_CONTENT = "http://www.mei.com/appapi/home/event/v3?summary=0720346859018fb21dac9f2ff05e054f&timeStamp=20170228213558&pageIndex=1";
+
+    public static final String TODAY_HEADVIEW = "http://www.mei.com/appapi/home/marketingBannerNew/v3?summary=ecabd4072745241950c2d5141497976d&timeStamp=20170228213547";
+    public static final String TODAY_WOMEN= "http://www.mei.com/appapi/silo/event/v3?summary=6ba1fc7758ba52987ad25312a98c8559&timeStamp=20170228213558&pageIndex=1&categoryId=2013000100000000001";
+
+    public static final   String TODAY_MEN="http://www.mei.com/appapi/silo/event/v3?summary=699a94983d328867cf3e7214d35f0fe1&timeStamp=20170228213558&pageIndex=1&categoryId=2013000100000000002";
+
+    public static  final  String TODAY_FURNISHING="http://www.mei.com/appapi/silo/event/v3?summary=2db074c5e0d27bbbee4a3ed4b5db6115&timeStamp=20170228220347&pageIndex=1&categoryId=2013000100000000004";
+
+    public  static  final String  TODAY_BABY="http://www.mei.com/appapi/silo/event/v3?summary=7be7294fe5663e693ad83a0d4037e54f&timeStamp=20170228220347&pageIndex=1&categoryId=2013000100000000005";
+
+    public  static final  String  TODAY_NEW="http://www.mei.com/appapi/upcoming/index/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347&userId=";
+
+    public static final String MATCH="http://www.mei.com/appapi/eventdays/list/v3?summary=0720346859018fb21dac9f2ff05e054f&timeStamp=20170228213558&pageIndex=1";
+
+    public  static final String TODAY_BEAUTIFUL="http://www.mei.com/appapi/silo/event/v3?summary=3db30a9882c84a440d26b93afae78f92&timeStamp=20170228220347&pageIndex=1&categoryId=2013000100000000003";
+
+    public static final String TODAY_BEAU_HEADVIEW = "http://www.mei.com/appapi/home/marketingBannerNew/v3?summary=fa6360109874208c2b2c03e5fc480020&timeStamp=20170228213558&silo_code=3";
+
+    public static final String TODAY_BEAU_SCROLLVIEW = "http://www.mei.com/appapi/beauty/todaySale/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347";
+}

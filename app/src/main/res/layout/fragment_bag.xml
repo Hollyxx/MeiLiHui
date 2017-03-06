@@ -1,0 +1,47 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.qf.meilihui.fargment.BagFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:background="@mipmap/box_info"
+            android:id="@+id/bag_tv"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="购物袋"
+            />
+        <ListView
+
+            android:layout_below="@id/bag_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/bag_listview"></ListView>
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/bag_linearlayout"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_shopping_cart"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="您还没有可购买的商品哦"/>
+    </LinearLayout>
+
+
+</FrameLayout>

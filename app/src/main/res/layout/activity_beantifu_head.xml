@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_beantifu_head"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qf.meilihui.view.BeantifuHeadActivity">
+    <RadioGroup
+        android:layout_alignBottom="@+id/viewpager_bea"
+        android:id="@+id/rgb"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:background="@drawable/radiobutton_selector"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:background="@drawable/radiobutton_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_bea"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+    </android.support.v4.view.ViewPager>
+    <HorizontalScrollView
+        android:scrollbars="none"
+        android:layout_below="@+id/viewpager_bea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/scroll_layout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+</RelativeLayout>

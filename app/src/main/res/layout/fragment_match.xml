@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/match_fragment"
+    tools:context="com.qf.meilihui.fargment.MatchFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <TextView
+            android:id="@+id/match_tv"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="魅力志"
+            />
+    <ListView
+            android:layout_below="@+id/match_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/match_listview" />
+    <ImageView
+            android:id="@+id/match_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="440dp"
+            android:src="@mipmap/icon_shopcart_num"/>
+
+</RelativeLayout>
