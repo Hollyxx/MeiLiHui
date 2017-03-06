@@ -23,6 +23,7 @@ public class BrandofCategoryGridAdapter extends BaseAdapter {
     private Context context;
     private List<Brand> data;
 
+
     public BrandofCategoryGridAdapter(Context context, List<Brand> data) {
         this.context = context;
         this.data = data;
