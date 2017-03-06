@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         setContentView(R.layout.activity_main);
         init();
         radioGroup.setOnCheckedChangeListener(this);
-
+        Toast.makeText(this, "hahah", Toast.LENGTH_SHORT).show();
     }
 
     public RadioGroup getRadioGroup(){
