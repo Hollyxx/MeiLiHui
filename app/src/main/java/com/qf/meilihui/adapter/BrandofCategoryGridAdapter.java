@@ -29,6 +29,7 @@ public class BrandofCategoryGridAdapter extends BaseAdapter {
         this.data = data;
     }
 
+
     @Override
     public int getCount() {
         return data != null ? data.size()+1 : 0;
