@@ -14,8 +14,10 @@ public class TodaySecondDetails {
     private  String  marketPrice;
     private  String  imageUrl;
     private String  discount;
+    private String  isRecommend;
+    private String    saleableQty;
 
-    public TodaySecondDetails(String productId, String productName, String product_type, String brandName, String price, String marketPrice, String imageUrl, String discount) {
+    public TodaySecondDetails(String productId, String productName, String product_type, String brandName, String price, String marketPrice, String imageUrl, String discount, String isRecommend, String saleableQty) {
         this.productId = productId;
         this.productName = productName;
         this.product_type = product_type;
@@ -24,6 +26,8 @@ public class TodaySecondDetails {
         this.marketPrice = marketPrice;
         this.imageUrl = imageUrl;
         this.discount = discount;
+        this.isRecommend = isRecommend;
+        this.saleableQty = saleableQty;
     }
 
     public String getProductId() {
@@ -42,14 +46,6 @@ public class TodaySecondDetails {
         this.productName = productName;
     }
 
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
-
     public String getProduct_type() {
         return product_type;
     }
@@ -58,12 +54,12 @@ public class TodaySecondDetails {
         this.product_type = product_type;
     }
 
-    public String getPrice() {
-        return price;
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
     public String getMarketPrice() {
@@ -72,6 +68,14 @@ public class TodaySecondDetails {
 
     public void setMarketPrice(String marketPrice) {
         this.marketPrice = marketPrice;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getImageUrl() {
@@ -88,5 +92,21 @@ public class TodaySecondDetails {
 
     public void setDiscount(String discount) {
         this.discount = discount;
+    }
+
+    public String getSaleableQty() {
+        return saleableQty;
+    }
+
+    public void setSaleableQty(String saleableQty) {
+        this.saleableQty = saleableQty;
+    }
+
+    public String getIsRecommend() {
+        return isRecommend;
+    }
+
+    public void setIsRecommend(String isRecommend) {
+        this.isRecommend = isRecommend;
     }
 }

@@ -19,9 +19,11 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:text="YSL"/>
+
     <TextView
         android:singleLine="true"
         android:id="@+id/scroll_tv2"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="黑胶色唇釉401#"/>
@@ -36,6 +38,7 @@
             android:layout_height="wrap_content"
             android:text="￥318"/>
         <TextView
+            android:background="@mipmap/line_number"
             android:layout_toRightOf="@+id/scroll_tv3"
             android:id="@+id/scroll_tv4"
             android:textSize="12sp"

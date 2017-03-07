@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:text="￥318"/>
         <TextView
+            android:background="@mipmap/line_number"
             android:id="@+id/scroll_tv4"
             android:textSize="12sp"
             android:textColor="@color/gray"

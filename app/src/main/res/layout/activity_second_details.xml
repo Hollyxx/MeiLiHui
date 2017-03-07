@@ -73,6 +73,7 @@
                     android:layout_height="wrap_content"
                     />
                 <TextView
+                    android:id="@+id/deatails_text"
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="8dp"
                     android:textSize="13sp"
@@ -94,6 +95,7 @@
        >
 
         <TextView
+            android:onClick="onClick"
             android:id="@+id/popular_sort"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -104,6 +106,7 @@
             android:text="人气"/>
 
         <TextView
+            android:onClick="onClick"
             android:id="@+id/discount_sort"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -121,6 +124,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
             <TextView
+                android:onClick="onClick"
                 android:id="@+id/price_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -147,6 +151,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
             <TextView
+                android:onClick="onClick"
                 android:id="@+id/filter_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -168,6 +173,10 @@
         android:background="#e4e4e4"/>
 
     <GridView
+        android:padding="8dp"
+        android:background="@color/white"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="25dp"
         android:layout_below="@+id/view2"
         android:id="@+id/grid_products"
         android:layout_width="match_parent"
