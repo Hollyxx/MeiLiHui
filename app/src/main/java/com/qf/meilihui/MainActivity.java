@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         setContentView(R.layout.activity_main);
         init();
         radioGroup.setOnCheckedChangeListener(this);
-        Toast.makeText(this, "hahah", Toast.LENGTH_SHORT).show();
     }
 
     public RadioGroup getRadioGroup(){
