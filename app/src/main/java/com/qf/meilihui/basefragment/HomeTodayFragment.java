@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -25,6 +26,7 @@ import com.qf.meilihui.adapter.BasePagerAdapter;
 import com.qf.meilihui.adapter.HomeBaseAdapter;
 import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.avtivity.HeadViewDetailsActivity;
+import com.qf.meilihui.avtivity.SecondDetailsActivity;
 import com.qf.meilihui.bean.HeadViewContent;
 import com.qf.meilihui.bean.HomeContent;
 import com.qf.meilihui.uri.Config;
@@ -80,23 +82,39 @@ public class HomeTodayFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("object",response.toString());
-               List<HomeContent> data = new ArrayList<>();
+               final List<HomeContent> data = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("lists");
                    for (int i=0;i<lists.length();i++){
+
                        JSONObject jsonObject = lists.getJSONObject(i);
+                      // String  categoryId=jsonObject.getString(" categoryId");
                        String englishName = jsonObject.getString("englishName");
                        String chineseName = jsonObject.getString("chineseName");
                        String discountText = jsonObject.getString("discountText");
                        String  imageUrl=jsonObject.getString("imageUrl");
+                       String  categoryId=jsonObject.getString("categoryId");
+                       Log.i("categoryId",categoryId);
 
-                       data.add(new HomeContent(englishName,imageUrl,chineseName,discountText));
+                       data.add(new HomeContent(englishName,imageUrl,chineseName,discountText,categoryId));
                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 HomeBaseAdapter adapter = new HomeBaseAdapter(getContext(),data);
                 listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent  intent=new Intent(getContext(),SecondDetailsActivity.class);
+
+                        String secondUrl=Config.TODAY_SECOND_CONTENT+data.get(position).getEventId()+"&pageIndex=1";
+                        intent.putExtra("web",secondUrl);
+
+                        startActivity(intent);
+                    }
+                });
+//
             }
         },new Response.ErrorListener(){
             @Override

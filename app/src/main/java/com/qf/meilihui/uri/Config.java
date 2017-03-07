@@ -39,4 +39,5 @@ public class Config {
 
     public static final String TODAY_BEAU_GRIDVIEW= "http://www.mei.com/appapi/beauty/beautyChannelBrands/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347";
 
+    public  static  final  String TODAY_SECOND_CONTENT="http://www.mei.com/appapi/event/product/v3?sort=&categoryId=";
 }

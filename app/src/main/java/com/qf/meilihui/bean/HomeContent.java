@@ -13,6 +13,15 @@ public class HomeContent {
     private  String  chineseName;
     private  String  imageUrl;
     private  String  discountText;
+    private String  eventId;
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
 
     public String getEnglishName() {
         return englishName;
@@ -52,9 +61,12 @@ public class HomeContent {
         this.chineseName = chineseName;
         this.englishName = englishName;
     }
-    public HomeContent(String discountText, String chineseName, String englishName) {
+
+    public HomeContent(String discountText, String imageUrl, String chineseName, String englishName,String eventId) {
         this.discountText = discountText;
+        this.imageUrl = imageUrl;
         this.chineseName = chineseName;
         this.englishName = englishName;
+        this.eventId = eventId;
     }
 }
