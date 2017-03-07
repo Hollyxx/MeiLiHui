@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:padding="8dp"
+        android:id="@+id/up_linear"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <LinearLayout
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:text="距离开场还剩"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="18sp"
+                    android:id="@+id/uptime"
+                    android:background="@mipmap/bg_rectangle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:text="30"
+                    />
+                <TextView
+                    android:id="@+id/up_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分钟"
+                    />
+            </LinearLayout>
+            <TextView
+                android:textSize="10sp"
+                android:text="订阅你喜欢的品牌，我们将在活动当天提醒你！"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/black"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
 import com.qf.meilihui.bean.Brand;
-import com.qf.meilihui.bean.Category;
 
 import java.util.List;
 
@@ -59,7 +58,9 @@ public class BrandofCategoryGridAdapter extends BaseAdapter {
             holder = (BrandofCategoryGridViewHolder) convertView.getTag();
         }
         if (position==data.size()){
+
             holder.image.setImageResource(R.mipmap.find_more);
+            holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         }else {
             Brand brand = data.get(position);
             Glide.with(context).load(brand.getLogoUrl()).into(holder.image);

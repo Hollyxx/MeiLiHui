@@ -9,15 +9,17 @@ public class ScrollBean {
     private String   productId;
     private String   brandName;
     private String   productName;
+    private String   marketPrice;
     private String   price;
     private String   picUrl;
     private String   glsCode;
 
-    public ScrollBean(String eventId, String productId, String brandName, String productName, String price, String picUrl, String glsCode) {
+    public ScrollBean(String eventId, String productId, String brandName, String productName, String marketPrice, String price, String picUrl, String glsCode) {
         this.eventId = eventId;
         this.productId = productId;
         this.brandName = brandName;
         this.productName = productName;
+        this.marketPrice = marketPrice;
         this.price = price;
         this.picUrl = picUrl;
         this.glsCode = glsCode;
@@ -45,6 +47,14 @@ public class ScrollBean {
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;
+    }
+
+    public String getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(String marketPrice) {
+        this.marketPrice = marketPrice;
     }
 
     public String getProductName() {

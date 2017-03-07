@@ -1,6 +1,8 @@
 package com.qf.meilihui.basefragment;
 
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -9,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -24,8 +28,10 @@ import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.BasePagerAdapter;
 import com.qf.meilihui.adapter.HomeBaseAdapter;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.bean.BrandWall;
 import com.qf.meilihui.bean.HeadViewContent;
 import com.qf.meilihui.bean.HomeContent;
+import com.qf.meilihui.bean.ScrollBean;
 import com.qf.meilihui.uri.Config;
 
 import org.json.JSONArray;
@@ -41,20 +47,22 @@ import java.util.List;
 public class HomeBeautyFragment extends Fragment {
 
     private HomeBaseAdapter adapter;
-    private  TextView  tv1,tv2,tv3,tv4;
+    private List<BrandWall> brands;
     private ListView  listView;
     private View headView,scrollview;
     private RadioGroup rg;
     private ViewPager viewPager;
     private boolean isStop = false;
     private int position = 0;
-    private LinearLayout layout;
+    private  List<String>  num;
     private Handler handler = new Handler();
     private List<ImageView> imagesTop;
+    private List<ScrollBean> data;
+    private GridView horizontalGridView,gridView;
+    private  MyHorizontalListAdapter mAdapter;
     public HomeBeautyFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,18 +71,86 @@ public class HomeBeautyFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_home_beauty, container, false);
 
         listView= (ListView) view.findViewById(R.id.todsy_beauty_listview);
-
+        init();
         volleyGet(Config.TODAY_BEAUTIFUL,Config.TODAY_BEAU_HEADVIEW,Config.TODAY_BEAU_SCROLLVIEW);
+        volleyGet(Config.TODAY_BEAU_IM,Config.TODAY_BEAU_GRIDVIEW);
         return view;
+    }
+    public  void init (){
+        scrollview=LayoutInflater.from(getContext()).inflate(R.layout.item_scroll,null,false);
+        headView=LayoutInflater.from(getContext()).inflate(R.layout.activity_beantifu_head,null,false);
+        horizontalGridView= (GridView) headView.findViewById(R.id.horizontal_gridview);
+        gridView= (GridView) headView.findViewById(R.id.brand_gridview);
+        rg = (RadioGroup) headView.findViewById(R.id.rgb);
+        viewPager= (ViewPager) headView.findViewById(R.id.viewpager_bea);
+    }
+    public  void volleyGet(String url,String url2){
+          final  JsonObjectRequest  objectRequest=new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+              @Override
+              public void onResponse(JSONObject response) {
+                  try {
+                      String overseaFileUrl=response.getString("overseaFileUrl");
+                      String starFileUrl=response.getString("starFileUrl");
+                      ImageView iv1= (ImageView) headView.findViewById(R.id.iv1);
+                      ImageView iv2= (ImageView) headView.findViewById(R.id.iv2);
+                      Glide.with(getActivity()).load(overseaFileUrl).into(iv1);
+                      Glide.with(getActivity()).load(starFileUrl).into(iv2);
+
+
+                  } catch (JSONException e) {
+                      e.printStackTrace();
+                  }
+
+
+              }
+          }, new Response.ErrorListener() {
+              @Override
+              public void onErrorResponse(VolleyError error) {
+
+              }
+          });
+        final JsonObjectRequest brandRequest=new JsonObjectRequest(url2,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                num=new ArrayList<>();
+                brands = new ArrayList<>();
+                try {
+                    JSONArray lists = response.getJSONArray("brandWall");
+                    for (int i=0;i<lists.length();i++){
+                        JSONObject jsonObject = lists.getJSONObject(i);
+                        String  id=jsonObject.getString("id");
+                        String brandName = jsonObject.getString("brandName");
+                        String brandLogoUrl = jsonObject.getString("brandLogoUrl");
+                        String eventId = jsonObject.getString("eventId");
+
+                        num.add(brandLogoUrl);
+                       // Log.i("xiao",brandLogoUrl+"......");
+
+                        brands.add(new BrandWall(id,brandName,brandLogoUrl,eventId));
+                    }
+
+                    MyGridAdapter adapter=new MyGridAdapter(getContext(),brands);
+                    gridView.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //tv.setText("网络请求失败");
+            }
+        });
+
+        MyApp.getHttpQueue().add(objectRequest);
+        MyApp.getHttpQueue().add(brandRequest);
     }
     public  void volleyGet(String url, String path,String brand ){
 
-        scrollview=LayoutInflater.from(getContext()).inflate(R.layout.item_scroll,null,false);
-        headView=LayoutInflater.from(getContext()).inflate(R.layout.activity_beantifu_head,null,false);
-        layout= (LinearLayout) headView.findViewById(R.id.scroll_layout);
-        rg = (RadioGroup) headView.findViewById(R.id.rgb);
         imagesTop = new ArrayList<>();
-        viewPager= (ViewPager) headView.findViewById(R.id.viewpager_bea);
         final JsonObjectRequest objectRequest=new JsonObjectRequest(url,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -112,35 +188,46 @@ public class HomeBeautyFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("brandName",response.toString());
+                data=new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("products");
                     Log.i("brandName",lists.toString());
                     for (int i=0;i<lists.length();i++){
                         JSONObject jsonObject = lists.getJSONObject(i);
+
                         String eventId = jsonObject.getString("eventId");
                         String productId = jsonObject.getString("productId");
                         String brandName = jsonObject.getString("brandName");
                         String productName=jsonObject.getString("productName");
-                        String price=jsonObject.getString("headRequest");
+                        String price=jsonObject.getString("price");
                         String picUrl=jsonObject.getString("picUrl");
                         String glsCode=jsonObject.getString("glsCode");
                         String marketPrice=jsonObject.getString("marketPrice");
-                        ImageView imageView= (ImageView) scrollview.findViewById(R.id.scroll_iv);
-                        tv1= (TextView) scrollview.findViewById(R.id.scroll_tv1);
-                        tv2= (TextView) scrollview.findViewById(R.id.scroll_tv2);
-                        tv3= (TextView) scrollview.findViewById(R.id.scroll_tv3);
-                        tv4= (TextView) scrollview.findViewById(R.id.scroll_tv4);
-                        tv1.setText(brandName);
-                        tv2.setText(productName);
-                        tv3.setText("￥"+price);
-                        tv4.setText("￥"+marketPrice);
-                        Glide.with(getActivity()).load(picUrl).into(imageView);
-                        Log.i("brandName",brandName);
-                        layout.addView(scrollview);
+
+                        data.add(new ScrollBean(eventId,productId,brandName,productName,marketPrice,price,picUrl,glsCode));
+
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                int size = data.size();
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((360*6), LinearLayout.LayoutParams.FILL_PARENT);
+                horizontalGridView.setLayoutParams(params); //设置GirdView布局参数,横向布局的关键
+                horizontalGridView.setColumnWidth(350);
+                horizontalGridView.setHorizontalSpacing(15);
+                horizontalGridView.setStretchMode(GridView.NO_STRETCH);
+                horizontalGridView.setNumColumns(size);
+                horizontalGridView.setBackgroundColor(Color.WHITE);
+
+                mAdapter = new MyHorizontalListAdapter();
+                horizontalGridView.setAdapter(mAdapter);
+                horizontalGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                } );
             }
         },new Response.ErrorListener(){
             @Override
@@ -199,7 +286,7 @@ public class HomeBeautyFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
 
-                ((RadioButton) rg.getChildAt(position)).setChecked(true);
+                //((RadioButton) rg.getChildAt(position)).setChecked(true);
             }
 
             @Override
@@ -239,6 +326,83 @@ public class HomeBeautyFragment extends Fragment {
         MyApp.getHttpQueue().add(objectRequest);
         MyApp.getHttpQueue().add(headRequest);
         MyApp.getHttpQueue().add(brandRequest);
+    }
+
+    class MyHorizontalListAdapter  extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = View.inflate(getActivity(), R.layout.item_scroll, null);
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.scroll_iv);
+            TextView tv1= (TextView) convertView.findViewById(R.id.scroll_tv1);
+            TextView tv2= (TextView) convertView.findViewById(R.id.scroll_tv2);
+            TextView tv3= (TextView) convertView.findViewById(R.id.scroll_tv3);
+            TextView tv4= (TextView) convertView.findViewById(R.id.scroll_tv4);
+            tv1.setText(data.get(position).getBrandName());
+            tv2.setText(data.get(position).getProductName());
+            tv3.setText("￥" + data.get(position).getPrice());
+            tv4.setText("￥" + data.get(position).getMarketPrice());
+//imageView.setImageResource(R.mipmap.app_icon);
+            Log.i("kkkk",data.get(position).getPicUrl());
+            Glide.with(getActivity()).load(data.get(position).getPicUrl()).into(imageView);
+
+            return convertView;
+
+        }
+    }
+
+    class  MyGridAdapter extends  BaseAdapter{
+        private Context context;
+        private List<BrandWall> brands;
+
+        public MyGridAdapter(Context context, List<BrandWall> brands) {
+            this.context = context;
+            this.brands = brands;
+        }
+
+        @Override
+        public int getCount() {
+            return brands.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return brands.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            View v = LayoutInflater.from(getActivity()).inflate(R.layout.item_grid_item_list_brand_category,null);
+            ImageView iv = (ImageView) v.findViewById(R.id.image_item_grid_list_brand_category);
+           if(position==brands.size()) {
+               iv.setImageResource(R.mipmap.find_more2);
+           }else{
+               Log.i("num",num.get(position)+position+"?????");
+               Glide.with(context).load(brands.get(position).getBrandLogoUrl()).into(iv);
+           }
+            return v;
+        }
     }
 
 }

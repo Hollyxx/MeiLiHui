@@ -34,4 +34,9 @@ public class Config {
     //分类页面的品牌一级接口
 
     public static final String Category_Brand = "http://www.mei.com/appapi/brand/list/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347";
+
+    public static final String TODAY_BEAU_IM= "http://www.mei.com/appapi/beauty/getStarAndOverSeaPic/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347&credential=";
+
+    public static final String TODAY_BEAU_GRIDVIEW= "http://www.mei.com/appapi/beauty/beautyChannelBrands/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347";
+
 }

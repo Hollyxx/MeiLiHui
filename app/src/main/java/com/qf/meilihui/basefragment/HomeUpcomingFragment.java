@@ -2,7 +2,10 @@ package com.qf.meilihui.basefragment;
 
 
 import android.content.Context;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,7 +43,7 @@ public class HomeUpcomingFragment extends Fragment {
         // Required empty public constructor
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,11 +52,38 @@ public class HomeUpcomingFragment extends Fragment {
 
         listView= (ListView) view.findViewById(R.id.home_upcoming_listview);
 
+        View v= LayoutInflater.from(getContext()).inflate(R.layout.item_update,null,false);
+
         volleyGet(Config.TODAY_NEW);
 
+        listView.addHeaderView(v);
+        inittime(v);
         return view;
     }
 
+@RequiresApi(api = Build.VERSION_CODES.N)
+public  void inittime(View v){
+    final   Calendar c = Calendar.getInstance();
+    int mHour = c.get(Calendar.HOUR_OF_DAY);//获取当前的小时数
+
+    int mMinute =  c.get(Calendar.MINUTE);//获取当前的分钟数
+
+    TextView tv= (TextView) v.findViewById(R.id.uptime);
+    TextView text=(TextView) v.findViewById(R.id.up_text);
+
+    int hour=(mHour)-8;
+    if(hour<0){
+        hour=hour+24;
+    }
+    if(mHour<23) {
+        tv.setText(hour+"");
+        text.setText("小时");
+    }else{
+        tv.setText(mMinute+"");
+        text.setText("分钟");
+    }
+
+}
     public  void volleyGet(String url){
         final JsonObjectRequest objectRequest=new JsonObjectRequest(url,null, new Response.Listener<JSONObject>() {
             @Override
