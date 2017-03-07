@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_head_view_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qf.meilihui.avtivity.HeadViewDetailsActivity">
+
+    <LinearLayout
+        android:background="@mipmap/box_info"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/details_linear"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <ImageView
+            android:onClick="onClick"
+            android:id="@+id/details_back"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:src="@mipmap/back"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentTop="true"/>
+        <TextView
+            android:singleLine="true"
+            android:layout_weight="9"
+            android:layout_toRightOf="@+id/bag_back"
+            android:id="@+id/deatails_tv"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:text="活动详情"
+            />
+        <ImageView
+            android:id="@+id/details_iv"
+            android:onClick="onClick"
+            android:src="@mipmap/icon_share1"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="45dp" />
+
+    </LinearLayout>
+    <WebView
+        android:layout_below="@+id/details_linear"
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
+</RelativeLayout>

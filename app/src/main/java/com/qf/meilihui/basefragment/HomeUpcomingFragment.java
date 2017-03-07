@@ -76,8 +76,14 @@ public  void inittime(View v){
         hour=hour+24;
     }
     if(mHour<23) {
-        tv.setText(hour+"");
-        text.setText("小时");
+        if(mMinute<=30){
+            tv.setText(hour+"");
+            text.setText("小时");
+        }else{
+            tv.setText((hour-1)+"");
+            text.setText("小时");
+        }
+
     }else{
         tv.setText(mMinute+"");
         text.setText("分钟");

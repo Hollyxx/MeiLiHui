@@ -21,7 +21,8 @@
         <activity android:name=".avtivity.BagActivity" />
         <activity android:name=".view.HeadActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".view.BeantifuHeadActivity"></activity>
+        <activity android:name=".view.BeantifuHeadActivity" />
+        <activity android:name=".avtivity.HeadViewDetailsActivity"></activity>
     </application>
 
 </manifest>

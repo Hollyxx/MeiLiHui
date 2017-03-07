@@ -1,6 +1,7 @@
 package com.qf.meilihui.basefragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.BasePagerAdapter;
 import com.qf.meilihui.adapter.HomeBaseAdapter;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.avtivity.HeadViewDetailsActivity;
 import com.qf.meilihui.bean.HeadViewContent;
 import com.qf.meilihui.bean.HomeContent;
 import com.qf.meilihui.uri.Config;
@@ -87,13 +89,9 @@ public class HomeTodayFragment extends Fragment {
                        String chineseName = jsonObject.getString("chineseName");
                        String discountText = jsonObject.getString("discountText");
                        String  imageUrl=jsonObject.getString("imageUrl");
-                       Log.i("name",englishName+i);
-                       Log.i("name",chineseName+i);
-                       Log.i("name",discountText+i);
+
                        data.add(new HomeContent(englishName,imageUrl,chineseName,discountText));
-
                    }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -116,12 +114,10 @@ public class HomeTodayFragment extends Fragment {
                     for (int i=0;i<lists.length();i++){
                         JSONObject jsonObject = lists.getJSONObject(i);
                         String imgUrl = jsonObject.getString("imgUrl");
-                        String shareUrl = jsonObject.getString("shareUrl");
+                        final String shareUrl = jsonObject.getString("shareUrl");
                         String imgAndroid = jsonObject.getString("imgAndroid");
-                        String  shareContent=jsonObject.getString("shareContent");
-//                        Log.i("name",shareContent+i);
-//                        Log.i("name",imgUrl+i);
-                        Log.i("imgAndroid",imgAndroid+i);
+                        final String  shareContent=jsonObject.getString("shareContent");
+                        //Log.i("web",shareUrl);
 
                         data.add(new HeadViewContent(imgUrl,shareUrl,shareContent,imgAndroid));
                     if(imgUrl.isEmpty()==false){
@@ -129,6 +125,19 @@ public class HomeTodayFragment extends Fragment {
                         Glide.with(getActivity()).load(data.get(i).getImgUrl()).into(imageView);
                         imageView.setImageResource(R.mipmap.bk_mybrand_default);
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(shareUrl.isEmpty()==false){
+
+                                    Intent intent=new Intent(getActivity(), HeadViewDetailsActivity.class);
+                                    intent.putExtra("path",shareUrl);
+                                    intent.putExtra("title",shareContent);
+                                    startActivity(intent);
+
+                                }
+                            }
+                        });
                         imagesTop.add(imageView);
                         RadioButton radioButton = new RadioButton(getActivity());
                         radioButton.setButtonDrawable(R.drawable.radiobutton_selector);
