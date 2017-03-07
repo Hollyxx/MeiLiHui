@@ -78,6 +78,7 @@ public class KindofCategoryListAdapter extends BaseAdapter {
                 intent.putExtra("siloId",categoryBean.getId());
                 intent.putExtra("categoryId",category.getCategoryId());
                 intent.putExtra("summary",categoryBean.getDisplayName());
+                intent.putExtra("name",category.getCategoryName());
                 intent.setClass(context, ProductsListActivity.class);
                 context.startActivity(intent);
             }
