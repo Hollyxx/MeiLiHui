@@ -2,11 +2,13 @@ package com.qf.meilihui.bean;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by invoker on 2017/3/6.
  */
 
-public class Brand {
+public class Brand implements Serializable {
 
     private String logoId;
     private String brandName;

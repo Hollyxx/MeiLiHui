@@ -34,4 +34,12 @@ public class Config {
     //分类页面的品牌一级接口
 
     public static final String Category_Brand = "http://www.mei.com/appapi/brand/list/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347";
+
+    //分类页面的类别二级页面      需要拼接的属性siloId、categoryId  displayName、pageIndex
+    //http://www.mei.com/appapi/secondcategory/product/v3?siloId=2013000100000000001&categoryId=1000000337&summary=男士&pageIndex=1
+    public static final String Category_Second_Kinds = "http://www.mei.com/appapi/secondcategory/product/v3?";
+
+    //分类的品牌页面的二级页面  需要拼接的属性 logoId
+
+    public static final String Category_Second_Brand = "http://www.mei.com/appapi/brand/product/v3?logoId=3616200100000000578";
 }

@@ -3,6 +3,7 @@ package com.qf.meilihui.bean;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by invoker on 2017/3/6.
  */
 
-public class BrandBean {
+public class BrandBean implements Serializable {
 
     private String siloName;
     private String siloEn;
