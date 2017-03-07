@@ -81,7 +81,7 @@ public class HomeTodayFragment extends Fragment {
         final JsonObjectRequest objectRequest=new JsonObjectRequest(url,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("object",response.toString());
+
                final List<HomeContent> data = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("lists");
@@ -94,7 +94,6 @@ public class HomeTodayFragment extends Fragment {
                        String discountText = jsonObject.getString("discountText");
                        String  imageUrl=jsonObject.getString("imageUrl");
                        String  categoryId=jsonObject.getString("categoryId");
-                       Log.i("categoryId",categoryId);
 
                        data.add(new HomeContent(englishName,imageUrl,chineseName,discountText,categoryId));
                    }
@@ -111,7 +110,7 @@ public class HomeTodayFragment extends Fragment {
                         String secondUrl=Config.TODAY_SECOND_CONTENT+data.get(position-1).getEventId()+"&pageIndex=1";
                         intent.putExtra("web",secondUrl);
                         intent.putExtra("englishName", data.get(position-1).getDiscountText());
-                        //Log.i("englishName", data.get(position).getDiscountText());
+                        //Log.i("englishName",data.get(position-1).getEventId());
                         startActivity(intent);
                     }
                 });

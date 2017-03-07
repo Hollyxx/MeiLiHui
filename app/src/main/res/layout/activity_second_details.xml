@@ -174,7 +174,8 @@
         android:layout_height="match_parent"
         android:numColumns="2"/>
     <ImageView
-        android:id="@+id/match_imageview"
+        android:onClick="onClick"
+        android:id="@+id/Deatails_imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
