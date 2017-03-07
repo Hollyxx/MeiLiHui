@@ -1,13 +1,17 @@
 package com.qf.meilihui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.qf.meilihui.R;
+import com.qf.meilihui.avtivity.ProductsListActivity;
 import com.qf.meilihui.bean.Category;
 import com.qf.meilihui.bean.CategoryBean;
 import com.qf.meilihui.customview.CustomGridView;
@@ -57,17 +61,31 @@ public class KindofCategoryListAdapter extends BaseAdapter {
         } else
             holder = (KindofCategoryListViewHolder) convertView.getTag();
 
-        CategoryBean categoryBean = data.get(position);
+        final CategoryBean categoryBean = data.get(position);
 
         holder.name.setText(categoryBean.getSiloNameEn());
         holder.title.setText(categoryBean.getDisplayName());
-        List<Category> items = categoryBean.getItems();
+        final List<Category> items = categoryBean.getItems();
 
         KindofCategoryGridAdapter adapter = new KindofCategoryGridAdapter(context, items);
         holder.gridView.setAdapter(adapter);
 
+        holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                Category category = items.get(position);
+                intent.putExtra("siloId",categoryBean.getId());
+                intent.putExtra("categoryId",category.getCategoryId());
+                intent.putExtra("summary",categoryBean.getDisplayName());
+                intent.putExtra("name",category.getCategoryName());
+                intent.setClass(context, ProductsListActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
+
 
     class KindofCategoryListViewHolder {
         TextView name, title;

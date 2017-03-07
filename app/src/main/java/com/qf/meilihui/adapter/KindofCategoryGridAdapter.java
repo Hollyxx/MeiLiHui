@@ -1,6 +1,8 @@
 package com.qf.meilihui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,8 @@ public class KindofCategoryGridAdapter extends BaseAdapter {
 
             holder.image = (ImageView) convertView.findViewById(R.id.image_item_grid_list_kind_category);
             holder.title = (TextView) convertView.findViewById(R.id.title_item_grid_list_kind_category);
+
+
 
             convertView.setTag(holder);
 

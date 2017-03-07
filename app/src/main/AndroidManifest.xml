@@ -24,6 +24,8 @@
         <activity android:name=".view.BeantifuHeadActivity" />
         <activity android:name=".avtivity.HeadViewDetailsActivity" />
         <activity android:name=".avtivity.SecondDetailsActivity"></activity>
+        <activity android:name=".view.BeantifuHeadActivity" />
+        <activity android:name=".avtivity.ProductsListActivity"></activity>
     </application>
 
 </manifest>
