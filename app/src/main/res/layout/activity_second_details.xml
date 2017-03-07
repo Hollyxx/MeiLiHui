@@ -5,5 +5,180 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.qf.meilihui.avtivity.SecondDetailsActivity">
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:onClick="onClick"
+            android:id="@+id/back_title_bar_products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/back"/>
+
+
+        <TextView
+            android:id="@+id/title_title_bar_products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="服装"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            />
+
+        <ImageView
+            android:id="@+id/title_bar_products"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_share1"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/rl1"
+        android:padding="8dp"
+        android:background="@color/gray2"
+        android:id="@+id/deatails_linear"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <LinearLayout
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:background="@color/gray2"
+            android:gravity="center"
+            android:padding="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textSize="12sp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="免 运"
+                    android:background="@mipmap/icon_coupon_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="13sp"
+                    android:text="全场免运费（海外直发商品除外）"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/details_linear2"
+        android:layout_below="@+id/deatails_linear"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+       >
+
+        <TextView
+            android:id="@+id/popular_sort"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="人气"/>
+
+        <TextView
+            android:id="@+id/discount_sort"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="折扣"/>
+
+        <LinearLayout
+            android:id="@+id/choice_price"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/price_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="价格"/>
+            <ImageView
+                android:id="@+id/second_details_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/up_grey"/>
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="38dp"
+            android:background="@color/gray"
+            android:layout_gravity="center_vertical"
+            />
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/filter_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="筛选"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/filter_icon"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_below="@+id/details_linear2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e4e4e4"/>
+
+    <GridView
+        android:layout_below="@+id/view2"
+        android:id="@+id/grid_products"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"/>
+    <ImageView
+        android:id="@+id/match_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="480dp"
+        android:src="@mipmap/icon_shopcart_num"/>
 
 </RelativeLayout>
