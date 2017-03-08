@@ -20,6 +20,7 @@ import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.SecondDetailsAdapter;
 import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.bean.TodaySecondDetails;
+import com.qf.meilihui.uri.Config;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,7 +140,13 @@ public class SecondDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent  intent=new Intent(getApplicationContext(),ThirdDetailsActivity.class);
-
+                        String  thirdAddress= Config.TODAY_THIRD_CONTENT+data.get(position).getProductId();
+                        intent.putExtra("thirdAddress",thirdAddress);
+                        intent.putExtra("price",data.get(position).getPrice());
+                        intent.putExtra("marketPrice",data.get(position).getMarketPrice());
+                        intent.putExtra("name",data.get(position).getBrandName());
+                        intent.putExtra("productName",data.get(position).getProductName());
+                        intent.putExtra("discount",data.get(position).getDiscount());
                         startActivity(intent);
                     }
                 });

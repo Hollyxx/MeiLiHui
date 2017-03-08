@@ -26,7 +26,9 @@
         <activity android:name=".avtivity.SecondDetailsActivity" />
         <activity android:name=".view.BeantifuHeadActivity" />
         <activity android:name=".avtivity.ProductsListActivity" />
-        <activity android:name=".avtivity.ThirdDetailsActivity"></activity>
+        <activity android:name=".avtivity.ThirdDetailsActivity" />
+        <activity android:name=".avtivity.EnsureActivity" />
+        <activity android:name=".avtivity.RulerActivity"></activity>
     </application>
 
 </manifest>

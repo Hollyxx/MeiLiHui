@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_ruler"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qf.meilihui.avtivity.RulerActivity">
+
+    <RelativeLayout
+        android:background="@mipmap/box_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bag_re">
+        <ImageView
+            android:onClick="onClick"
+            android:id="@+id/bag_back"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:src="@mipmap/arrow_dark"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentTop="true"/>
+        <TextView
+            android:layout_toRightOf="@+id/bag_back"
+            android:id="@+id/bag_activity_tv"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="尺寸测量"
+            />
+    </RelativeLayout>
+</RelativeLayout>
