@@ -23,9 +23,10 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".view.BeantifuHeadActivity" />
         <activity android:name=".avtivity.HeadViewDetailsActivity" />
-        <activity android:name=".avtivity.SecondDetailsActivity"></activity>
+        <activity android:name=".avtivity.SecondDetailsActivity" />
         <activity android:name=".view.BeantifuHeadActivity" />
-        <activity android:name=".avtivity.ProductsListActivity"></activity>
+        <activity android:name=".avtivity.ProductsListActivity" />
+        <activity android:name=".avtivity.ThirdDetailsActivity"></activity>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -133,6 +134,15 @@ public class SecondDetailsActivity extends AppCompatActivity {
                 }
                 SecondDetailsAdapter adapter=new SecondDetailsAdapter(getApplicationContext(),data,name);
                 gridView.setAdapter(adapter);
+
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent  intent=new Intent(getApplicationContext(),ThirdDetailsActivity.class);
+
+                        startActivity(intent);
+                    }
+                });
             }
 
         },new Response.ErrorListener(){
