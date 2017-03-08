@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -33,6 +36,7 @@ import java.util.List;
 public class ThirdDetailsActivity extends AppCompatActivity {
 
     private List<ImageView>  viewpageimages;
+    private RadioGroup  rg;
     private ViewPager  viewpager;
     private String thirdAddress;
     private  List<InfoBean>  info;
@@ -78,6 +82,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         thirddetails_info= (ListView) findViewById(R.id.thirddetails_info);
         thirddetails_component_tv= (TextView) findViewById(R.id.thirddetails_component_tv);
         viewpager= (ViewPager) findViewById(R.id.third_details_viewpage);
+        rg= (RadioGroup) findViewById(R.id.viewPager_rg);
 
         title_brandname.setText(name);
         title_marketPrice.setText("￥"+marketPrice);
@@ -151,16 +156,13 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                         Glide.with(getApplicationContext()).load(smallImgUrl).into(iv);
                         pictures.add(bigImgUrl);
 
-                        iv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent  intent=new Intent(getApplicationContext(),ViewPagerActivity.class);
-
-                                //intent.putStringArrayListExtra("picture",pictures);
-                                startActivity(intent);
-                            }
-                        });
                         viewpageimages.add(iv);
+                        RadioButton radioButton = new RadioButton(getApplicationContext());
+                        radioButton.setButtonDrawable(R.drawable.radiobutton_selector);
+                        radioButton.setLayoutParams(new RadioGroup.LayoutParams(20, 20));
+                        radioButton.setPadding(20, 10, 20, 10);//上  右  下  左
+                        radioButton.setClickable(false);
+                        rg.addView(radioButton);
                     }
 
                 } catch (JSONException e) {
@@ -174,6 +176,47 @@ public class ThirdDetailsActivity extends AppCompatActivity {
 
                 BasePagerAdapter  adapter3=new BasePagerAdapter(viewpageimages);
                 viewpager.setAdapter(adapter3);
+                ((RadioButton) rg.getChildAt(0)).setChecked(true);
+                viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        ((RadioButton) rg.getChildAt(position)).setChecked(true);
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+                viewpager.setOnTouchListener(new View.OnTouchListener() {
+                    int flage=0;
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction()){
+                            case MotionEvent.ACTION_DOWN:
+                                flage=0;
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                flage=1;
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                if(flage==0){
+                                    int item=viewpager.getCurrentItem();
+                                    Intent  intent=new Intent(getApplicationContext(),ViewPagerActivity.class);
+                                    intent.putStringArrayListExtra("picture", (ArrayList<String>) pictures);
+                                    intent.putExtra("item",item+"");
+                                    startActivity(intent);
+                                }
+                        }
+                        return false;
+                    }
+                });
+
 
                 //scrollview嵌套listview  listview需重新得到自己所需的控件高度
                 setListViewHeightBasedOnChildren(thirddetails_picture);
