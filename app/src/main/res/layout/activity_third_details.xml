@@ -1,71 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/rl1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <ImageView
-            android:onClick="onClick"
-            android:id="@+id/title_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/back"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/title_brandname"
-                android:text="品牌"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/title_price"
-                    android:text="￥708"
-                    android:textSize="14sp"
-                    android:textColor="@color/red"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <TextView
-                    android:id="@+id/title_marketPrice"
-                    android:background="@mipmap/line_number"
-                    android:textSize="12sp"
-                    android:text="￥2890"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-        <ImageView
-            android:id="@+id/title_bar_products"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/icon_share1"/>
-    </RelativeLayout>
     <ScrollView
     android:id="@+id/activity_third_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="vertical"
+    android:scrollbars="none"
     android:fadingEdge="vertical"
    >
 <LinearLayout
@@ -76,9 +19,10 @@
     android:layout_height="wrap_content">
 
     <android.support.v4.view.ViewPager
+        android:background="@color/white"
         android:id="@+id/third_details_viewpage"
         android:layout_width="match_parent"
-        android:layout_height="400dp"></android.support.v4.view.ViewPager>
+        android:layout_height="500dp"></android.support.v4.view.ViewPager>
     <TextView
         android:id="@+id/thirddetails_brandname"
         android:textStyle="bold"
@@ -311,20 +255,25 @@
         android:layout_width="match_parent"
         android:src="@mipmap/bg_event"
         android:layout_height="120dp" />
-    <RelativeLayout
+    <LinearLayout
+        android:padding="2dp"
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="25dp">
+        android:layout_height="wrap_content">
         <TextView
-            android:layout_width="wrap_content"
+            android:textSize="13sp"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
             android:layout_height="wrap_content"
             android:text="材质"/>
         <TextView
+            android:textSize="13sp"
+            android:layout_weight="7"
             android:id="@+id/thirddetails_component_tv"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="棉"/>
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:text="洗护与保养"
@@ -438,4 +387,63 @@
 
   </LinearLayout>
 </ScrollView>
-</RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:onClick="onClick"
+            android:id="@+id/title_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/back"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/title_brandname"
+                android:text="品牌"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/title_price"
+                    android:text="￥708"
+                    android:textSize="14sp"
+                    android:textColor="@color/red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/title_marketPrice"
+                    android:background="@mipmap/line_number"
+                    android:textSize="12sp"
+                    android:text="￥2890"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/title_bar_products"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_share1"/>
+    </RelativeLayout>
+</FrameLayout>

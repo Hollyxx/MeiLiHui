@@ -28,7 +28,8 @@
         <activity android:name=".avtivity.ProductsListActivity" />
         <activity android:name=".avtivity.ThirdDetailsActivity" />
         <activity android:name=".avtivity.EnsureActivity" />
-        <activity android:name=".avtivity.RulerActivity"></activity>
+        <activity android:name=".avtivity.RulerActivity" />
+        <activity android:name=".avtivity.ViewPagerActivity"></activity>
     </application>
 
 </manifest>

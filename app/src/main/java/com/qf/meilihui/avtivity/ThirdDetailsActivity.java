@@ -2,6 +2,7 @@ package com.qf.meilihui.avtivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
+import com.qf.meilihui.adapter.BasePagerAdapter;
+import com.qf.meilihui.adapter.ListInfoAdapter;
 import com.qf.meilihui.adapter.PictureListViewAdapter;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.bean.InfoBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,12 +32,15 @@ import java.util.List;
 
 public class ThirdDetailsActivity extends AppCompatActivity {
 
+    private List<ImageView>  viewpageimages,viewpageimages2;
+    private ViewPager  viewpager,viewpageractivity;
     private String thirdAddress;
+    private  List<InfoBean>  info;
     private ImageView  thirddetails_Prompt,thirddetails_component_iv;
     private List<String> images;
     private ListView thirddetails_picture,thirddetails_info;
     private TextView title_brandname,title_price,title_marketPrice,thirddetails_brandname,thirddetails_name,thirddetails_price,thirddetails_marketPrice,thirddetails_discount;
-    private TextView Discount_details,Discount_picture,thirddetails_describe,thirddetails_maintain;
+    private TextView Discount_details,Discount_picture,thirddetails_describe,thirddetails_maintain,thirddetails_component_tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +76,9 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         thirddetails_component_iv= (ImageView) findViewById(R.id.thirddetails_component_iv);
         thirddetails_maintain= (TextView) findViewById(R.id.thirddetails_maintain);
         thirddetails_info= (ListView) findViewById(R.id.thirddetails_info);
-
+        thirddetails_component_tv= (TextView) findViewById(R.id.thirddetails_component_tv);
+        viewpager= (ViewPager) findViewById(R.id.third_details_viewpage);
+        viewpageractivity= (ViewPager) findViewById(R.id.viewPagerActivity_id);
 
         title_brandname.setText(name);
         title_marketPrice.setText("￥"+marketPrice);
@@ -116,16 +125,58 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                     String maintenanceList=description.getString("maintenanceList");
                     String substring = maintenanceList.substring(2, maintenanceList.length() - 2);
                     thirddetails_maintain.setText(substring);
+                    //详细信息加载
+                    JSONArray attributesList = description.getJSONArray("attributesList");
+                      info=new ArrayList<>();
+                    for (int i=0;i<attributesList.length()-1;i++){
+                         JSONObject jsonObject = attributesList.getJSONObject(i);
+                         String name=jsonObject.getString("name");
+                         String value=jsonObject.getString("value");
+                         info.add(new InfoBean(name,value));
+                    }
+                    //材质信息
+                    JSONObject jsonObject = attributesList.getJSONObject(attributesList.length()-1);
+                    String component=jsonObject.getString("value");
+                    thirddetails_component_tv.setText(component);
+                    //viewpage的图片获得
+                    JSONArray images = infos.getJSONArray("images");
+                    viewpageimages=new ArrayList<>();
+                    viewpageimages2=new ArrayList<>();
+                    for (int i=0;i<images.length();i++){
+                        JSONObject jsonObject1 = images.getJSONObject(i);
+                        String smallImgUrl=jsonObject1.getString("smallImgUrl");
+                        String bigImgUrl=jsonObject1.getString("bigImgUrl");
+                        ImageView  iv=new ImageView(getApplicationContext());
+                        //iv.setScaleType(ImageView.ScaleType.FIT_XY);
+                        Glide.with(getApplicationContext()).load(smallImgUrl).into(iv);
 
+                        iv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent  intent=new Intent(getApplicationContext(),ViewPagerActivity.class);
 
+                                startActivity(intent);
+                            }
+                        });
+
+                        viewpageimages.add(iv);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 PictureListViewAdapter  adapter=new PictureListViewAdapter(getApplicationContext(),images);
                 thirddetails_picture.setAdapter(adapter);
+
+                ListInfoAdapter adapter2=new ListInfoAdapter(getApplicationContext(),info);
+                thirddetails_info.setAdapter(adapter2);
+
+                BasePagerAdapter  adapter3=new BasePagerAdapter(viewpageimages);
+                viewpager.setAdapter(adapter3);
+
                 //scrollview嵌套listview  listview需重新得到自己所需的控件高度
                 setListViewHeightBasedOnChildren(thirddetails_picture);
+                setListViewHeightBasedOnChildren(thirddetails_info);
             }
         }, new Response.ErrorListener() {
             @Override
