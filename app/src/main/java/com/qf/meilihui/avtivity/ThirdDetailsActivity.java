@@ -32,12 +32,12 @@ import java.util.List;
 
 public class ThirdDetailsActivity extends AppCompatActivity {
 
-    private List<ImageView>  viewpageimages,viewpageimages2;
-    private ViewPager  viewpager,viewpageractivity;
+    private List<ImageView>  viewpageimages;
+    private ViewPager  viewpager;
     private String thirdAddress;
     private  List<InfoBean>  info;
     private ImageView  thirddetails_Prompt,thirddetails_component_iv;
-    private List<String> images;
+    private List<String> images,pictures;
     private ListView thirddetails_picture,thirddetails_info;
     private TextView title_brandname,title_price,title_marketPrice,thirddetails_brandname,thirddetails_name,thirddetails_price,thirddetails_marketPrice,thirddetails_discount;
     private TextView Discount_details,Discount_picture,thirddetails_describe,thirddetails_maintain,thirddetails_component_tv;
@@ -78,7 +78,6 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         thirddetails_info= (ListView) findViewById(R.id.thirddetails_info);
         thirddetails_component_tv= (TextView) findViewById(R.id.thirddetails_component_tv);
         viewpager= (ViewPager) findViewById(R.id.third_details_viewpage);
-        viewpageractivity= (ViewPager) findViewById(R.id.viewPagerActivity_id);
 
         title_brandname.setText(name);
         title_marketPrice.setText("￥"+marketPrice);
@@ -141,7 +140,8 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                     //viewpage的图片获得
                     JSONArray images = infos.getJSONArray("images");
                     viewpageimages=new ArrayList<>();
-                    viewpageimages2=new ArrayList<>();
+                    pictures=new ArrayList<>();
+
                     for (int i=0;i<images.length();i++){
                         JSONObject jsonObject1 = images.getJSONObject(i);
                         String smallImgUrl=jsonObject1.getString("smallImgUrl");
@@ -149,16 +149,17 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                         ImageView  iv=new ImageView(getApplicationContext());
                         //iv.setScaleType(ImageView.ScaleType.FIT_XY);
                         Glide.with(getApplicationContext()).load(smallImgUrl).into(iv);
+                        pictures.add(bigImgUrl);
 
                         iv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent  intent=new Intent(getApplicationContext(),ViewPagerActivity.class);
 
+                                //intent.putStringArrayListExtra("picture",pictures);
                                 startActivity(intent);
                             }
                         });
-
                         viewpageimages.add(iv);
                     }
 
