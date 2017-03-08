@@ -6,7 +6,7 @@ import org.json.JSONObject;
  * Created by invoker on 2017/3/7.
  */
 
-public class ProductsOfCategory {
+public class ProductsOfCategory implements Comparable{
 
     private String productId;
     private String productName;
@@ -109,4 +109,9 @@ public class ProductsOfCategory {
     }
 
 
+    @Override
+    public int compareTo(Object o) {
+        ProductsOfCategory productsOfCategory  = (ProductsOfCategory) o;
+        return this.getPrice().compareTo(productsOfCategory.getPrice());
+    }
 }

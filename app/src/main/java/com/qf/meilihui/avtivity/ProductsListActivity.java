@@ -3,10 +3,12 @@ package com.qf.meilihui.avtivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.GridView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,11 +20,13 @@ import com.qf.meilihui.adapter.ProductOfKindsGridAdapter;
 import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.bean.ProductsOfCategory;
 import com.qf.meilihui.bean.ProductsofCategoryBean;
+import com.qf.meilihui.customview.CustomGridView;
 import com.qf.meilihui.uri.Config;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ProductsListActivity extends AppCompatActivity {
@@ -35,6 +39,7 @@ public class ProductsListActivity extends AppCompatActivity {
     private List<ProductsOfCategory> data;
     private ProductsofCategoryBean bean;
     private ProductOfKindsGridAdapter adapter;
+    private ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class ProductsListActivity extends AppCompatActivity {
         loadData(page);
         grid.setAdapter(adapter);
 
+
         grid.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -69,6 +75,7 @@ public class ProductsListActivity extends AppCompatActivity {
                 isBottom = firstVisibleItem + visibleItemCount == totalItemCount;
             }
         });
+
 
     }
 
@@ -100,5 +107,16 @@ public class ProductsListActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         finish();
+    }
+
+    public void sortClick(View view) {
+        switch (view.getId()) {
+            case R.id.price_sort:
+                Collections.sort(data);
+                adapter.notifyDataSetChanged();
+                break;
+        }
+
+
     }
 }

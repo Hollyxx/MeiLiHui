@@ -1,5 +1,7 @@
 package com.qf.meilihui.uri;
 
+import java.util.List;
+
 /**
  * Created by 肖 on 2017/3/1.
  */
@@ -47,5 +49,10 @@ public class Config {
 
     //分类的品牌页面的二级页面  需要拼接的属性 logoId
 
-    public static final String Category_Second_Brand = "http://www.mei.com/appapi/brand/product/v3?logoId=3616200100000000578";
+    public static final String Category_Second_Brand = "http://www.mei.com/appapi/brand/product/v3?logoId=";
+
+    //品牌详情页面内部的热门商品
+    public static final String Category_Second_Brand_Detail_HotProducts="http://www.mei.com/appapi/brand/product/hot/v3?logoId=";
+
+
 }

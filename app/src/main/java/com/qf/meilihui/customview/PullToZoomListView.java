@@ -1,0 +1,318 @@
+package com.qf.meilihui.customview;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.SystemClock;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+import android.widget.AbsListView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+/**
+ * Created by invoker on 2017/3/8.
+ */
+
+public class PullToZoomListView extends ListView implements
+        AbsListView.OnScrollListener{
+
+    private static final int INVALID_VALUE = -1;
+    private static final String TAG = "PullToZoomListView";
+
+    int mActivePointerId = -1;
+    private FrameLayout mHeaderContainer;
+    private int mHeadHeight;//头部视图的高
+    private ImageView mHeaderImage;
+
+    //偏移量
+    float mLastMotionY = -1.0F;
+    float mLastScale = -1.0F;
+    float mMaxScale = -1.0F;
+
+    //抽象的listView
+    private AbsListView.OnScrollListener mOnScrollListener;
+    private ScalingRunnalable mScalingRunnalable;
+    private int mScreenHeight;  //屏幕的高
+    private ImageView mShadow;
+
+    //定义动画变化的速率
+    /**
+     * Interpolator定义了动画变化的速率，在Animations框架当中定义了一下几种Interpolator
+     Ø         AccelerateDecelerateInterpolator：在动画开始与结束的地方速率改变比较慢，在中间的时候速率快。
+     Ø         AccelerateInterpolator：在动画开始的地方速率改变比较慢，然后开始加速
+     Ø         CycleInterpolator：动画循环播放特定的次数，速率改变沿着正弦曲线
+     Ø         DecelerateInterpolator：在动画开始的地方速率改变比较慢，然后开始减速
+     Ø         LinearInterpolator：动画以均匀的速率改变
+     */
+    private static final Interpolator sInterpolatar = new Interpolator(){
+        @Override
+        public float getInterpolation(float input) {
+            float f = input - 1.0F;
+            return 1.0F + f * (f*(f*(f*f)));
+        }
+    };
+    public PullToZoomListView(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public PullToZoomListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    public PullToZoomListView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
+    private void endScraling(){
+        //下拉开始
+        if (this.mHeaderContainer.getBottom() >= this.mHeadHeight)
+        this.mScalingRunnalable.startAnimation(200L);
+    }
+
+    private void init(Context paramContext){
+        //屏幕的像素
+        DisplayMetrics localDisplayMetrics = new DisplayMetrics();
+
+        ///将当前窗口的一些信息放在DisplayMetrics类中，
+        ((Activity)paramContext).getWindowManager().getDefaultDisplay()
+                .getMetrics(localDisplayMetrics);
+
+        //屏幕高度
+        this.mScreenHeight = localDisplayMetrics.heightPixels;
+        this.mHeaderContainer  = new FrameLayout(paramContext);
+        this.mHeaderImage = new ImageView(paramContext);
+        //屏幕宽度
+        int i = localDisplayMetrics.widthPixels;
+        setHeaderViewSize(i, (int) (9.0F * (i / 16.0F)));
+
+        this.mShadow = new ImageView(paramContext);
+
+        //指定了该布局的宽和高(-1为宽,-2为高)
+        FrameLayout.LayoutParams localLayoutParams = new FrameLayout.LayoutParams(-1,-2);
+        localLayoutParams.gravity = 80;
+        this.mShadow.setLayoutParams(localLayoutParams);
+        this.mHeaderContainer.addView(this.mHeaderImage);
+        this.mHeaderContainer.addView(this.mShadow);
+        addHeaderView(this.mHeaderContainer);
+
+        //ScalingRunnalable
+        this.mScalingRunnalable = new ScalingRunnalable();
+        super.setOnScrollListener(this);
+    }
+
+    //第二次下拉设为0
+    private void onSecondaryPointerUp(MotionEvent paramMotionEvent){
+        int i = (paramMotionEvent.getAction()) >> 8;
+        if (paramMotionEvent.getPointerId(i) == this.mActivePointerId)
+            if (i != 0){
+                int j = 1;
+                this.mLastMotionY = paramMotionEvent.getY(0);
+                this.mActivePointerId = paramMotionEvent.getPointerId(0);
+                return;
+            }
+    }
+
+    private void reset(){
+        this.mActivePointerId = -1;
+        this.mLastMotionY = -1.0F;
+        this.mMaxScale = -1.0F;
+        this.mLastScale = -1.0F;
+    }
+
+    public ImageView getHeaderView(){
+        return this.mHeaderImage;
+    }
+
+    //返回true表示拦截。
+    public boolean onInterceptTouchEvent(MotionEvent paramMotionEvent) {
+        return super.onInterceptTouchEvent(paramMotionEvent);
+    }
+
+    // 确定View的位置
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (this.mHeadHeight == 0){
+            this.mHeadHeight = this.mHeaderContainer.getHeight();
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView paramAbsListview, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        float f = this.mHeadHeight - this.mHeaderContainer.getBottom();
+
+        //偏移量
+        if ((f > 0.0f) && (f < this.mHeadHeight)){
+            int i = (int) (0.65D * f);
+            this.mHeaderImage.scrollTo(0 , -i);
+            //没有向下滑
+        } else if(this.mHeaderContainer.getScrollY() != 0){
+            this.mHeaderContainer.scrollTo(0,0);
+        }
+        if (this.mOnScrollListener != null){
+            this.mOnScrollListener.onScroll(paramAbsListview, firstVisibleItem,
+                    visibleItemCount, totalItemCount);
+        }
+
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (this.mOnScrollListener != null){
+            this.mOnScrollListener.onScrollStateChanged(view,
+                    scrollState);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+
+        switch (MotionEvent.ACTION_MASK & ev.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                if (!this.mScalingRunnalable.mIsFinished){
+                    //结束动画
+                    this.mScalingRunnalable.abortAnimation();
+                }
+                this.mLastMotionY = ev.getY();
+                this.mActivePointerId = ev.getPointerId(0);
+                this.mMaxScale = (this.mScreenHeight / this.mHeadHeight);
+                this.mLastScale = (this.mHeaderContainer.getBottom() / this.mHeadHeight);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                //获得指定ID的pointer在当前事件中的index。
+                int j = ev.findPointerIndex(this.mActivePointerId);
+                if (j == -1){
+                    Log.e("pullToZoomListView", "Invalid pointerId"
+                            + this.mActivePointerId + "in onTouchEvent");
+                } else {
+                    if (this.mLastMotionY == -1.0F)
+                        this.mLastMotionY = ev.getY(j);
+                    //如果底部大于图片的高
+                    if (this.mHeaderContainer.getBottom() >= this.mHeadHeight){
+                        //下滑
+                        ViewGroup.LayoutParams localLayoutParams = this.mHeaderContainer.getLayoutParams();
+                        float f = ((ev.getY(j) - this.mLastMotionY + this.mHeaderContainer.
+                                getBottom()) / this.mHeadHeight - this.mLastScale)
+                                /2.0F + this.mLastScale;
+                        if ((this.mLastScale <= 1.0D) && (f < this.mLastScale)){
+                            //初始化param的高，没有改变还是原来样子
+                            localLayoutParams.height = this.mHeadHeight;
+                            this.mHeaderContainer.setLayoutParams(localLayoutParams);
+                            return super.onTouchEvent(ev);
+                        }
+                        this.mLastScale = Math.min(Math.max(f, 1.0F),this.mMaxScale);
+
+                        //高度乘偏移量 为 拉伸的图片高度
+                        localLayoutParams.height = (int)((this.mHeadHeight * this.mLastScale));
+                        if (localLayoutParams.height < this.mScreenHeight)
+                            this.mHeaderContainer.setLayoutParams(localLayoutParams);
+                        this.mLastMotionY = ev.getY(j);
+                        return true;
+                    }
+                    this.mLastMotionY = ev.getY(j);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                reset();
+                //初始化 开始恢复动画
+                endScraling();
+                break;
+            //当屏幕上已经有一个点被按住,此时再按下其他点时触发。
+            case MotionEvent.ACTION_POINTER_DOWN:
+                onSecondaryPointerUp(ev);
+                this.mLastMotionY = ev.getY(ev.findPointerIndex(this.mActivePointerId));
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+        }
+        return super.onTouchEvent(ev);
+    }
+
+    //设置头部的大小
+    public void setHeaderViewSize(int paramInt1, int paramInt2){
+        Object localObject = this.mHeaderContainer.getLayoutParams();
+        if (localObject == null){
+            //如果没有的话，设置listview的宽高
+            localObject = new AbsListView.LayoutParams(paramInt1, paramInt2);
+            ((ViewGroup.LayoutParams)localObject).width = paramInt1;
+            ((ViewGroup.LayoutParams)localObject).height = paramInt2;
+            //这里代码有点乱
+            this.mHeaderContainer.setLayoutParams((ViewGroup.LayoutParams)localObject);
+            this.mHeadHeight = paramInt2;
+        }
+    }
+
+    public void setOnScrollListener(
+            AbsListView.OnScrollListener paramOnScrollListener
+    ){
+        this.mOnScrollListener = paramOnScrollListener;
+    }
+
+    public void setShadow(int paramInt){
+        this.mShadow.setBackgroundResource(paramInt);
+    }
+
+    //启用一个动画来使HeaderView平滑的恢复到放大之前的状态。
+    class ScalingRunnalable implements Runnable{
+        long mDuration;  //持续时间
+        boolean mIsFinished = true;  //是否结束
+        float mScale;  //测量规模
+        long mStartTime; //开始时间
+
+        ScalingRunnalable(){}
+
+        public void abortAnimation(){
+            this.mIsFinished = true;
+        }
+
+        public boolean isFinished(){
+            return this.mIsFinished;
+        }
+        @Override
+        public void run() {
+            float f2;
+            ViewGroup.LayoutParams locallayoutParams;
+            if ((!this.mIsFinished) && (this.mScale > 1.0D)){
+                float f1 = ((float) SystemClock.currentThreadTimeMillis() - (float) this.mStartTime)
+                        /this.mDuration;
+
+                //每次执行run的时候mHeadContainer的高度改变了多少
+                //偏移量-超出的值（速度快慢）
+                f2 = this.mScale - (this.mScale - 1.0F)
+                        * PullToZoomListView.sInterpolatar.getInterpolation(f1);
+                //设计控件的布局
+                locallayoutParams = PullToZoomListView.this.mHeaderContainer.getLayoutParams();
+                //当超过高度的时候，开始变形
+                if (f2 > 1.0F){
+
+                    //设置图片的布局的 高度
+                    locallayoutParams.height = PullToZoomListView.this.mHeadHeight;
+                    locallayoutParams.height = (int)(f2* PullToZoomListView.this.mHeadHeight);
+
+                    //设置变化
+                    PullToZoomListView.this.mHeaderContainer.setLayoutParams(locallayoutParams);
+                    PullToZoomListView.this.post(this);
+                    return;
+                }
+                this.mIsFinished = true;
+            }
+        }
+        public void startAnimation(long paramLong){
+            this.mStartTime = SystemClock.currentThreadTimeMillis();
+            this.mDuration = paramLong;
+            //mLastScale是根据垂直偏移计算出来的
+            this.mScale = ((float) (PullToZoomListView.this.mHeaderContainer.getBottom())/PullToZoomListView.this.mHeadHeight);
+            this.mIsFinished = false;
+            //post调用ScalingRunnalable的run方法，而ScalingRunnalable run方法中再次调用了post，就这样不断的更新UI，直到达到一定的条件退出这个循环
+            PullToZoomListView.this.post(this);
+        }
+    }
+
+}

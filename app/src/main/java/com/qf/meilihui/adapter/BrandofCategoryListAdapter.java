@@ -1,13 +1,16 @@
 package com.qf.meilihui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.qf.meilihui.R;
+import com.qf.meilihui.avtivity.BrandDetailActivity;
 import com.qf.meilihui.bean.Brand;
 import com.qf.meilihui.bean.BrandBean;
 import com.qf.meilihui.customview.CustomGridView;
@@ -60,11 +63,24 @@ public class BrandofCategoryListAdapter extends BaseAdapter {
 
         holder.image.setImageResource(images.get(position));
 
-        BrandBean bean = data.get(position);
-        List<Brand> items = bean.getItems();
+        final BrandBean bean = data.get(position);
+        final List<Brand> items = bean.getItems();
 
         BrandofCategoryGridAdapter adapter = new BrandofCategoryGridAdapter(context, items);
         holder.gridView.setAdapter(adapter);
+
+        holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Brand brand = items.get(position);
+                String logoId = brand.getLogoId();
+                Intent intent = new Intent(context, BrandDetailActivity.class);
+                intent.putExtra("logoId",logoId);
+                context.startActivity(intent);
+            }
+        });
+
+
         return convertView;
     }
 
