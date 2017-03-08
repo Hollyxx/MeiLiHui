@@ -4,6 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +28,9 @@ import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.BasePagerAdapter;
 import com.qf.meilihui.adapter.ListInfoAdapter;
 import com.qf.meilihui.adapter.PictureListViewAdapter;
+import com.qf.meilihui.adapter.RecycleAdapter;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.bean.HotBean;
 import com.qf.meilihui.bean.InfoBean;
 
 import org.json.JSONArray;
@@ -35,6 +42,9 @@ import java.util.List;
 
 public class ThirdDetailsActivity extends AppCompatActivity {
 
+    private String hotadress;
+    private RecyclerView mRecycleView;
+    private TextView  type;
     private List<ImageView>  viewpageimages;
     private RadioGroup  rg;
     private ViewPager  viewpager;
@@ -53,6 +63,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         init();
 
         volleyGet(thirdAddress);
+        volleyHot(hotadress);
 
     }
     public   void init(){
@@ -63,6 +74,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         String marketPrice=intent.getStringExtra("marketPrice");
         String productName=intent.getStringExtra("productName");
         String discount=intent.getStringExtra("discount");
+        hotadress=intent.getStringExtra("Hot_recommendation");
 
         title_brandname= (TextView) findViewById(R.id.title_brandname);
         title_price= (TextView) findViewById(R.id.title_price);
@@ -83,16 +95,81 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         thirddetails_component_tv= (TextView) findViewById(R.id.thirddetails_component_tv);
         viewpager= (ViewPager) findViewById(R.id.third_details_viewpage);
         rg= (RadioGroup) findViewById(R.id.viewPager_rg);
+        type= (TextView) findViewById(R.id.type);
+        mRecycleView= (RecyclerView) findViewById(R.id.my_Recommend);
 
         title_brandname.setText(name);
         title_marketPrice.setText("￥"+marketPrice);
         title_price.setText("￥"+price);
         thirddetails_brandname.setText(name);
-        thirddetails_discount.setText(discount);
+        thirddetails_discount.setText(discount+"折");
         thirddetails_marketPrice.setText("￥"+marketPrice);
         thirddetails_price.setText("￥"+price);
         thirddetails_name.setText(productName);
 
+    }
+    public   void volleyHot(String url){
+        final  JsonObjectRequest   jsonObjectRequest=new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String name= response.getString("secondCategoryName");
+                    Log.i("name",name);
+                    type.setText(name);
+
+                    JSONArray categoryList = response.getJSONArray("categoryList");
+                    List<HotBean>  data=new ArrayList<>();
+                    for(int i=0;i<categoryList.length();i++){
+                        JSONObject jsonObject = categoryList.getJSONObject(i);
+                         String productId=jsonObject.getString("productId") ;
+                         String imgUrl=jsonObject.getString("imgUrl");
+                         String product_name=jsonObject.getString("product_name");
+                         String brand_name=jsonObject.getString("brand_name");
+                         String market_price=jsonObject.getString("market_price");
+
+                         String price=jsonObject.getString("price");
+                         String eventId=jsonObject.getString("eventId");
+
+                        data.add(new HotBean(productId,imgUrl,product_name,brand_name,market_price,price,eventId));
+
+                    }
+
+                    RecycleAdapter  adapter=new RecycleAdapter(getApplicationContext(),data);
+
+                    mRecycleView.setAdapter(adapter);
+                    LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+
+
+                    //设置布局管理器
+                    mRecycleView.setLayoutManager(manager);
+
+                    //设置增删数据的动画
+                    mRecycleView.setItemAnimator(new DefaultItemAnimator());
+
+                    adapter.setOnItemClickListener(new RecycleAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View itemView, int position) {
+
+
+                        }
+                    });
+
+                    StaggeredGridLayoutManager sManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+
+                    mRecycleView.setLayoutManager(sManager);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+       MyApp.getHttpQueue().add(jsonObjectRequest);
     }
     public   void volleyGet(String url){
         final JsonObjectRequest  jsonObjectRequest=new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {

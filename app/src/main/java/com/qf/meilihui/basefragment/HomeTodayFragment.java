@@ -109,6 +109,8 @@ public class HomeTodayFragment extends Fragment {
 
                         String secondUrl=Config.TODAY_SECOND_CONTENT+data.get(position-1).getEventId()+"&pageIndex=1";
                         intent.putExtra("web",secondUrl);
+                        intent.putExtra("id",data.get(position-1).getEventId());
+                        //Log.i("id",data.get(position-1).getEventId());
                         intent.putExtra("englishName", data.get(position-1).getDiscountText());
                         //Log.i("englishName",data.get(position-1).getEventId());
                         startActivity(intent);

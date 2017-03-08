@@ -36,6 +36,7 @@ public class SecondDetailsActivity extends AppCompatActivity {
     private List<String>  name;
     private GridView gridView;
     private LinearLayout layout;
+    private String categoryId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class SecondDetailsActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         String web=intent.getStringExtra("web");
+         categoryId=intent.getStringExtra("id");
         String englishName=intent.getStringExtra("englishName");
         init();
 
@@ -141,6 +143,9 @@ public class SecondDetailsActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent  intent=new Intent(getApplicationContext(),ThirdDetailsActivity.class);
                         String  thirdAddress= Config.TODAY_THIRD_CONTENT+data.get(position).getProductId();
+                        String  Hot_recommendation= Config.Hot_recommendation+data.get(position).getProductId()+"&categoryId="+categoryId;
+                        Log.i("id",Hot_recommendation);
+                        intent.putExtra("Hot_recommendation",Hot_recommendation);
                         intent.putExtra("thirdAddress",thirdAddress);
                         intent.putExtra("price",data.get(position).getPrice());
                         intent.putExtra("marketPrice",data.get(position).getMarketPrice());
