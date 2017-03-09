@@ -30,6 +30,9 @@
         <activity android:name=".avtivity.EnsureActivity" />
         <activity android:name=".avtivity.RulerActivity" />
         <activity android:name=".avtivity.ViewPagerActivity"></activity>
+        <activity android:name=".avtivity.SecondDetailsActivity" />
+        <activity android:name=".avtivity.ProductsListActivity" />
+        <activity android:name=".avtivity.BrandDetailActivity"></activity>
     </application>
 
 </manifest>

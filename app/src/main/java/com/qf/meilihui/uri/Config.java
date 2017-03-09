@@ -1,11 +1,14 @@
 package com.qf.meilihui.uri;
 
+import java.util.List;
+
 /**
  * Created by 肖 on 2017/3/1.
  */
 
 public class Config {
     //今日热门内容
+
     public static final String TODAY_CONTENT = "http://www.mei.com/appapi/home/event/v3?summary=0720346859018fb21dac9f2ff05e054f&timeStamp=20170228213558&pageIndex=1";
 
     public static final String TODAY_HEADVIEW = "http://www.mei.com/appapi/home/marketingBannerNew/v3?summary=ecabd4072745241950c2d5141497976d&timeStamp=20170228213547";
@@ -35,12 +38,14 @@ public class Config {
 
     public static final String Category_Brand = "http://www.mei.com/appapi/brand/list/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347";
 
-    public static final String TODAY_BEAU_IM= "http://www.mei.com/appapi/beauty/getStarAndOverSeaPic/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347&credential=";
+    public static final String TODAY_BEAU_IM = "http://www.mei.com/appapi/beauty/getStarAndOverSeaPic/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347&credential=";
 
-    public static final String TODAY_BEAU_GRIDVIEW= "http://www.mei.com/appapi/beauty/beautyChannelBrands/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347";
+    public static final String TODAY_BEAU_GRIDVIEW = "http://www.mei.com/appapi/beauty/beautyChannelBrands/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347";
 
     public  static  final  String TODAY_SECOND_CONTENT="http://www.mei.com/appapi/event/product/v3?sort=&categoryId=";
     public  static  final  String TODAY_THIRD_CONTENT="http://www.mei.com/appapi/product/detail/v3?&productId=";
+    public static final String TODAY_SECOND_CONTENT = "http://www.mei.com/appapi/event/product/v3?sort=&categoryId=";
+
     //分类页面的类别二级页面      需要拼接的属性siloId、categoryId  displayName、pageIndex
     //http://www.mei.com/appapi/secondcategory/product/v3?siloId=2013000100000000001&categoryId=1000000337&summary=男士&pageIndex=1
     public static final String Category_Second_Kinds = "http://www.mei.com/appapi/secondcategory/product/v3?";
@@ -50,5 +55,11 @@ public class Config {
     public static final String Category_Second_Brand = "http://www.mei.com/appapi/brand/product/v3?logoId=3616200100000000578";
      //详情页的推荐
     public static final String  Hot_recommendation ="http://www.mei.com/appapi/product/hot/v3?&productId=";
+
+    public static final String Category_Second_Brand = "http://www.mei.com/appapi/brand/product/v3?logoId=";
+
+    //品牌详情页面内部的热门商品
+    public static final String Category_Second_Brand_Detail_HotProducts = "http://www.mei.com/appapi/brand/product/hot/v3?logoId=";
+
 
 }

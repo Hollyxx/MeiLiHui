@@ -6,7 +6,7 @@ import org.json.JSONObject;
  * Created by invoker on 2017/3/7.
  */
 
-public class ProductsOfCategory {
+public class ProductsOfCategory implements Comparable{
 
     private String productId;
     private String productName;
@@ -21,6 +21,68 @@ public class ProductsOfCategory {
     private String isCrossBorder;
     private String ev_url_key;
     private String event_id;
+    private String isRecommend;
+    private String saleableQty;
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public String getGlsCode() {
+        return glsCode;
+    }
+
+    public String getProduct_type() {
+        return product_type;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getMarketPrice() {
+        return marketPrice;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getIsRecommend() {
+        return isRecommend;
+    }
+
+    public String getStockStatus() {
+        return stockStatus;
+    }
+
+    public String getIsNewProduct() {
+        return isNewProduct;
+    }
+
+    public String getIsCrossBorder() {
+        return isCrossBorder;
+    }
+
+    public String getEv_url_key() {
+        return ev_url_key;
+    }
+
+    public String getSaleableQty() {
+        return saleableQty;
+    }
+
+    public String getEvent_id() {
+        return event_id;
+    }
 
     public void parseJson(JSONObject object) {
         if (object != null) {
@@ -38,6 +100,8 @@ public class ProductsOfCategory {
                 isCrossBorder = object.getString("isCrossBorder");
                 ev_url_key = object.getString("ev_url_key");
                 event_id = object.getString("event_id");
+                isRecommend = object.getString("isRecommend");
+                saleableQty = object.getString("saleableQty");
             } catch (Exception e) {
 
             }
@@ -45,4 +109,9 @@ public class ProductsOfCategory {
     }
 
 
+    @Override
+    public int compareTo(Object o) {
+        ProductsOfCategory productsOfCategory  = (ProductsOfCategory) o;
+        return this.getPrice().compareTo(productsOfCategory.getPrice());
+    }
 }
