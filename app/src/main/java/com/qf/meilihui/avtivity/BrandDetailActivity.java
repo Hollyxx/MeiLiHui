@@ -8,6 +8,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.qf.meilihui.adapter.BrandDetailRecyclerAdapter;
 import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.bean.BrandDetailBean;
 import com.qf.meilihui.bean.HotProductsOfBrandDetailBean;
+import com.qf.meilihui.callback.LoadMoreCallBack;
 import com.qf.meilihui.customview.PullToZoomListView;
 import com.qf.meilihui.uri.Config;
 
@@ -30,17 +32,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BrandDetailActivity extends AppCompatActivity {
+public class BrandDetailActivity extends AppCompatActivity{
 
     private RecyclerView recyclerView;
     private TextView title;
     private String logoId;
     private List<Object> data;
-    private  int page =1;
+    private int page = 1;
     private BrandDetailRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_detail);
 
@@ -48,17 +51,19 @@ public class BrandDetailActivity extends AppCompatActivity {
         title = (TextView) findViewById(R.id.logo_toolbar_brand_detail_activity);
         Intent intent = getIntent();
         logoId = intent.getStringExtra("logoId");
+        String name = intent.getStringExtra("name");
+        title.setText(name);
         data = new ArrayList<>();
         adapter = new BrandDetailRecyclerAdapter(this, data);
         recyclerView.setAdapter(adapter);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, OrientationHelper.VERTICAL,false);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         loadData();
 
 
     }
 
-    private void updateData(int page) {
+    public void updateData(int page) {
 
         StringRequest request = new StringRequest(Config.Category_Second_Brand_Detail_HotProducts + logoId + "&pageIndex=" + page, new Response.Listener<String>() {
             @Override
@@ -72,7 +77,7 @@ public class BrandDetailActivity extends AppCompatActivity {
                         data.add(parent);
                         adapter.notifyDataSetChanged();
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -117,4 +122,10 @@ public class BrandDetailActivity extends AppCompatActivity {
     public void onClick(View view) {
         finish();
     }
+
+//    @Override
+//    public void update() {
+//        page++;
+//        updateData(page);
+//    }
 }

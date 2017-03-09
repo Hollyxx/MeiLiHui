@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_all_brand"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qf.meilihui.avtivity.AllBrandActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_title_all_brand"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:onClick="onClick"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:id="@+id/title_all_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="男士品牌"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray" />
+    </RelativeLayout>
+
+
+    <ListView
+        android:id="@+id/list_all_brand"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_title_all_brand"
+        android:divider="@color/gray2"
+        android:dividerHeight="1dp"
+        android:padding="15dp"
+        android:scrollbars="none" />
+
+    <LinearLayout
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/layout_title_all_brand"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/search_A"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="A"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="B"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="C"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_D"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="D"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_E"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="E"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_F"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="F"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_G"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="G"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_H"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="H"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_I"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="I"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_J"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="J"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_K"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="K"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_L"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="L"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_M"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="M"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_N"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="N"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_O"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="O"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_P"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="P"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_Q"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="Q"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_R"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="R"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_S"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="S"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_T"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="T"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_U"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="U"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_V"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="V"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_W"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="W"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_X"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="X"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_Y"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="Y"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_Z"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="Z"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/search_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="searchClick"
+            android:text="#"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

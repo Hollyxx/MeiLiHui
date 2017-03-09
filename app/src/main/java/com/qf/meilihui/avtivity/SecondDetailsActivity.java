@@ -32,21 +32,22 @@ import java.util.List;
 public class SecondDetailsActivity extends AppCompatActivity {
 
     private ImageView price;
-    private TextView  title,tv1,tv2,tv3,tv4;
-    private List<String>  name;
+    private TextView title, tv1, tv2, tv3, tv4;
+    private List<String> name;
     private GridView gridView;
     private LinearLayout layout;
     private String categoryId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_second_details);
 
-        Intent intent=getIntent();
-        String web=intent.getStringExtra("web");
-         categoryId=intent.getStringExtra("id");
-        String englishName=intent.getStringExtra("englishName");
+        Intent intent = getIntent();
+        String web = intent.getStringExtra("web");
+        categoryId = intent.getStringExtra("id");
+        String englishName = intent.getStringExtra("englishName");
         init();
 
         title.setText(englishName);
@@ -55,18 +56,20 @@ public class SecondDetailsActivity extends AppCompatActivity {
         //Log.i("web",web);
 
     }
-    public void init(){
-        title= (TextView) findViewById(R.id.title_title_bar_products);
-        tv1= (TextView) findViewById(R.id.popular_sort);
-        tv2= (TextView) findViewById(R.id.discount_sort);
-        tv3= (TextView) findViewById(R.id.price_sort);
-        tv4= (TextView) findViewById(R.id.filter_sort);
-        price= (ImageView) findViewById(R.id.second_details_iv);
-        gridView= (GridView) findViewById(R.id.grid_products);
-    }
-    public   void onClick(View  view){
 
-        switch (view.getId()){
+    public void init() {
+        title = (TextView) findViewById(R.id.title_title_bar_products);
+        tv1 = (TextView) findViewById(R.id.popular_sort);
+        tv2 = (TextView) findViewById(R.id.discount_sort);
+        tv3 = (TextView) findViewById(R.id.price_sort);
+        tv4 = (TextView) findViewById(R.id.filter_sort);
+        price = (ImageView) findViewById(R.id.second_details_iv);
+        gridView = (GridView) findViewById(R.id.grid_products);
+    }
+
+    public void onClick(View view) {
+
+        switch (view.getId()) {
 
             case R.id.back_title_bar_products:
 
@@ -75,7 +78,7 @@ public class SecondDetailsActivity extends AppCompatActivity {
                 break;
             case R.id.Deatails_imageview:
 
-                Intent intent=new Intent(getApplicationContext(), BagActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BagActivity.class);
 
                 startActivity(intent);
                 break;
@@ -103,16 +106,16 @@ public class SecondDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public   void volleyGet(String url){
-        final JsonObjectRequest objectRequest=new JsonObjectRequest(url,null, new Response.Listener<JSONObject>() {
+    public void volleyGet(String url) {
+        final JsonObjectRequest objectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("object",response.toString());
+                Log.i("object", response.toString());
                 final List<TodaySecondDetails> data = new ArrayList<>();
-                name=new ArrayList<>();
+                name = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("products");
-                    for (int i=0;i<lists.length();i++){
+                    for (int i = 0; i < lists.length(); i++) {
 
                         JSONObject jsonObject = lists.getJSONObject(i);
                         // String  categoryId=jsonObject.getString(" categoryId");
@@ -120,50 +123,48 @@ public class SecondDetailsActivity extends AppCompatActivity {
                         String productName = jsonObject.getString("productName");
 
                         String product_type = jsonObject.getString("product_type");
-                        String  brandName=jsonObject.getString("brandName");
-                        String  price=jsonObject.getString("price");
-                        Log.i("productName",price);
-                        String  marketPrice=jsonObject.getString("marketPrice");
-                        String  imageUrl=jsonObject.getString("imageUrl");
-                        String  discount=jsonObject.getString("discount");
-                        String isRecommend=jsonObject.getString("isRecommend");
-                        String  saleableQty=jsonObject.getString("saleableQty");
-                        Log.i("imageUrl",imageUrl);
-                        data.add(new TodaySecondDetails(productId,productName,price,brandName,price,marketPrice,imageUrl,discount,isRecommend,saleableQty));
+                        String brandName = jsonObject.getString("brandName");
+                        String price = jsonObject.getString("price");
+                        Log.i("productName", price);
+                        String marketPrice = jsonObject.getString("marketPrice");
+                        String imageUrl = jsonObject.getString("imageUrl");
+                        String discount = jsonObject.getString("discount");
+                        String isRecommend = jsonObject.getString("isRecommend");
+                        String saleableQty = jsonObject.getString("saleableQty");
+                        data.add(new TodaySecondDetails(productId, productName, price, brandName, price, marketPrice, imageUrl, discount, isRecommend, saleableQty));
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                SecondDetailsAdapter adapter=new SecondDetailsAdapter(getApplicationContext(),data,name);
+                SecondDetailsAdapter adapter = new SecondDetailsAdapter(getApplicationContext(), data, name);
                 gridView.setAdapter(adapter);
 
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent  intent=new Intent(getApplicationContext(),ThirdDetailsActivity.class);
-                        String  thirdAddress= Config.TODAY_THIRD_CONTENT+data.get(position).getProductId();
-                        String  Hot_recommendation= Config.Hot_recommendation+data.get(position).getProductId()+"&categoryId="+categoryId;
-                        Log.i("id",Hot_recommendation);
-                        intent.putExtra("Hot_recommendation",Hot_recommendation);
-                        intent.putExtra("thirdAddress",thirdAddress);
-                        intent.putExtra("price",data.get(position).getPrice());
-                        intent.putExtra("marketPrice",data.get(position).getMarketPrice());
-                        intent.putExtra("name",data.get(position).getBrandName());
-                        intent.putExtra("productName",data.get(position).getProductName());
-                        intent.putExtra("discount",data.get(position).getDiscount());
+                        Intent intent = new Intent(SecondDetailsActivity.this, ThirdDetailsActivity.class);
+                        String thirdAddress = Config.TODAY_THIRD_CONTENT + data.get(position).getProductId();
+                        String Hot_recommendation = Config.Hot_recommendation + data.get(position).getProductId() + "&categoryId=" + categoryId;
+                        intent.putExtra("Hot_recommendation", Hot_recommendation);
+                        intent.putExtra("thirdAddress", thirdAddress);
+                        intent.putExtra("price", data.get(position).getPrice());
+                        intent.putExtra("marketPrice", data.get(position).getMarketPrice());
+                        intent.putExtra("name", data.get(position).getBrandName());
+                        intent.putExtra("productName", data.get(position).getProductName());
+                        intent.putExtra("discount", data.get(position).getDiscount());
                         startActivity(intent);
                     }
                 });
             }
 
-        },new Response.ErrorListener(){
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //tv.setText("网络请求失败");
             }
         });
-        final JsonObjectRequest objectRequest2=new JsonObjectRequest(url,null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest objectRequest2 = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -171,19 +172,19 @@ public class SecondDetailsActivity extends AppCompatActivity {
                     JSONObject object = response.getJSONObject("couponScheme");
 
                     JSONArray otherCoupon = object.getJSONArray("otherCoupon");
-                        for(int i=0;i<otherCoupon.length();i++){
+                    for (int i = 0; i < otherCoupon.length(); i++) {
 
-                            JSONObject jsonObject = otherCoupon.getJSONObject(i);
-                            String info=jsonObject.getString("couponContent");
-                            TextView  tv= (TextView) findViewById(R.id.deatails_text);
+                        JSONObject jsonObject = otherCoupon.getJSONObject(i);
+                        String info = jsonObject.getString("couponContent");
+                        TextView tv = (TextView) findViewById(R.id.deatails_text);
 
-                            layout= (LinearLayout) findViewById(R.id.deatails_linear);
+                        layout = (LinearLayout) findViewById(R.id.deatails_linear);
 
-                            if(info!=null){
-                                tv.setText(info);
-                            }else  if(info.isEmpty()==true){
-                                layout.setVisibility(View.GONE);
-                            }
+                        if (info != null) {
+                            tv.setText(info);
+                        } else if (info.isEmpty() == true) {
+                            layout.setVisibility(View.GONE);
+                        }
                     }
 
                 } catch (JSONException e) {
@@ -191,7 +192,7 @@ public class SecondDetailsActivity extends AppCompatActivity {
                 }
             }
 
-        },new Response.ErrorListener(){
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //tv.setText("网络请求失败");

@@ -16,6 +16,11 @@ public class BrandBean implements Serializable {
     private String siloName;
     private String siloEn;
     private List<Brand> items;
+    private String siloId;
+
+    public String getSiloId() {
+        return siloId;
+    }
 
     public String getSiloName() {
         return siloName;
@@ -35,10 +40,11 @@ public class BrandBean implements Serializable {
             try {
                 siloName = object.getString("siloName");
                 siloEn = object.getString("siloEn");
+                siloId = object.getString("siloId");
                 JSONArray array = object.getJSONArray("brandLogo");
 
                 int col = array.length() / 3;
-                int length = col*3-1;
+                int length = col * 3 - 1;
                 for (int i = 0; i < length; i++) {
                     JSONObject json = array.getJSONObject(i);
                     Brand brand = new Brand();

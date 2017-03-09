@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
 import com.qf.meilihui.bean.BrandDetailBean;
+import com.qf.meilihui.callback.OnRecyclerItemClickListener;
 
 import java.util.List;
 
@@ -22,10 +23,15 @@ public class BrandDetailRecyclerFirstAdapter extends RecyclerView.Adapter<BrandD
 
     private Context context;
     private List<BrandDetailBean.BodyBrandDetailBean.NewProductBrandDetailBean.ProductBrandDetailBean> data;
+    private OnRecyclerItemClickListener listener;
 
     public BrandDetailRecyclerFirstAdapter(Context context, List<BrandDetailBean.BodyBrandDetailBean.NewProductBrandDetailBean.ProductBrandDetailBean> data) {
         this.context = context;
         this.data = data;
+    }
+
+    public void setListener(OnRecyclerItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -36,11 +42,17 @@ public class BrandDetailRecyclerFirstAdapter extends RecyclerView.Adapter<BrandD
     }
 
     @Override
-    public void onBindViewHolder(HViewHolder holder, int position) {
+    public void onBindViewHolder(HViewHolder holder, final int position) {
         BrandDetailBean.BodyBrandDetailBean.NewProductBrandDetailBean.ProductBrandDetailBean item = data.get(position);
         holder.price.setText("¥" + item.getPrice());
         holder.price_origin.setText("¥" + item.getMarketPrice());
         Glide.with(context).load(item.getFileUrl()).into(holder.image);
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClickListener(position);
+            }
+        });
     }
 
     @Override

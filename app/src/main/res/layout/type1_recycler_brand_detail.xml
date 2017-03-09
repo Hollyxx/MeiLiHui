@@ -7,14 +7,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="200dp"
         android:background="#fff"
         android:orientation="vertical">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#F6F6F6"/>
+            android:background="#F6F6F6" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="70dp">
@@ -23,20 +25,20 @@
                 android:id="@+id/logo_title_type1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="18dp"
-                android:textColor="@color/black"
-                android:text="LA PERLA"/>
+                android:text="LA PERLA"
+                android:textColor="@color/black" />
 
             <ImageView
                 android:id="@+id/focus_type1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:src="@mipmap/icon_focus"/>
+                android:src="@mipmap/icon_focus" />
 
         </RelativeLayout>
 
@@ -45,48 +47,53 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="vertical">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:background="#F6F6F6"/>
+                android:layout_marginTop="5dp"
+                android:background="#F6F6F6" />
+
             <TextView
                 android:id="@+id/summary_brand_type1"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:textSize="15sp"
-                android:padding="10dp"
                 android:layout_marginLeft="16dp"
-                android:textColor="#555454"
                 android:ellipsize="end"
                 android:lines="2"
+                android:padding="10dp"
                 android:text="洋溢着古老人文气息而又华丽不记得意大利，是无数女人蒙羞昂中"
-                />
+                android:textColor="#555454"
+                android:textSize="15sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
-                android:src="@mipmap/icon_pic_title_arrow_down"
                 android:layout_gravity="center"
-                />
+                android:src="@mipmap/icon_pic_title_arrow_down" />
         </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="#0fff"
-        android:layout_height="65dp">
+        android:layout_height="220dp"
+        android:background="#0fff">
+
+        <ImageView
+            android:id="@+id/image_logo_brand_type1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
 
         <ImageView
             android:id="@+id/logo_brand_type1"
             android:layout_width="120dp"
-            android:layout_height="65dp"
-            android:scaleType="fitXY"
+            android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            />
+            android:scaleType="fitXY" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -40,22 +40,23 @@ public class Config {
 
     public static final String TODAY_BEAU_GRIDVIEW = "http://www.mei.com/appapi/beauty/beautyChannelBrands/v3?summary=814b9a24bd8c6891c25767087ed5d835&timeStamp=20170228220347";
 
-    public  static  final  String TODAY_SECOND_CONTENT="http://www.mei.com/appapi/event/product/v3?sort=&categoryId=";
-    public  static  final  String TODAY_THIRD_CONTENT="http://www.mei.com/appapi/product/detail/v3?&productId=";
+    public static final String TODAY_SECOND_CONTENT = "http://www.mei.com/appapi/event/product/v3?sort=&categoryId=";
+    public static final String TODAY_THIRD_CONTENT = "http://www.mei.com/appapi/product/detail/v3?&productId=";
 
     //分类页面的类别二级页面      需要拼接的属性siloId、categoryId  displayName、pageIndex
     //http://www.mei.com/appapi/secondcategory/product/v3?siloId=2013000100000000001&categoryId=1000000337&summary=男士&pageIndex=1
     public static final String Category_Second_Kinds = "http://www.mei.com/appapi/secondcategory/product/v3?";
 
     //分类的品牌页面的二级页面  需要拼接的属性 logoId
-
-     //详情页的推荐
-    public static final String  Hot_recommendation ="http://www.mei.com/appapi/product/hot/v3?&productId=";
-
     public static final String Category_Second_Brand = "http://www.mei.com/appapi/brand/product/v3?logoId=";
+
+    //详情页的推荐
+    public static final String Hot_recommendation = "http://www.mei.com/appapi/product/hot/v3?&productId=";
 
     //品牌详情页面内部的热门商品
     public static final String Category_Second_Brand_Detail_HotProducts = "http://www.mei.com/appapi/brand/product/hot/v3?logoId=";
 
-
+    //所有的品牌页面详情 拼接属性 siloId
+    //http://www.mei.com/appapi/brand/more/v3?siloId=2013000100000000001
+    public static final String All_Brand="http://www.mei.com/appapi/brand/more/v3?siloId=";
 }

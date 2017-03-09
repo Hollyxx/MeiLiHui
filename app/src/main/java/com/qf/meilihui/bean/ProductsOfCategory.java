@@ -24,6 +24,8 @@ public class ProductsOfCategory implements Comparable{
     private String isRecommend;
     private String saleableQty;
 
+
+
     public String getProductId() {
         return productId;
     }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
 import com.qf.meilihui.bean.HotProductsOfBrandDetail;
+import com.qf.meilihui.callback.OnRecyclerItemClickListener;
 
 import java.util.List;
 
@@ -22,10 +23,15 @@ public class BrandDetailRecyclerSecondAdapter extends RecyclerView.Adapter<Brand
 
     private Context context;
     private List<HotProductsOfBrandDetail> data;
+    private OnRecyclerItemClickListener listener;
 
     public BrandDetailRecyclerSecondAdapter(Context context, List<HotProductsOfBrandDetail> data) {
         this.context = context;
         this.data = data;
+    }
+
+    public void setListener(OnRecyclerItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -36,22 +42,28 @@ public class BrandDetailRecyclerSecondAdapter extends RecyclerView.Adapter<Brand
     }
 
     @Override
-    public void onBindViewHolder(GViewHolder holder, int position) {
+    public void onBindViewHolder(final GViewHolder holder, final int position) {
         HotProductsOfBrandDetail product = data.get(position);
         holder.brand.setText(product.getBrandName());
         holder.summary.setText(product.getProductName());
-        holder.price.setText("¥"+product.getPrice());
-        holder.price_origin.setText("¥"+product.getMarketPrice());
+        holder.price.setText("¥" + product.getPrice());
+        holder.price_origin.setText("¥" + product.getMarketPrice());
         Glide.with(context).load(product.getFileUrl()).into(holder.image);
-        if ("1".equals(product.getIsRecommended())){
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClickListener(position);
+            }
+        });
+        if ("1".equals(product.getIsRecommended())) {
             holder.recommend.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             holder.recommend.setVisibility(View.INVISIBLE);
         }
 
-        if ("1".equals(product.getStockQty())){
+        if ("1".equals(product.getStockQty())) {
             holder.onlyOne.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.onlyOne.setVisibility(View.INVISIBLE);
         }
 
@@ -78,5 +90,6 @@ public class BrandDetailRecyclerSecondAdapter extends RecyclerView.Adapter<Brand
             onlyOne = (TextView) itemView.findViewById(R.id.only_one_item_grid_products_category);
 
         }
+
     }
 }

@@ -3,10 +3,12 @@ package com.qf.meilihui.avtivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -39,16 +41,16 @@ public class ProductsListActivity extends AppCompatActivity {
     private List<ProductsOfCategory> data;
     private ProductsofCategoryBean bean;
     private ProductOfKindsGridAdapter adapter;
-    private ScrollView scrollView;
+    private String categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_products_list);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         String siloId = intent.getStringExtra("siloId");
-        String categoryId = intent.getStringExtra("categoryId");
+        categoryId = intent.getStringExtra("categoryId");
         String summary = intent.getStringExtra("summary");
         String name = intent.getStringExtra("name");
         url = Config.Category_Second_Kinds + "siloId=" + siloId + "&categoryId=" + categoryId + "&summary=" + summary + "&pageIndex=";
@@ -76,6 +78,24 @@ public class ProductsListActivity extends AppCompatActivity {
             }
         });
 
+        //点击每个单条进行3级页面跳转，进入商品详情页
+        //底部数据需要拼接productsId 和 categoryId
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ProductsOfCategory product = data.get(position);
+                Intent intent1 = new Intent(ProductsListActivity.this,ThirdDetailsActivity.class);
+                String  thirdAddress= Config.TODAY_THIRD_CONTENT+product.getProductId();
+                String  Hot_recommendation= Config.Hot_recommendation+product.getProductId()+"&categoryId="+ product.getEvent_id();
+                intent1.putExtra("Hot_recommendation",Hot_recommendation);
+                intent1.putExtra("thirdAddress",thirdAddress);
+                intent1.putExtra("price",product.getPrice());
+                intent1.putExtra("marketPrice",product.getMarketPrice());
+                intent1.putExtra("name",product.getBrandName());
+                intent1.putExtra("productName",product.getProductName());
+                startActivity(intent1);
+            }
+        });
 
     }
 

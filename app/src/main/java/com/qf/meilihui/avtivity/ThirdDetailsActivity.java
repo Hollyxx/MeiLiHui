@@ -44,17 +44,18 @@ public class ThirdDetailsActivity extends AppCompatActivity {
 
     private String hotadress;
     private RecyclerView mRecycleView;
-    private TextView  type;
-    private List<ImageView>  viewpageimages;
-    private RadioGroup  rg;
-    private ViewPager  viewpager;
+    private TextView type;
+    private List<ImageView> viewpageimages;
+    private RadioGroup rg;
+    private ViewPager viewpager;
     private String thirdAddress;
-    private  List<InfoBean>  info;
-    private ImageView  thirddetails_Prompt,thirddetails_component_iv;
-    private List<String> images,pictures;
-    private ListView thirddetails_picture,thirddetails_info;
-    private TextView title_brandname,title_price,title_marketPrice,thirddetails_brandname,thirddetails_name,thirddetails_price,thirddetails_marketPrice,thirddetails_discount;
-    private TextView Discount_details,Discount_picture,thirddetails_describe,thirddetails_maintain,thirddetails_component_tv;
+    private List<InfoBean> info;
+    private ImageView thirddetails_Prompt, thirddetails_component_iv;
+    private List<String> images, pictures;
+    private ListView thirddetails_picture, thirddetails_info;
+    private TextView title_brandname, title_price, title_marketPrice, thirddetails_brandname, thirddetails_name, thirddetails_price, thirddetails_marketPrice, thirddetails_discount;
+    private TextView Discount_details, Discount_picture, thirddetails_describe, thirddetails_maintain, thirddetails_component_tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,78 +67,80 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         volleyHot(hotadress);
 
     }
-    public   void init(){
-        Intent  intent=getIntent();
-        String name =intent.getStringExtra("name");
-        String price=intent.getStringExtra("price");
-        thirdAddress=intent.getStringExtra("thirdAddress");
-        String marketPrice=intent.getStringExtra("marketPrice");
-        String productName=intent.getStringExtra("productName");
-        String discount=intent.getStringExtra("discount");
-        hotadress=intent.getStringExtra("Hot_recommendation");
 
-        title_brandname= (TextView) findViewById(R.id.title_brandname);
-        title_price= (TextView) findViewById(R.id.title_price);
-        title_marketPrice= (TextView) findViewById(R.id.title_marketPrice);
-        thirddetails_brandname= (TextView) findViewById(R.id.thirddetails_brandname);
-        thirddetails_discount= (TextView) findViewById(R.id.thirddetails_discount);
-        thirddetails_marketPrice= (TextView) findViewById(R.id.thirddetails_marketPrice);
-        thirddetails_price= (TextView) findViewById(R.id.thirddetails_price);
-        thirddetails_name= (TextView) findViewById(R.id.thirddetails_name);
-        Discount_details= (TextView) findViewById(R.id.Discount_details);
-        Discount_details= (TextView) findViewById(R.id.Discount_details);
-        thirddetails_describe= (TextView) findViewById(R.id.thirddetails_describe);
-        thirddetails_picture= (ListView) findViewById(R.id.thirddetails_picture);
-        thirddetails_Prompt= (ImageView) findViewById(R.id.thirddetails_Prompt);
-        thirddetails_component_iv= (ImageView) findViewById(R.id.thirddetails_component_iv);
-        thirddetails_maintain= (TextView) findViewById(R.id.thirddetails_maintain);
-        thirddetails_info= (ListView) findViewById(R.id.thirddetails_info);
-        thirddetails_component_tv= (TextView) findViewById(R.id.thirddetails_component_tv);
-        viewpager= (ViewPager) findViewById(R.id.third_details_viewpage);
-        rg= (RadioGroup) findViewById(R.id.viewPager_rg);
-        type= (TextView) findViewById(R.id.type);
-        mRecycleView= (RecyclerView) findViewById(R.id.my_Recommend);
+    public void init() {
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String price = intent.getStringExtra("price");
+        thirdAddress = intent.getStringExtra("thirdAddress");
+        String marketPrice = intent.getStringExtra("marketPrice");
+        String productName = intent.getStringExtra("productName");
+        String discount = intent.getStringExtra("discount");
+        hotadress = intent.getStringExtra("Hot_recommendation");
+
+        title_brandname = (TextView) findViewById(R.id.title_brandname);
+        title_price = (TextView) findViewById(R.id.title_price);
+        title_marketPrice = (TextView) findViewById(R.id.title_marketPrice);
+        thirddetails_brandname = (TextView) findViewById(R.id.thirddetails_brandname);
+        thirddetails_discount = (TextView) findViewById(R.id.thirddetails_discount);
+        thirddetails_marketPrice = (TextView) findViewById(R.id.thirddetails_marketPrice);
+        thirddetails_price = (TextView) findViewById(R.id.thirddetails_price);
+        thirddetails_name = (TextView) findViewById(R.id.thirddetails_name);
+        Discount_details = (TextView) findViewById(R.id.Discount_details);
+        Discount_details = (TextView) findViewById(R.id.Discount_details);
+        thirddetails_describe = (TextView) findViewById(R.id.thirddetails_describe);
+        thirddetails_picture = (ListView) findViewById(R.id.thirddetails_picture);
+        thirddetails_Prompt = (ImageView) findViewById(R.id.thirddetails_Prompt);
+        thirddetails_component_iv = (ImageView) findViewById(R.id.thirddetails_component_iv);
+        thirddetails_maintain = (TextView) findViewById(R.id.thirddetails_maintain);
+        thirddetails_info = (ListView) findViewById(R.id.thirddetails_info);
+        thirddetails_component_tv = (TextView) findViewById(R.id.thirddetails_component_tv);
+        viewpager = (ViewPager) findViewById(R.id.third_details_viewpage);
+        rg = (RadioGroup) findViewById(R.id.viewPager_rg);
+        type = (TextView) findViewById(R.id.type);
+        mRecycleView = (RecyclerView) findViewById(R.id.my_Recommend);
 
         title_brandname.setText(name);
-        title_marketPrice.setText("￥"+marketPrice);
-        title_price.setText("￥"+price);
+        title_marketPrice.setText("￥" + marketPrice);
+        title_price.setText("￥" + price);
         thirddetails_brandname.setText(name);
-        thirddetails_discount.setText(discount+"折");
-        thirddetails_marketPrice.setText("￥"+marketPrice);
-        thirddetails_price.setText("￥"+price);
+        thirddetails_discount.setText(discount + "折");
+        thirddetails_marketPrice.setText("￥" + marketPrice);
+        thirddetails_price.setText("￥" + price);
         thirddetails_name.setText(productName);
 
     }
-    public   void volleyHot(String url){
-        final  JsonObjectRequest   jsonObjectRequest=new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+
+    public void volleyHot(String url) {
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    String name= response.getString("secondCategoryName");
-                    Log.i("name",name);
+                    String name = response.getString("secondCategoryName");
+                    Log.i("name", name);
                     type.setText(name);
 
                     JSONArray categoryList = response.getJSONArray("categoryList");
-                    List<HotBean>  data=new ArrayList<>();
-                    for(int i=0;i<categoryList.length();i++){
+                    List<HotBean> data = new ArrayList<>();
+                    for (int i = 0; i < categoryList.length(); i++) {
                         JSONObject jsonObject = categoryList.getJSONObject(i);
-                         String productId=jsonObject.getString("productId") ;
-                         String imgUrl=jsonObject.getString("imgUrl");
-                         String product_name=jsonObject.getString("product_name");
-                         String brand_name=jsonObject.getString("brand_name");
-                         String market_price=jsonObject.getString("market_price");
+                        String productId = jsonObject.getString("productId");
+                        String imgUrl = jsonObject.getString("imgUrl");
+                        String product_name = jsonObject.getString("product_name");
+                        String brand_name = jsonObject.getString("brand_name");
+                        String market_price = jsonObject.getString("market_price");
 
-                         String price=jsonObject.getString("price");
-                         String eventId=jsonObject.getString("eventId");
+                        String price = jsonObject.getString("price");
+                        String eventId = jsonObject.getString("eventId");
 
-                        data.add(new HotBean(productId,imgUrl,product_name,brand_name,market_price,price,eventId));
+                        data.add(new HotBean(productId, imgUrl, product_name, brand_name, market_price, price, eventId));
 
                     }
 
-                    RecycleAdapter  adapter=new RecycleAdapter(getApplicationContext(),data);
+                    RecycleAdapter adapter = new RecycleAdapter(getApplicationContext(), data);
 
                     mRecycleView.setAdapter(adapter);
-                    LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+                    LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
 
 
                     //设置布局管理器
@@ -154,7 +157,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                         }
                     });
 
-                    StaggeredGridLayoutManager sManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+                    StaggeredGridLayoutManager sManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
 
                     mRecycleView.setLayoutManager(sManager);
 
@@ -169,10 +172,11 @@ public class ThirdDetailsActivity extends AppCompatActivity {
 
             }
         });
-       MyApp.getHttpQueue().add(jsonObjectRequest);
+        MyApp.getHttpQueue().add(jsonObjectRequest);
     }
-    public   void volleyGet(String url){
-        final JsonObjectRequest  jsonObjectRequest=new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+
+    public void volleyGet(String url) {
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -182,12 +186,12 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                     String design = description.getString("design");
                     thirddetails_describe.setText(design);
 
-                     //产品图片
-                    images=new ArrayList<>();
+                    //产品图片
+                    images = new ArrayList<>();
                     JSONArray product_array = description.getJSONArray("product_img1");
-                    for (int i=0;i<product_array.length();i++){
+                    for (int i = 0; i < product_array.length(); i++) {
                         JSONObject jsonObject = product_array.getJSONObject(i);
-                        String picture_url= jsonObject.getString("bigImgUrl");
+                        String picture_url = jsonObject.getString("bigImgUrl");
 
                         images.add(picture_url);
                     }
@@ -197,38 +201,38 @@ public class ThirdDetailsActivity extends AppCompatActivity {
 
                     //材质
                     String material_quality_img = description.getString("material_quality_img");
-                    if(material_quality_img.isEmpty()==true){
+                    if (material_quality_img.isEmpty() == true) {
                         thirddetails_component_iv.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         Glide.with(getApplicationContext()).load(material_quality_img).into(thirddetails_component_iv);
                     }
                     //保养须知
-                    String maintenanceList=description.getString("maintenanceList");
+                    String maintenanceList = description.getString("maintenanceList");
                     String substring = maintenanceList.substring(2, maintenanceList.length() - 2);
                     thirddetails_maintain.setText(substring);
                     //详细信息加载
                     JSONArray attributesList = description.getJSONArray("attributesList");
-                      info=new ArrayList<>();
-                    for (int i=0;i<attributesList.length()-1;i++){
-                         JSONObject jsonObject = attributesList.getJSONObject(i);
-                         String name=jsonObject.getString("name");
-                         String value=jsonObject.getString("value");
-                         info.add(new InfoBean(name,value));
+                    info = new ArrayList<>();
+                    for (int i = 0; i < attributesList.length() - 1; i++) {
+                        JSONObject jsonObject = attributesList.getJSONObject(i);
+                        String name = jsonObject.getString("name");
+                        String value = jsonObject.getString("value");
+                        info.add(new InfoBean(name, value));
                     }
                     //材质信息
-                    JSONObject jsonObject = attributesList.getJSONObject(attributesList.length()-1);
-                    String component=jsonObject.getString("value");
+                    JSONObject jsonObject = attributesList.getJSONObject(attributesList.length() - 1);
+                    String component = jsonObject.getString("value");
                     thirddetails_component_tv.setText(component);
                     //viewpage的图片获得
                     JSONArray images = infos.getJSONArray("images");
-                    viewpageimages=new ArrayList<>();
-                    pictures=new ArrayList<>();
+                    viewpageimages = new ArrayList<>();
+                    pictures = new ArrayList<>();
 
-                    for (int i=0;i<images.length();i++){
+                    for (int i = 0; i < images.length(); i++) {
                         JSONObject jsonObject1 = images.getJSONObject(i);
-                        String smallImgUrl=jsonObject1.getString("smallImgUrl");
-                        String bigImgUrl=jsonObject1.getString("bigImgUrl");
-                        ImageView  iv=new ImageView(getApplicationContext());
+                        String smallImgUrl = jsonObject1.getString("smallImgUrl");
+                        String bigImgUrl = jsonObject1.getString("bigImgUrl");
+                        ImageView iv = new ImageView(getApplicationContext());
                         //iv.setScaleType(ImageView.ScaleType.FIT_XY);
                         Glide.with(getApplicationContext()).load(smallImgUrl).into(iv);
                         pictures.add(bigImgUrl);
@@ -245,13 +249,13 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                PictureListViewAdapter  adapter=new PictureListViewAdapter(getApplicationContext(),images);
+                PictureListViewAdapter adapter = new PictureListViewAdapter(getApplicationContext(), images);
                 thirddetails_picture.setAdapter(adapter);
 
-                ListInfoAdapter adapter2=new ListInfoAdapter(getApplicationContext(),info);
+                ListInfoAdapter adapter2 = new ListInfoAdapter(getApplicationContext(), info);
                 thirddetails_info.setAdapter(adapter2);
 
-                BasePagerAdapter  adapter3=new BasePagerAdapter(viewpageimages);
+                BasePagerAdapter adapter3 = new BasePagerAdapter(viewpageimages);
                 viewpager.setAdapter(adapter3);
                 ((RadioButton) rg.getChildAt(0)).setChecked(true);
                 viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -271,22 +275,23 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                     }
                 });
                 viewpager.setOnTouchListener(new View.OnTouchListener() {
-                    int flage=0;
+                    int flage = 0;
+
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-                        switch (event.getAction()){
+                        switch (event.getAction()) {
                             case MotionEvent.ACTION_DOWN:
-                                flage=0;
+                                flage = 0;
                                 break;
                             case MotionEvent.ACTION_MOVE:
-                                flage=1;
+                                flage = 1;
                                 break;
                             case MotionEvent.ACTION_UP:
-                                if(flage==0){
-                                    int item=viewpager.getCurrentItem();
-                                    Intent  intent=new Intent(getApplicationContext(),ViewPagerActivity.class);
+                                if (flage == 0) {
+                                    int item = viewpager.getCurrentItem();
+                                    Intent intent = new Intent(getApplicationContext(), ViewPagerActivity.class);
                                     intent.putStringArrayListExtra("picture", (ArrayList<String>) pictures);
-                                    intent.putExtra("item",item+"");
+                                    intent.putExtra("item", item + "");
                                     startActivity(intent);
                                 }
                         }
@@ -306,15 +311,16 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         });
         MyApp.getHttpQueue().add(jsonObjectRequest);
 
-   }
-    public  void onClick(View  view){
-        switch (view.getId()){
+    }
+
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.thirddetails_ensure:
-                Intent  intent=new Intent(getApplicationContext(),EnsureActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EnsureActivity.class);
                 startActivity(intent);
                 break;
             case R.id.third_details_ruler:
-                Intent  intent1=new Intent(getApplicationContext(),RulerActivity.class);
+                Intent intent1 = new Intent(getApplicationContext(), RulerActivity.class);
 
                 startActivity(intent1);
                 break;
@@ -344,7 +350,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         // listView.getDividerHeight()获取子项间分隔符占用的高度
         // params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);

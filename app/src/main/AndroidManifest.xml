@@ -29,10 +29,11 @@
         <activity android:name=".avtivity.ThirdDetailsActivity" />
         <activity android:name=".avtivity.EnsureActivity" />
         <activity android:name=".avtivity.RulerActivity" />
-        <activity android:name=".avtivity.ViewPagerActivity"></activity>
+        <activity android:name=".avtivity.ViewPagerActivity" />
         <activity android:name=".avtivity.SecondDetailsActivity" />
         <activity android:name=".avtivity.ProductsListActivity" />
-        <activity android:name=".avtivity.BrandDetailActivity"></activity>
+        <activity android:name=".avtivity.BrandDetailActivity" />
+        <activity android:name=".avtivity.AllBrandActivity"></activity>
     </application>
 
 </manifest>

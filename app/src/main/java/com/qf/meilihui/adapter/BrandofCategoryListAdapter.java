@@ -65,21 +65,12 @@ public class BrandofCategoryListAdapter extends BaseAdapter {
 
         final BrandBean bean = data.get(position);
         final List<Brand> items = bean.getItems();
-
+        String siloName = bean.getSiloName();
+        String id = bean.getSiloId();
         BrandofCategoryGridAdapter adapter = new BrandofCategoryGridAdapter(context, items);
+        adapter.setName(siloName);
+        adapter.setId(id);
         holder.gridView.setAdapter(adapter);
-
-        holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Brand brand = items.get(position);
-                String logoId = brand.getLogoId();
-                Intent intent = new Intent(context, BrandDetailActivity.class);
-                intent.putExtra("logoId",logoId);
-                context.startActivity(intent);
-            }
-        });
-
 
         return convertView;
     }
