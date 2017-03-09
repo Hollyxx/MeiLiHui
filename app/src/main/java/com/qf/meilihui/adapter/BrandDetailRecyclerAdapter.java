@@ -104,7 +104,7 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                 holder3.recyclerView.setAdapter(adapter1);
                 RecyclerView.LayoutManager manager = new GridLayoutManager(context, 2, OrientationHelper.VERTICAL, false);
                 holder3.recyclerView.setLayoutManager(manager);
-
+                
                 break;
 
         }
