@@ -7,7 +7,9 @@
     tools:context="com.qf.meilihui.avtivity.WelcomActivity">
 
     <ImageView
-        android:scaleType="centerCrop"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="25dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@mipmap/welcome_page"

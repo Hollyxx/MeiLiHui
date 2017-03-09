@@ -294,7 +294,6 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                     }
                 });
 
-
                 //scrollview嵌套listview  listview需重新得到自己所需的控件高度
                 setListViewHeightBasedOnChildren(thirddetails_picture);
                 setListViewHeightBasedOnChildren(thirddetails_info);
