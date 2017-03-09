@@ -32,6 +32,7 @@ import com.qf.meilihui.adapter.RecycleAdapter;
 import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.bean.HotBean;
 import com.qf.meilihui.bean.InfoBean;
+import com.qf.meilihui.uri.Config;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +43,8 @@ import java.util.List;
 
 public class ThirdDetailsActivity extends AppCompatActivity {
 
+    private List<HotBean> data;
+    private String logId,name;
     private String hotadress;
     private RecyclerView mRecycleView;
     private TextView type;
@@ -51,11 +54,12 @@ public class ThirdDetailsActivity extends AppCompatActivity {
     private String thirdAddress;
     private List<InfoBean> info;
     private ImageView thirddetails_Prompt, thirddetails_component_iv;
-    private List<String> images, pictures;
+    private List<String> Images, pictures;
     private ListView thirddetails_picture, thirddetails_info;
     private TextView title_brandname, title_price, title_marketPrice, thirddetails_brandname, thirddetails_name, thirddetails_price, thirddetails_marketPrice, thirddetails_discount;
     private TextView Discount_details, Discount_picture, thirddetails_describe, thirddetails_maintain, thirddetails_component_tv;
 
+    private TextView brandname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,13 +74,15 @@ public class ThirdDetailsActivity extends AppCompatActivity {
 
     public void init() {
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        name = intent.getStringExtra("name");
         String price = intent.getStringExtra("price");
         thirdAddress = intent.getStringExtra("thirdAddress");
         String marketPrice = intent.getStringExtra("marketPrice");
         String productName = intent.getStringExtra("productName");
         String discount = intent.getStringExtra("discount");
         hotadress = intent.getStringExtra("Hot_recommendation");
+        brandname= (TextView) findViewById(R.id.brandname);
+        brandname.setText(name);
 
         title_brandname = (TextView) findViewById(R.id.title_brandname);
         title_price = (TextView) findViewById(R.id.title_price);
@@ -94,6 +100,8 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         thirddetails_component_iv = (ImageView) findViewById(R.id.thirddetails_component_iv);
         thirddetails_maintain = (TextView) findViewById(R.id.thirddetails_maintain);
         thirddetails_info = (ListView) findViewById(R.id.thirddetails_info);
+        thirddetails_info.setFocusable(false);
+        thirddetails_picture.setFocusable(false);
         thirddetails_component_tv = (TextView) findViewById(R.id.thirddetails_component_tv);
         viewpager = (ViewPager) findViewById(R.id.third_details_viewpage);
         rg = (RadioGroup) findViewById(R.id.viewPager_rg);
@@ -121,7 +129,8 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                     type.setText(name);
 
                     JSONArray categoryList = response.getJSONArray("categoryList");
-                    List<HotBean> data = new ArrayList<>();
+
+                    data = new ArrayList<>();
                     for (int i = 0; i < categoryList.length(); i++) {
                         JSONObject jsonObject = categoryList.getJSONObject(i);
                         String productId = jsonObject.getString("productId");
@@ -152,7 +161,18 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                     adapter.setOnItemClickListener(new RecycleAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View itemView, int position) {
+                            Intent  intent=new Intent(getApplication(),ThirdDetailsActivity.class);
+                            String  thirdAddress= Config.TODAY_THIRD_CONTENT+data.get(position).getProductId();
+                            String  Hot_recommendation= Config.Hot_recommendation+data.get(position).getProductId()+"&categoryId="+data.get(position).getEventId();
 
+                            intent.putExtra("Hot_recommendation",Hot_recommendation);
+                            intent.putExtra("thirdAddress",thirdAddress);
+                            intent.putExtra("price",data.get(position).getPrice());
+                            intent.putExtra("marketPrice",data.get(position).getMarket_price());
+                            intent.putExtra("name",data.get(position).getBrand_name());
+                            intent.putExtra("productName",data.get(position).getProduct_name());
+                            //intent.putExtra("discount",name);
+                            startActivity(intent);
 
                         }
                     });
@@ -180,49 +200,14 @@ public class ThirdDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+
                     JSONObject infos = response.getJSONObject("infos");
 
-                    JSONObject description = infos.getJSONObject("description");
-                    String design = description.getString("design");
-                    thirddetails_describe.setText(design);
+                    String discount=infos.getString("discount");
+                    thirddetails_discount.setText(discount);
+                    logId=infos.getString("brandLogoId");
 
-                    //产品图片
-                    images = new ArrayList<>();
-                    JSONArray product_array = description.getJSONArray("product_img1");
-                    for (int i = 0; i < product_array.length(); i++) {
-                        JSONObject jsonObject = product_array.getJSONObject(i);
-                        String picture_url = jsonObject.getString("bigImgUrl");
 
-                        images.add(picture_url);
-                    }
-                    String priceImageUrl = infos.getString("priceImageUrl");
-                    //Log.i("priceImageUrl",priceImageUrl);
-                    Glide.with(getApplicationContext()).load(priceImageUrl).into(thirddetails_Prompt);
-
-                    //材质
-                    String material_quality_img = description.getString("material_quality_img");
-                    if (material_quality_img.isEmpty() == true) {
-                        thirddetails_component_iv.setVisibility(View.GONE);
-                    } else {
-                        Glide.with(getApplicationContext()).load(material_quality_img).into(thirddetails_component_iv);
-                    }
-                    //保养须知
-                    String maintenanceList = description.getString("maintenanceList");
-                    String substring = maintenanceList.substring(2, maintenanceList.length() - 2);
-                    thirddetails_maintain.setText(substring);
-                    //详细信息加载
-                    JSONArray attributesList = description.getJSONArray("attributesList");
-                    info = new ArrayList<>();
-                    for (int i = 0; i < attributesList.length() - 1; i++) {
-                        JSONObject jsonObject = attributesList.getJSONObject(i);
-                        String name = jsonObject.getString("name");
-                        String value = jsonObject.getString("value");
-                        info.add(new InfoBean(name, value));
-                    }
-                    //材质信息
-                    JSONObject jsonObject = attributesList.getJSONObject(attributesList.length() - 1);
-                    String component = jsonObject.getString("value");
-                    thirddetails_component_tv.setText(component);
                     //viewpage的图片获得
                     JSONArray images = infos.getJSONArray("images");
                     viewpageimages = new ArrayList<>();
@@ -246,14 +231,76 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                         rg.addView(radioButton);
                     }
 
+                    JSONObject description = infos.getJSONObject("description");
+                    if(infos.isNull("description")==false){
+
+                        String design = description.getString("design");
+                        thirddetails_describe.setText(design);
+
+                        //产品图片
+                        Images = new ArrayList<>();
+                        JSONArray product_array = description.getJSONArray("product_img1");
+                        for (int i = 0; i < product_array.length(); i++) {
+                            JSONObject jsonObject = product_array.getJSONObject(i);
+                            String picture_url = jsonObject.getString("bigImgUrl");
+
+                            Images.add(picture_url);
+                        }
+                        PictureListViewAdapter adapter = new PictureListViewAdapter(getApplicationContext(), Images);
+                        thirddetails_picture.setAdapter(adapter);
+
+                        //材质
+                        String material_quality_img = description.getString("material_quality_img");
+                        if (material_quality_img.isEmpty() == true) {
+                            thirddetails_component_iv.setVisibility(View.GONE);
+                        } else {
+                            Glide.with(getApplicationContext()).load(material_quality_img).into(thirddetails_component_iv);
+                        }
+
+                        //保养须知
+                        String maintenanceList=description.getString("maintenanceList");
+                        if(maintenanceList.length()>0){
+//                        String substring = maintenanceList.substring(2, maintenanceList.length() - 2);
+//                        thirddetails_maintain.setText(substring);
+                            thirddetails_maintain.setText(maintenanceList);
+
+                        }else{
+
+                            thirddetails_maintain.setVisibility(View.GONE);
+                        }
+                        //详细信息加载
+                        JSONArray attributesList = description.getJSONArray("attributesList");
+                        if(attributesList.length()>0){
+                            info=new ArrayList<>();
+                            for (int i=0;i<attributesList.length()-1;i++){
+                                JSONObject jsonObject = attributesList.getJSONObject(i);
+                                String name=jsonObject.getString("name");
+                                String value=jsonObject.getString("value");
+                                info.add(new InfoBean(name,value));
+                            }
+                            ListInfoAdapter adapter2=new ListInfoAdapter(getApplicationContext(),info);
+                            thirddetails_info.setAdapter(adapter2);
+
+                            //材质信息
+                            JSONObject jsonObject = attributesList.getJSONObject(attributesList.length()-1);
+                            String component=jsonObject.getString("value");
+                            thirddetails_component_tv.setText(component);
+
+                        }else{
+                            thirddetails_component_tv.setVisibility(View.GONE);
+                        }
+                    }
+
+                    String priceImageUrl = infos.getString("priceImageUrl");
+                    Glide.with(getApplicationContext()).load(priceImageUrl).into(thirddetails_Prompt);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                PictureListViewAdapter adapter = new PictureListViewAdapter(getApplicationContext(), images);
-                thirddetails_picture.setAdapter(adapter);
 
-                ListInfoAdapter adapter2 = new ListInfoAdapter(getApplicationContext(), info);
-                thirddetails_info.setAdapter(adapter2);
+                PictureListViewAdapter adapter = new PictureListViewAdapter(getApplicationContext(), pictures);
+                thirddetails_picture.setAdapter(adapter);
 
                 BasePagerAdapter adapter3 = new BasePagerAdapter(viewpageimages);
                 viewpager.setAdapter(adapter3);
@@ -326,6 +373,13 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                 break;
             case R.id.title_back:
                 finish();
+                break;
+            case R.id.thirddetails_in:
+                Intent  intent2=new Intent(this,BrandDetailActivity.class);
+
+                intent2.putExtra("logoId",logId);
+                intent2.putExtra("name",name);
+                startActivity(intent2);
                 break;
 
 

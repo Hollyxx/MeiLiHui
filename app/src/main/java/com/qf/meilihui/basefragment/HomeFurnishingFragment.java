@@ -1,12 +1,14 @@
 package com.qf.meilihui.basefragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -15,6 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.HomeBaseAdapter;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.avtivity.SecondDetailsActivity;
 import com.qf.meilihui.bean.HomeContent;
 import com.qf.meilihui.uri.Config;
 
@@ -30,7 +33,7 @@ import java.util.List;
  */
 public class HomeFurnishingFragment extends Fragment {
     private ListView  listView;
-
+    private  List<HomeContent> data;
     private HomeBaseAdapter adapter;
     public HomeFurnishingFragment() {
         // Required empty public constructor
@@ -55,7 +58,7 @@ public class HomeFurnishingFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("objectf",response.toString());
-                List<HomeContent> data = new ArrayList<>();
+                data = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("eventList");
                     for (int i=0;i<lists.length();i++){
@@ -64,11 +67,9 @@ public class HomeFurnishingFragment extends Fragment {
                         String chineseName = jsonObject.getString("chineseName");
                         String discountText = jsonObject.getString("discountText");
                         String  imageUrl=jsonObject.getString("imageUrl");
+                        String  categoryId=jsonObject.getString("categoryId");
 
-//                        Log.i("furn",englishName+i);
-//                        Log.i("furn",chineseName+i);
-//                        Log.i("furn",discountText+i);
-                        data.add(new HomeContent(englishName,imageUrl,chineseName,discountText));
+                        data.add(new HomeContent(englishName,imageUrl,chineseName,discountText,categoryId));
                     }
 
                 } catch (JSONException e) {
@@ -76,6 +77,21 @@ public class HomeFurnishingFragment extends Fragment {
                 }
                 adapter = new HomeBaseAdapter(getContext(),data);
                 listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent=new Intent(getContext(),SecondDetailsActivity.class);
+
+                        String secondUrl=Config.TODAY_SECOND_CONTENT+data.get(position).getEventId()+"&pageIndex=1";
+                        intent.putExtra("web",secondUrl);
+                        intent.putExtra("id",data.get(position).getEventId());
+                        //Log.i("id",data.get(position-1).getEventId());
+                        intent.putExtra("englishName", data.get(position).getDiscountText());
+                        //Log.i("englishName",data.get(position-1).getEventId());
+                        startActivity(intent);
+
+                    }
+                });
             }
         },new Response.ErrorListener(){
             @Override

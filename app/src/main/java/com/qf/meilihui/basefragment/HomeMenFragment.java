@@ -2,12 +2,14 @@ package com.qf.meilihui.basefragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.avtivity.SecondDetailsActivity;
 import com.qf.meilihui.bean.HomeContent;
 import com.qf.meilihui.uri.Config;
 
@@ -34,6 +37,7 @@ import java.util.List;
  */
 public class HomeMenFragment extends Fragment {
 
+    private List<HomeContent> data;
     private ListView listView;
     private TextView tv;
 
@@ -65,7 +69,7 @@ public class HomeMenFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("object",response.toString());
-                List<HomeContent> data = new ArrayList<>();
+                data = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("eventList");
                     for (int i=0;i<lists.length();i++){
@@ -75,7 +79,9 @@ public class HomeMenFragment extends Fragment {
                         String discountText = jsonObject.getString("discountText");
                         String  imageUrl=jsonObject.getString("imageUrl");
 
-                        data.add(new HomeContent(englishName,imageUrl,chineseName,discountText));
+                        String  categoryId=jsonObject.getString("categoryId");
+
+                        data.add(new HomeContent(englishName,imageUrl,chineseName,discountText,categoryId));
 
                     }
 
@@ -84,6 +90,21 @@ public class HomeMenFragment extends Fragment {
                 }
                 MyAdapter adapter = new MyAdapter(getContext(),data);
                 listView.setAdapter(adapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent=new Intent(getContext(),SecondDetailsActivity.class);
+
+                        String secondUrl=Config.TODAY_SECOND_CONTENT+data.get(position).getEventId()+"&pageIndex=1";
+                        intent.putExtra("web",secondUrl);
+                        intent.putExtra("id",data.get(position).getEventId());
+                        //Log.i("id",data.get(position-1).getEventId());
+                        intent.putExtra("englishName", data.get(position).getDiscountText());
+                        //Log.i("englishName",data.get(position-1).getEventId());
+                        startActivity(intent);
+                    }
+                });
             }
         },new Response.ErrorListener(){
             @Override

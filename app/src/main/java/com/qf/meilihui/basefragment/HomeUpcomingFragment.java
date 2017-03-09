@@ -2,6 +2,7 @@ package com.qf.meilihui.basefragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.avtivity.SecondDetailsActivity;
 import com.qf.meilihui.bean.HomeContent;
 import com.qf.meilihui.uri.Config;
 
@@ -38,6 +40,7 @@ import java.util.List;
 public class HomeUpcomingFragment extends Fragment {
 
     private ListView listView;
+    private List<HomeContent> data;
     private MyAdapter adapter;
     public HomeUpcomingFragment() {
         // Required empty public constructor
@@ -110,11 +113,9 @@ public  void inittime(View v){
                             String chineseName = jsonObject2.getString("chineseName");
                             String discountText = jsonObject2.getString("discount");
                             String  imageUrl=jsonObject2.getString("imgUrl");
-                            Log.i("furn",englishName+i);
-                            Log.i("furn",chineseName+i);
-                            Log.i("furn",discountText+i);
-                            data.add(new HomeContent(englishName,imageUrl,chineseName,discountText));
+                            String  categoryId=jsonObject2.getString("categoryId");
 
+                            data.add(new HomeContent(englishName,imageUrl,chineseName,discountText,categoryId));
                         }
                     }
 
@@ -160,7 +161,7 @@ public  void inittime(View v){
         }
 
         @Override
-        public View getView(int position, View view, ViewGroup viewGroup) {
+        public View getView(final int position, View view, ViewGroup viewGroup) {
 
            ViewHolder viewHolder;
 
@@ -194,6 +195,21 @@ public  void inittime(View v){
             viewHolder.chineseName.setText(data.get(position).getChineseName());
             viewHolder.discountText.setText(data.get(position).getDiscountText());
 
+            viewHolder.imageUrl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(getContext(),SecondDetailsActivity.class);
+//                    http://www.mei.com/appapi/event/product/v3?sort=&categoryId=
+//                     String path= http://www.mei.com/appapi/event/product/v3?summary=fe1b2dc51d27f447976a70a00fdcfe06&sort=&timeStamp=20170309140854&pageIndex=1&categoryId=2040204090000002399
+                    String secondUrl="http://www.mei.com/appapi/event/product/v3?&pageIndex=1"+"&categoryId="+data.get(position).getEventId();
+                    intent.putExtra("web",secondUrl);
+                    intent.putExtra("id",data.get(position).getEventId());
+                    Log.i("secondUrl",secondUrl);
+                    intent.putExtra("englishName", data.get(position).getDiscountText());
+
+                    startActivity(intent);
+                }
+            });
             Glide.with(context).load(data.get(position).getImageUrl()).into(viewHolder.imageUrl);
 
             return view;

@@ -59,4 +59,5 @@ public class Config {
     //所有的品牌页面详情 拼接属性 siloId
     //http://www.mei.com/appapi/brand/more/v3?siloId=2013000100000000001
     public static final String All_Brand="http://www.mei.com/appapi/brand/more/v3?siloId=";
+
 }

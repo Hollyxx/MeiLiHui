@@ -2,6 +2,7 @@ package com.qf.meilihui.basefragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +29,7 @@ import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.BasePagerAdapter;
 import com.qf.meilihui.adapter.HomeBaseAdapter;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.avtivity.SecondDetailsActivity;
 import com.qf.meilihui.bean.BrandWall;
 import com.qf.meilihui.bean.HeadViewContent;
 import com.qf.meilihui.bean.HomeContent;
@@ -46,6 +48,7 @@ import java.util.List;
  */
 public class HomeBeautyFragment extends Fragment {
 
+    private List<HomeContent> dataAll;
     private HomeBaseAdapter adapter;
     private List<BrandWall> brands;
     private ListView  listView;
@@ -155,7 +158,7 @@ public class HomeBeautyFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
 
-                List<HomeContent> data = new ArrayList<>();
+                 dataAll = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("eventList");
                     for (int i=0;i<lists.length();i++){
@@ -164,18 +167,33 @@ public class HomeBeautyFragment extends Fragment {
                         String chineseName = jsonObject.getString("chineseName");
                         String discountText = jsonObject.getString("discountText");
                         String  imageUrl=jsonObject.getString("imageUrl");
+                        String  categoryId=jsonObject.getString("categoryId");
                         Log.i("beau",jsonObject.toString()+1);
                         Log.i("furn",englishName+i);
                         Log.i("furn",chineseName+i);
                         Log.i("furn",discountText+i);
-                        data.add(new HomeContent(englishName,imageUrl,chineseName,discountText));
+                        dataAll.add(new HomeContent(englishName,imageUrl,chineseName,discountText,categoryId));
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter = new HomeBaseAdapter(getContext(),data);
+                adapter = new HomeBaseAdapter(getContext(),dataAll);
                 listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent=new Intent(getContext(),SecondDetailsActivity.class);
+
+                        String secondUrl=Config.TODAY_SECOND_CONTENT+data.get(position).getEventId()+"&pageIndex=1";
+                        intent.putExtra("web",secondUrl);
+                        intent.putExtra("id",dataAll.get(position).getEventId());
+                        //Log.i("id",data.get(position-1).getEventId());
+                        intent.putExtra("englishName", dataAll.get(position).getDiscountText());
+                        //Log.i("englishName",data.get(position-1).getEventId());
+                        startActivity(intent);
+                    }
+                });
             }
         },new Response.ErrorListener(){
             @Override
