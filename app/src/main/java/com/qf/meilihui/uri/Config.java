@@ -1,7 +1,5 @@
 package com.qf.meilihui.uri;
 
-import java.util.List;
-
 /**
  * Created by 肖 on 2017/3/1.
  */
@@ -44,7 +42,6 @@ public class Config {
 
     public  static  final  String TODAY_SECOND_CONTENT="http://www.mei.com/appapi/event/product/v3?sort=&categoryId=";
     public  static  final  String TODAY_THIRD_CONTENT="http://www.mei.com/appapi/product/detail/v3?&productId=";
-    public static final String TODAY_SECOND_CONTENT = "http://www.mei.com/appapi/event/product/v3?sort=&categoryId=";
 
     //分类页面的类别二级页面      需要拼接的属性siloId、categoryId  displayName、pageIndex
     //http://www.mei.com/appapi/secondcategory/product/v3?siloId=2013000100000000001&categoryId=1000000337&summary=男士&pageIndex=1
@@ -52,7 +49,6 @@ public class Config {
 
     //分类的品牌页面的二级页面  需要拼接的属性 logoId
 
-    public static final String Category_Second_Brand = "http://www.mei.com/appapi/brand/product/v3?logoId=3616200100000000578";
      //详情页的推荐
     public static final String  Hot_recommendation ="http://www.mei.com/appapi/product/hot/v3?&productId=";
 
