@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
 import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.avtivity.BagActivity;
+import com.qf.meilihui.avtivity.HeadViewDetailsActivity;
 import com.qf.meilihui.bean.MatchContent;
 import com.qf.meilihui.uri.Config;
 
@@ -77,7 +78,7 @@ public class MatchFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
 
-                List<MatchContent> data = new ArrayList<>();
+                final List<MatchContent> data = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("eventdaysList");
                     for (int i=0;i<lists.length();i++){
@@ -86,8 +87,9 @@ public class MatchFragment extends Fragment {
                         String titleNew1 = jsonObject.getString("titleNew1");
                         String titleNew2 = jsonObject.getString("titleNew2");
                         String imgUrl = jsonObject.getString("imgUrl");
-                        Log.i("match",titleNew1);
-                        data.add(new MatchContent(id,titleNew1,titleNew2,imgUrl));
+                        String linkUrl=jsonObject.getString("linkUrl");
+                        //Log.i("match",titleNew1);
+                        data.add(new MatchContent(id,titleNew1,titleNew2,imgUrl,linkUrl));
 
                     }
 
@@ -96,6 +98,15 @@ public class MatchFragment extends Fragment {
                 }
                 MyAdapter adapter = new MyAdapter(getContext(),data);
                 listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent=new Intent(getActivity(), HeadViewDetailsActivity.class);
+                        intent.putExtra("path",data.get(position).getLinkUrl());
+                        intent.putExtra("title",data.get(position).getTitleNew1());
+                        startActivity(intent);
+                    }
+                });
             }
         },new Response.ErrorListener(){
             @Override

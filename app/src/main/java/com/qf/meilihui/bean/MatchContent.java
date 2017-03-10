@@ -10,12 +10,21 @@ public class MatchContent {
     private String titleNew1;
     private String titleNew2;
     private String imgUrl;
+    private String linkUrl;
 
-    public MatchContent(String id, String titleNew1, String titleNew2,String imgUrl) {
+    public MatchContent(String id, String titleNew1, String titleNew2,String imgUrl,String linkUrl) {
         this.id = id;
         this.titleNew1 = titleNew1;
         this.titleNew2 = titleNew2;
         this.imgUrl=imgUrl;
+        this.linkUrl=linkUrl;
+    }
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
     }
 
     public String getImgUrl() {

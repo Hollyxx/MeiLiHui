@@ -66,6 +66,7 @@ public class HomeUpcomingFragment extends Fragment {
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public  void inittime(View v){
     final   Calendar c = Calendar.getInstance();
     int mHour = c.get(Calendar.HOUR_OF_DAY);//获取当前的小时数

@@ -203,7 +203,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                     JSONObject infos = response.getJSONObject("infos");
 
                     String discount=infos.getString("discount");
-                    thirddetails_discount.setText(discount+ "折");
+                    thirddetails_discount.setText(discount);
 
                     logId=infos.getString("brandLogoId");
                     //viewpage的图片获得

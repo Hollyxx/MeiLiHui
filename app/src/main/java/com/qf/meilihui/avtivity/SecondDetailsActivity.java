@@ -146,6 +146,8 @@ public class SecondDetailsActivity extends AppCompatActivity {
                         Intent intent = new Intent(SecondDetailsActivity.this, ThirdDetailsActivity.class);
                         String thirdAddress = Config.TODAY_THIRD_CONTENT + data.get(position).getProductId();
                         String Hot_recommendation = Config.Hot_recommendation + data.get(position).getProductId() + "&categoryId=" + categoryId;
+                        Log.i("thirdAddress",thirdAddress);
+
                         intent.putExtra("Hot_recommendation", Hot_recommendation);
                         intent.putExtra("thirdAddress", thirdAddress);
                         intent.putExtra("price", data.get(position).getPrice());
