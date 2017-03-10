@@ -72,7 +72,6 @@ public class BrandofCategoryGridAdapter extends BaseAdapter {
 
             holder.image.setImageResource(R.mipmap.find_more);
             holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            //TODO 跳转到所有品牌的页面
             holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

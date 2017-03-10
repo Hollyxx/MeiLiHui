@@ -55,6 +55,7 @@ public class BrandDetailActivity extends AppCompatActivity{
         title.setText(name);
         data = new ArrayList<>();
         adapter = new BrandDetailRecyclerAdapter(this, data);
+//        adapter.setActivity(this);
         recyclerView.setAdapter(adapter);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this, OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(manager);

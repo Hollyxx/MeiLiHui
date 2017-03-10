@@ -6,9 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,15 +15,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
-import com.qf.meilihui.avtivity.BrandDetailActivity;
 import com.qf.meilihui.avtivity.SecondDetailsActivity;
 import com.qf.meilihui.avtivity.ThirdDetailsActivity;
 import com.qf.meilihui.bean.BrandDetailBean;
 import com.qf.meilihui.bean.HotProductsOfBrandDetail;
 import com.qf.meilihui.bean.HotProductsOfBrandDetailBean;
-import com.qf.meilihui.callback.LoadMoreCallBack;
 import com.qf.meilihui.callback.OnRecyclerItemClickListener;
-import com.qf.meilihui.customview.LoadMoreRecyclerOnScrollListener;
 import com.qf.meilihui.uri.Config;
 
 import java.util.List;
@@ -38,10 +33,11 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private Context context;
     private List<Object> data;
+    private boolean isAll = false;
     //    private LoadMoreCallBack callBack;
-    private BrandDetailActivity activity;
-    private boolean isBottom = false;
-    private int page = 1;
+//    private BrandDetailActivity activity;
+//    private boolean isBottom = false;
+//    private int page = 1;
 
     public BrandDetailRecyclerAdapter(Context context, List<Object> data) {
         this.context = context;
@@ -49,9 +45,9 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 //        this.callBack = callBack;
     }
 
-    public void setActivity(BrandDetailActivity activity) {
-        this.activity = activity;
-    }
+//    public void setActivity(BrandDetailActivity activity) {
+//        this.activity = activity;
+//    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -78,19 +74,38 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         Object o = data.get(position);
         switch (getItemViewType(position)) {
 
             case 0:
                 BrandDetailBean.BodyBrandDetailBean.BrandDetailBrandDetailBean detailBean = (BrandDetailBean.BodyBrandDetailBean.BrandDetailBrandDetailBean) o;
-                FirstViewHolder holder1 = (FirstViewHolder) holder;
+                final FirstViewHolder holder1 = (FirstViewHolder) holder;
                 holder1.logo_title.setText(detailBean.getBrandName());
                 if (detailBean.getBrandStoryText().length() < 1) {
                     holder1.layout.setVisibility(View.GONE);
                 } else {
                     holder1.summary.setText(detailBean.getBrandStoryText());
                 }
+                //TODO 点击小箭头加载全部描述
+
+                holder1.loadMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        holder1.summary.setLines(20);
+                        if (isAll) {
+                            holder1.summary.setLines(2);
+                            holder1.loadMore.setImageResource(R.mipmap.icon_pic_title_arrow_down);
+                            isAll = false;
+                        } else {
+                            isAll = true;
+                            holder1.summary.setSingleLine(false);
+                            holder1.loadMore.setImageResource(R.mipmap.icon_pic_title_arrow_up);
+                        }
+
+                    }
+                });
+
                 Glide.with(context).load(detailBean.getLogoUrl()).into(holder1.image_logo);
                 Glide.with(context).load(detailBean.getBrandPageImage()).into(holder1.image);
                 break;
@@ -149,7 +164,7 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                 BrandDetailRecyclerSecondAdapter adapter1 = new BrandDetailRecyclerSecondAdapter(context, details);
                 holder3.recyclerView.setAdapter(adapter1);
                 //用于分页加载
-//                loadMore(holder3.recyclerView);
+
                 //给adapter设置监听器，用于页面跳转
                 adapter1.setListener(new OnRecyclerItemClickListener() {
                     @Override
@@ -171,7 +186,7 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                 GridLayoutManager manager = new GridLayoutManager(context, 2, OrientationHelper.VERTICAL, false);
                 holder3.recyclerView.setLayoutManager(manager);
 //                holder3.recyclerView.addOnScrollListener(new LoadMoreRecyclerOnScrollListener(manager));
-
+//                loadMore(holder3.recyclerView);
                 break;
 
         }
@@ -179,59 +194,61 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     }
 
-    private void loadMore(RecyclerView recycler) {
-        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                int lastPosition = -1;
-                //当前状态为停止滑动状态SCROLL_STATE_IDLE时
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                    if (layoutManager instanceof GridLayoutManager) {
-                        //通过LayoutManager找到当前显示的最后的item的position
-                        lastPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
-                    } else if (layoutManager instanceof LinearLayoutManager) {
-                        lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-                    } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-                        //因为StaggeredGridLayoutManager的特殊性可能导致最后显示的item存在多个，所以这里取到的是一个数组
-                        //得到这个数组后再取到数组中position值最大的那个就是最后显示的position值了
-                        int[] lastPositions = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
-                        ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(lastPositions);
-                        lastPosition = findMax(lastPositions);
-                    }
-
-                    //时判断界面显示的最后item的position是否等于itemCount总数-1也就是最后一个item的position
-                    //如果相等则说明已经滑动到最后了
-                    if (lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
-                        isBottom = true;
-                    }
-
-                }
-            }
-
-            private int findMax(int[] lastPositions) {
-                int max = lastPositions[0];
-                for (int value : lastPositions) {
-                    if (value > max) {
-                        max = value;
-                    }
-                }
-                return max;
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (isBottom) {
-                    page++;
-                    activity.updateData(page);
-                }
-            }
-        });
-
-    }
+//    private void loadMore(RecyclerView recycler) {
+//        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//
+//                int lastPosition = -1;
+//                //当前状态为停止滑动状态SCROLL_STATE_IDLE时
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+//                    if (layoutManager instanceof GridLayoutManager) {
+//                        //通过LayoutManager找到当前显示的最后的item的position
+//                        lastPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+//                    } else if (layoutManager instanceof LinearLayoutManager) {
+//                        lastPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+//                    } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+//                        //因为StaggeredGridLayoutManager的特殊性可能导致最后显示的item存在多个，所以这里取到的是一个数组
+//                        //得到这个数组后再取到数组中position值最大的那个就是最后显示的position值了
+//                        int[] lastPositions = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
+//                        ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(lastPositions);
+//                        lastPosition = findMax(lastPositions);
+//                    }
+//
+//                    //时判断界面显示的最后item的position是否等于itemCount总数-1也就是最后一个item的position
+//                    //如果相等则说明已经滑动到最后了
+//                    if (lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
+//                        isBottom = true;
+//                    }
+//
+//                }
+//            }
+//
+//
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if (isBottom) {
+//                    page++;
+//                    activity.updateData(page);
+//                }
+//            }
+//        });
+//
+//    }
+//
+//    private int findMax(int[] lastPositions) {
+//        int max = lastPositions[0];
+//        for (int value : lastPositions) {
+//            if (value > max) {
+//                max = value;
+//            }
+//        }
+//        return max;
+//    }
 
     @Override
     public int getItemCount() {
@@ -254,6 +271,7 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     class FirstViewHolder extends RecyclerView.ViewHolder {
         TextView logo_title, summary;
         ImageView image_logo;
+        ImageView loadMore;
         LinearLayout layout;
         ImageView image;
 
@@ -264,6 +282,7 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
             image_logo = (ImageView) itemView.findViewById(R.id.logo_brand_type1);
             layout = (LinearLayout) itemView.findViewById(R.id.layout_summary_brand_type1);
             image = (ImageView) itemView.findViewById(R.id.image_logo_brand_type1);
+            loadMore = (ImageView) itemView.findViewById(R.id.load_more_summary);
         }
     }
 
