@@ -301,6 +301,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
 
                 BasePagerAdapter adapter3 = new BasePagerAdapter(viewpageimages);
                 viewpager.setAdapter(adapter3);
+                viewpager.setPageTransformer(true,new DepthPageTransformer());
                 ((RadioButton) rg.getChildAt(0)).setChecked(true);
                 viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override

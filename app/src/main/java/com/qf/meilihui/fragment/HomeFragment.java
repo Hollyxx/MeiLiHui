@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.qf.meilihui.R;
+import com.qf.meilihui.avtivity.CubeTransformer;
 import com.qf.meilihui.basefragment.HomeBabyFragment;
 import com.qf.meilihui.basefragment.HomeBeautyFragment;
 import com.qf.meilihui.basefragment.HomeFurnishingFragment;
@@ -96,6 +97,8 @@ public class HomeFragment extends Fragment {
 
         find_tab_adapter= new Find_tab_Adapter(getActivity().getSupportFragmentManager(), data,list_title);
         viewPager.setAdapter(find_tab_adapter);
+         //切换特效
+        viewPager.setPageTransformer(true, new CubeTransformer());
         //TabLayout加载viewpager
         tabLayout.setupWithViewPager(viewPager);
 

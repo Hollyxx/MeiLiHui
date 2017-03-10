@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.CategoryPagerAdapter;
+import com.qf.meilihui.avtivity.AccordionTransformer;
 import com.qf.meilihui.basefragment.BrandofCategoryFragment;
 import com.qf.meilihui.basefragment.KindofCategoryFragment;
 
@@ -56,6 +57,7 @@ public class CategoryFragment extends Fragment {
 
 
         pager.setAdapter(adapter);
+        pager.setPageTransformer(true,new AccordionTransformer());
         tab.setupWithViewPager(pager);
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
