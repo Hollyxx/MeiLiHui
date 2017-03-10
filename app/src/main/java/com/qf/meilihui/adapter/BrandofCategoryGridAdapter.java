@@ -2,6 +2,7 @@ package com.qf.meilihui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class BrandofCategoryGridAdapter extends BaseAdapter {
         if (position==data.size()){
 
             holder.image.setImageResource(R.mipmap.find_more);
+            holder.image.setBackgroundColor(Color.WHITE);
             holder.image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
