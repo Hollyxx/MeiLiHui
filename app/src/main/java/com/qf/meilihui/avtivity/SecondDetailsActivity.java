@@ -31,12 +31,16 @@ import java.util.List;
 
 public class SecondDetailsActivity extends AppCompatActivity {
 
+    private String path;
+    private int flag=0;
     private ImageView price;
     private TextView title, tv1, tv2, tv3, tv4;
     private List<String> name;
     private GridView gridView;
     private LinearLayout layout;
     private String categoryId;
+    private String web;
+    private SecondDetailsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,8 @@ public class SecondDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second_details);
 
         Intent intent = getIntent();
-        String web = intent.getStringExtra("web");
+        web = intent.getStringExtra("web");
+        path=web;
         categoryId = intent.getStringExtra("id");
         String englishName = intent.getStringExtra("englishName");
         init();
@@ -53,6 +58,7 @@ public class SecondDetailsActivity extends AppCompatActivity {
         title.setText(englishName);
 
         volleyGet(web);
+
         //Log.i("web",web);
 
     }
@@ -60,6 +66,7 @@ public class SecondDetailsActivity extends AppCompatActivity {
     public void init() {
         title = (TextView) findViewById(R.id.title_title_bar_products);
         tv1 = (TextView) findViewById(R.id.popular_sort);
+        tv1.setTextColor(Color.BLACK);
         tv2 = (TextView) findViewById(R.id.discount_sort);
         tv3 = (TextView) findViewById(R.id.price_sort);
         tv4 = (TextView) findViewById(R.id.filter_sort);
@@ -87,8 +94,13 @@ public class SecondDetailsActivity extends AppCompatActivity {
                 tv1.setTextColor(Color.BLACK);
                 tv2.setTextColor(Color.GRAY);
                 tv3.setTextColor(Color.GRAY);
+                volleyGet(path);
+                adapter.notifyDataSetChanged();
                 break;
             case R.id.discount_sort:
+                web="http://www.mei.com/appapi/event/product/v3?&sort=ASC&key=1&pageIndex=1&categoryId="+categoryId;
+                volleyGet(web);
+                adapter.notifyDataSetChanged();
                 price.setImageResource(R.mipmap.up_grey);
                 tv1.setTextColor(Color.GRAY);
                 tv2.setTextColor(Color.BLACK);
@@ -99,6 +111,18 @@ public class SecondDetailsActivity extends AppCompatActivity {
                 tv1.setTextColor(Color.GRAY);
                 tv2.setTextColor(Color.GRAY);
                 tv3.setTextColor(Color.BLACK);
+                flag++;
+               if(flag==1){
+                   web="http://www.mei.com/appapi/event/product/v3?&sort=ASC&pageIndex=1&categoryId="+categoryId;
+                   volleyGet(web);
+                   adapter.notifyDataSetChanged();
+                }if(flag==2){
+                  price.setImageResource(R.mipmap.down_black);
+                  web="http://www.mei.com/appapi/event/product/v3?&sort=DESC&pageIndex=1&categoryId="+categoryId;
+                  volleyGet(web);
+                  adapter.notifyDataSetChanged();
+                  flag=0;
+                 }
                 break;
             case R.id.filter_sort:
                 tv4.setTextColor(Color.BLACK);
@@ -137,7 +161,7 @@ public class SecondDetailsActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                SecondDetailsAdapter adapter = new SecondDetailsAdapter(getApplicationContext(), data, name);
+                 adapter = new SecondDetailsAdapter(getApplicationContext(), data, name);
                 gridView.setAdapter(adapter);
 
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
