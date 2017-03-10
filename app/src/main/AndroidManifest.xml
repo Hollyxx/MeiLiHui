@@ -33,7 +33,10 @@
         <activity android:name=".avtivity.SecondDetailsActivity" />
         <activity android:name=".avtivity.ProductsListActivity" />
         <activity android:name=".avtivity.BrandDetailActivity" />
-        <activity android:name=".avtivity.AllBrandActivity"></activity>
+        <activity android:name=".avtivity.AllBrandActivity" />
+        <activity android:name=".avtivity.SignActivity" />
+        <activity android:name=".avtivity.RegisterActivity" />
+        <activity android:name=".avtivity.MailBoxActivity"></activity>
     </application>
 
 </manifest>

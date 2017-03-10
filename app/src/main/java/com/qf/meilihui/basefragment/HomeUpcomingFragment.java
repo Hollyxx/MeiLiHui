@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
 import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.avtivity.SecondDetailsActivity;
+import com.qf.meilihui.avtivity.SignActivity;
 import com.qf.meilihui.bean.HomeContent;
 import com.qf.meilihui.uri.Config;
 
@@ -64,8 +66,7 @@ public class HomeUpcomingFragment extends Fragment {
         return view;
     }
 
-@RequiresApi(api = Build.VERSION_CODES.N)
-public  void inittime(View v){
+    public  void inittime(View v){
     final   Calendar c = Calendar.getInstance();
     int mHour = c.get(Calendar.HOUR_OF_DAY);//获取当前的小时数
 
@@ -191,6 +192,14 @@ public  void inittime(View v){
                 viewHolder.tv.setText("");
             }
 
+            viewHolder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent  intent=new Intent(getContext(),SignActivity.class);
+
+                    startActivity(intent);
+                }
+            });
             viewHolder.englishName.setText(math);
             viewHolder.chineseName.setText(data.get(position).getChineseName());
             viewHolder.discountText.setText(data.get(position).getDiscountText());
@@ -219,9 +228,11 @@ public  void inittime(View v){
         {
             TextView englishName,chineseName,discountText,tv;
             ImageView imageUrl;
+            Button  button;
 
             public  ViewHolder(View view)
             {
+                this.button=(Button) view.findViewById(R.id.home_new_item);
                 this.imageUrl=(ImageView)view.findViewById(R.id.today_image);
                 this.englishName = (TextView) view.findViewById(R.id.today_text4);
                 this.tv= (TextView) view.findViewById(R.id.today_text3);

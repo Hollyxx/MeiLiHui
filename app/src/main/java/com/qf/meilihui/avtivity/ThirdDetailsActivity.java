@@ -112,7 +112,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         title_marketPrice.setText("￥" + marketPrice);
         title_price.setText("￥" + price);
         thirddetails_brandname.setText(name);
-        thirddetails_discount.setText(discount + "折");
+        //thirddetails_discount.setText(discount + "折");
         thirddetails_marketPrice.setText("￥" + marketPrice);
         thirddetails_price.setText("￥" + price);
         thirddetails_name.setText(productName);
@@ -200,29 +200,27 @@ public class ThirdDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-
                     JSONObject infos = response.getJSONObject("infos");
 
                     String discount=infos.getString("discount");
-                    thirddetails_discount.setText(discount);
+                    thirddetails_discount.setText(discount+ "折");
+
                     logId=infos.getString("brandLogoId");
-
-
                     //viewpage的图片获得
                     JSONArray images = infos.getJSONArray("images");
-                    viewpageimages = new ArrayList<>();
-                    pictures = new ArrayList<>();
+                    viewpageimages=new ArrayList<>();
+                    pictures=new ArrayList<>();
 
-                    for (int i = 0; i < images.length(); i++) {
+                    for (int i=0;i<images.length();i++){
                         JSONObject jsonObject1 = images.getJSONObject(i);
-                        String smallImgUrl = jsonObject1.getString("smallImgUrl");
-                        String bigImgUrl = jsonObject1.getString("bigImgUrl");
-                        ImageView iv = new ImageView(getApplicationContext());
+                        String smallImgUrl=jsonObject1.getString("smallImgUrl");
+                        String bigImgUrl=jsonObject1.getString("bigImgUrl");
+                        ImageView  iv=new ImageView(getApplicationContext());
                         //iv.setScaleType(ImageView.ScaleType.FIT_XY);
                         Glide.with(getApplicationContext()).load(smallImgUrl).into(iv);
                         pictures.add(bigImgUrl);
-
                         viewpageimages.add(iv);
+
                         RadioButton radioButton = new RadioButton(getApplicationContext());
                         radioButton.setButtonDrawable(R.drawable.radiobutton_selector);
                         radioButton.setLayoutParams(new RadioGroup.LayoutParams(20, 20));
@@ -233,7 +231,6 @@ public class ThirdDetailsActivity extends AppCompatActivity {
 
                     JSONObject description = infos.getJSONObject("description");
                     if(infos.isNull("description")==false){
-
                         String design = description.getString("design");
                         thirddetails_describe.setText(design);
 

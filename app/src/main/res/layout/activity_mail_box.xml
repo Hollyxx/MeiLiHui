@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_mail_box"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qf.meilihui.avtivity.MailBoxActivity">
+
+    <RelativeLayout
+        android:background="@mipmap/bg_bazzer_default1"
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:onClick="onClick"
+            android:id="@+id/mail_title_bar_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/back"/>
+
+
+        <TextView
+            android:id="@+id/title_bar_products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="新用户注册"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:onClick="onClick"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="登录"
+            android:id="@+id/mail_title_bar_login"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:background="@mipmap/bg_bazzer_default1"
+        android:layout_below="@+id/rl1"
+        android:id="@+id/rl2"
+        android:paddingLeft="15dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:text="邮 箱："/>
+
+        <EditText
+            android:background="@null"
+            android:hint="请输入您的EMAIL地址"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@mipmap/bg_bazzer_default1"
+        android:id="@+id/rl3"
+        android:layout_below="@+id/rl2"
+        android:paddingLeft="15dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:text="密 码："/>
+
+        <EditText
+            android:background="@null"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:hint="请设置6至20位密码"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:text="显示"
+            android:id="@+id/sign_look"
+            android:onClick="onClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_below="@+id/rl3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:background="@mipmap/bg_bazzer_default1"
+            android:id="@+id/phone"
+            android:onClick="onClick"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:text="手机注册"/>
+    </RelativeLayout>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/rel"
+        android:text="立即注册"
+        android:gravity="center"
+        android:background="@color/black"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="联名登陆"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="60dp">
+            <ImageView
+                android:src="@mipmap/wechat_login"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp" />
+            <ImageView
+                android:src="@mipmap/weibo_login"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
