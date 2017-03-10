@@ -9,7 +9,7 @@
         android:id="@+id/list_brand_category"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#ebe9e9"
-        android:dividerHeight="10dp"/>
+        android:divider="#eeeeee"
+        android:dividerHeight="15dp"/>
 
 </FrameLayout>
