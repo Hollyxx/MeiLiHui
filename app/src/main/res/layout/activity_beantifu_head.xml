@@ -100,13 +100,7 @@
         android:layout_below="@+id/head_imageview"
         android:id="@+id/brand_gridview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
-        android:columnWidth="80dip"
-        android:numColumns="3"
-        android:stretchMode="columnWidth"
-        android:gravity="fill"
-        >
+        android:layout_height="170dp"
+        android:numColumns="3">
     </GridView>
 </RelativeLayout>

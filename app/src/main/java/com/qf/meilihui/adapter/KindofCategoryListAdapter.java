@@ -2,7 +2,7 @@ package com.qf.meilihui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +80,7 @@ public class KindofCategoryListAdapter extends BaseAdapter {
                 intent.putExtra("summary",categoryBean.getDisplayName());
                 intent.putExtra("name",category.getCategoryName());
                 intent.setClass(context, ProductsListActivity.class);
+
                 context.startActivity(intent);
             }
         });

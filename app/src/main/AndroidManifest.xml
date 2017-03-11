@@ -36,7 +36,9 @@
         <activity android:name=".avtivity.AllBrandActivity" />
         <activity android:name=".avtivity.SignActivity" />
         <activity android:name=".avtivity.RegisterActivity" />
-        <activity android:name=".avtivity.MailBoxActivity"></activity>
+        <activity android:name=".avtivity.MailBoxActivity" />
+        <activity android:name=".avtivity.StarRecommendActivity" />
+        <activity android:name=".avtivity.OverseasBoutiqueActivity"></activity>
     </application>
 
 </manifest>

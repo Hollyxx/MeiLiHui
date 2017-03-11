@@ -79,7 +79,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
         thirdAddress = intent.getStringExtra("thirdAddress");
         String marketPrice = intent.getStringExtra("marketPrice");
         String productName = intent.getStringExtra("productName");
-        String discount = intent.getStringExtra("discount");
+//        String discount = intent.getStringExtra("discount");
         hotadress = intent.getStringExtra("Hot_recommendation");
         brandname= (TextView) findViewById(R.id.brandname);
         brandname.setText(name);

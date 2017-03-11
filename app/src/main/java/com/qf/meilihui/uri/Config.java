@@ -60,4 +60,8 @@ public class Config {
     //http://www.mei.com/appapi/brand/more/v3?siloId=2013000100000000001
     public static final String All_Brand="http://www.mei.com/appapi/brand/more/v3?siloId=";
 
+    public static final String Star= "http://www.mei.com/appapi/beauty/starProduct/v3?";
+
+    public static  final  String  OverSea="http://www.mei.com/appapi/beauty/overseaEvents/v3?";
+
 }

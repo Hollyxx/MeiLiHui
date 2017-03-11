@@ -29,7 +29,10 @@ import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.BasePagerAdapter;
 import com.qf.meilihui.adapter.HomeBaseAdapter;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.avtivity.OverseasBoutiqueActivity;
 import com.qf.meilihui.avtivity.SecondDetailsActivity;
+import com.qf.meilihui.avtivity.StarRecommendActivity;
+import com.qf.meilihui.avtivity.ThirdDetailsActivity;
 import com.qf.meilihui.bean.BrandWall;
 import com.qf.meilihui.bean.HeadViewContent;
 import com.qf.meilihui.bean.HomeContent;
@@ -93,13 +96,27 @@ public class HomeBeautyFragment extends Fragment {
               public void onResponse(JSONObject response) {
                   try {
                       String overseaFileUrl=response.getString("overseaFileUrl");
-                      String starFileUrl=response.getString("starFileUrl");
+                      final String starFileUrl=response.getString("starFileUrl");
                       ImageView iv1= (ImageView) headView.findViewById(R.id.iv1);
                       ImageView iv2= (ImageView) headView.findViewById(R.id.iv2);
-                      Glide.with(getActivity()).load(overseaFileUrl).into(iv1);
-                      Glide.with(getActivity()).load(starFileUrl).into(iv2);
+                      Glide.with(getActivity()).load(overseaFileUrl).into(iv2);
+                      Glide.with(getActivity()).load(starFileUrl).into(iv1);
+                      iv1.setOnClickListener(new View.OnClickListener() {
+                          @Override
+                          public void onClick(View v) {
+                              Intent  intent=new Intent(getContext(), StarRecommendActivity.class);
 
+                              startActivity(intent);
+                          }
+                      });
+                      iv2.setOnClickListener(new View.OnClickListener() {
+                          @Override
+                          public void onClick(View v) {
+                              Intent  intent=new Intent(getContext(), OverseasBoutiqueActivity.class);
 
+                              startActivity(intent);
+                          }
+                      });
                   } catch (JSONException e) {
                       e.printStackTrace();
                   }
@@ -244,6 +261,21 @@ public class HomeBeautyFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                        Intent  intent=new Intent(getContext(), ThirdDetailsActivity.class);
+
+                        String thirdAddress = Config.TODAY_THIRD_CONTENT + data.get(position).getProductId();
+                        String Hot_recommendation = Config.Hot_recommendation + data.get(position).getProductId() + "&categoryId=" + data.get(position).getEventId();
+                        Log.i("thirdAddress",thirdAddress);
+
+                        intent.putExtra("Hot_recommendation", Hot_recommendation);
+                        intent.putExtra("thirdAddress", thirdAddress);
+                        intent.putExtra("price", data.get(position).getPrice());
+                        intent.putExtra("marketPrice", data.get(position).getMarketPrice());
+                        intent.putExtra("name", data.get(position).getBrandName());
+                        intent.putExtra("productName", data.get(position).getProductName());
+
+                        startActivity(intent);
+
                     }
                 } );
             }
@@ -267,8 +299,6 @@ public class HomeBeautyFragment extends Fragment {
                         String shareUrl = jsonObject.getString("shareUrl");
                         String imgAndroid = jsonObject.getString("imgAndroid");
                         String  shareContent=jsonObject.getString("shareContent");
-
-                        Log.i("imgAndroid",imgAndroid+i);
 
                         data.add(new HeadViewContent(imgUrl,shareUrl,shareContent,imgAndroid));
                         if(imgUrl.isEmpty()==false){
@@ -395,7 +425,7 @@ public class HomeBeautyFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return brands.size();
+            return brands.size()+1;
         }
 
         @Override
@@ -415,6 +445,8 @@ public class HomeBeautyFragment extends Fragment {
             ImageView iv = (ImageView) v.findViewById(R.id.image_item_grid_list_brand_category);
            if(position==brands.size()) {
                iv.setImageResource(R.mipmap.find_more2);
+               iv.setBackgroundColor(Color.WHITE);
+               iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
            }else{
                Log.i("num",num.get(position)+position+"?????");
                Glide.with(context).load(brands.get(position).getBrandLogoUrl()).into(iv);

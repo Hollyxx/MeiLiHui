@@ -287,7 +287,7 @@
             android:id="@+id/thirddetails_component_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="棉"/>
+            android:text=""/>
     </LinearLayout>
 
     <TextView
