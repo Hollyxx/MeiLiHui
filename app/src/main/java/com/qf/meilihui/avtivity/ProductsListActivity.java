@@ -196,7 +196,6 @@ public class ProductsListActivity extends AppCompatActivity {
                 break;
 
             case R.id.filter_sort:
-                //TODO  跳转到筛选页面
                 break;
         }
 

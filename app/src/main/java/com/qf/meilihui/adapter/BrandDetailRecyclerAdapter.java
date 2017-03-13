@@ -87,7 +87,6 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                 } else {
                     holder1.summary.setText(detailBean.getBrandStoryText());
                 }
-                //TODO 点击小箭头加载全部描述
 
                 holder1.loadMore.setOnClickListener(new View.OnClickListener() {
                     @Override
