@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AbsListView;
@@ -189,7 +188,6 @@ public class SecondDetailsActivity extends AppCompatActivity {
                         Intent intent = new Intent(SecondDetailsActivity.this, ThirdDetailsActivity.class);
                         String thirdAddress = Config.TODAY_THIRD_CONTENT + data.get(position).getProductId();
                         String Hot_recommendation = Config.Hot_recommendation + data.get(position).getProductId() + "&categoryId=" + categoryId;
-                        Log.i("thirdAddress", thirdAddress);
 
                         intent.putExtra("Hot_recommendation", Hot_recommendation);
                         intent.putExtra("thirdAddress", thirdAddress);

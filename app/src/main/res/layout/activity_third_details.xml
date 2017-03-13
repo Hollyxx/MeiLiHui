@@ -268,8 +268,7 @@
         android:scaleType="fitXY"
         android:id="@+id/thirddetails_component_iv"
         android:layout_width="match_parent"
-        android:src="@mipmap/bg_event"
-        android:layout_height="120dp" />
+        android:layout_height="wrap_content" />
     <LinearLayout
         android:padding="2dp"
         android:gravity="center_vertical"

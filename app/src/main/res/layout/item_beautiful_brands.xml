@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:src="@mipmap/bg_event"
+        android:id="@+id/brands_iv"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@mipmap/bg_brand_black_tag"
+        android:text="买手推荐"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+<LinearLayout
+    android:layout_below="@+id/brands_iv"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textColor="@color/black"
+        android:id="@+id/brand_tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="YSL"/>
+
+    <TextView
+        android:singleLine="true"
+        android:id="@+id/brand_tv2"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="黑胶色唇釉401#"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/brand_tv3"
+            android:textColor="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥318"/>
+        <TextView
+            android:background="@mipmap/line_number"
+            android:layout_toRightOf="@+id/brand_tv3"
+            android:id="@+id/brand_tv4"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥320"/>
+        <TextView
+            android:id="@+id/brand_tv5"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:background="@mipmap/bg_rectangle"
+            android:text="3.0折"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+       </RelativeLayout>
+     </LinearLayout>
+</RelativeLayout>

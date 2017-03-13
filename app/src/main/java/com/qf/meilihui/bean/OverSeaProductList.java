@@ -12,6 +12,7 @@ public class OverSeaProductList {
     private String brand;
     private String  price;
     private String  marketPrice;
+    private String discount;
 
     public OverSeaProductList(String id, String eventId, String productName, String productImgUrl, String brand, String price, String marketPrice) {
         this.id = id;
@@ -21,6 +22,17 @@ public class OverSeaProductList {
         this.brand = brand;
         this.price = price;
         this.marketPrice = marketPrice;
+    }
+
+    public OverSeaProductList(String id, String eventId, String productName, String productImgUrl, String brand, String price, String marketPrice, String discount) {
+        this.id = id;
+        this.eventId = eventId;
+        this.productName = productName;
+        this.productImgUrl = productImgUrl;
+        this.brand = brand;
+        this.price = price;
+        this.marketPrice = marketPrice;
+        this.discount = discount;
     }
 
     public String getId() {
@@ -77,5 +89,13 @@ public class OverSeaProductList {
 
     public void setMarketPrice(String marketPrice) {
         this.marketPrice = marketPrice;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
     }
 }

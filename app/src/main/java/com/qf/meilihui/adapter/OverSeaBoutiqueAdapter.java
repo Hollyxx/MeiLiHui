@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qf.meilihui.R;
-import com.qf.meilihui.avtivity.SecondDetailsActivity;
+import com.qf.meilihui.avtivity.HomeSecondProductsActivity;
 import com.qf.meilihui.avtivity.ThirdDetailsActivity;
 import com.qf.meilihui.bean.OverSeaEvent;
 import com.qf.meilihui.bean.OverSeaProductList;
@@ -74,12 +74,10 @@ public class OverSeaBoutiqueAdapter extends BaseAdapter {
         viewHolder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent=new Intent(context,SecondDetailsActivity.class);
-                String secondUrl=Config.TODAY_SECOND_CONTENT+data.get(position).getId()+"&pageIndex=1";
-                intent.putExtra("web",secondUrl);
-                intent.putExtra("id",data.get(position).getId());
-                //Log.i("id",data.get(position-1).getEventId());
-                intent.putExtra("englishName", data.get(position).getEnglishName());
+                Intent  intent=new Intent(context, HomeSecondProductsActivity.class);
+                intent.putExtra("name",data.get(position).getEnglishName());
+                intent.putExtra("categoryId",data.get(position).getId());
+                //Log.i("id",data.get(position).getId());
                 context.startActivity(intent);
             }
         });
@@ -90,7 +88,6 @@ public class OverSeaBoutiqueAdapter extends BaseAdapter {
         }
             m=m+4;
             n=n+4;
-       // Log.i("leng",data.get(position).getData().size()+"????");
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
 

@@ -146,7 +146,7 @@ public class BrandDetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
                     public void onClick(View v) {
                         Intent intent = new Intent(context, SecondDetailsActivity.class);
                         intent.putExtra("eventName", items.getEventName());
-                        String web = Config.TODAY_SECOND_CONTENT + items.getEventId() + "&pageIndex=1";
+                        String web = Config.TODAY_SECOND_CONTENT + items.getEventId() + "&pageIndex=";
                         intent.putExtra("web", web);
                         intent.putExtra("englishName", items.getEventName());
                         context.startActivity(intent);

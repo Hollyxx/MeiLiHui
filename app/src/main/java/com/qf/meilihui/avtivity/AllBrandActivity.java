@@ -3,7 +3,9 @@ package com.qf.meilihui.avtivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,6 +35,7 @@ public class AllBrandActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_all_brand);
 
         list = (ListView) findViewById(R.id.list_all_brand);
@@ -41,6 +44,7 @@ public class AllBrandActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String siloId = intent.getStringExtra("siloId");
+        Log.i("siloId",siloId+"....."+name);
         data = new ArrayList<>();
         adapter = new AllBrandListAdapter(this, data);
         loadData(siloId);

@@ -18,6 +18,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.BasePagerAdapter;
 import com.qf.meilihui.adapter.HomeBaseAdapter;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.avtivity.AllBrandActivity;
+import com.qf.meilihui.avtivity.BeautifulBrandsActivity;
 import com.qf.meilihui.avtivity.OverseasBoutiqueActivity;
 import com.qf.meilihui.avtivity.SecondDetailsActivity;
 import com.qf.meilihui.avtivity.StarRecommendActivity;
@@ -146,17 +149,32 @@ public class HomeBeautyFragment extends Fragment {
 
                         num.add(brandLogoUrl);
                        // Log.i("xiao",brandLogoUrl+"......");
-
                         brands.add(new BrandWall(id,brandName,brandLogoUrl,eventId));
                     }
 
                     MyGridAdapter adapter=new MyGridAdapter(getContext(),brands);
                     gridView.setAdapter(adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if(position<5){
+                                Intent  intent=new Intent(getContext(), BeautifulBrandsActivity.class);
+                                String path=Config.Beautiful_Brands+data.get(position).getEventId();
+                                intent.putExtra("path",path);
+                                intent.putExtra("name",data.get(position).getBrandName());
+                                startActivity(intent);
+                            }else  if(position==5){
+                                Intent  intent=new Intent(getContext(), AllBrandActivity.class);
+                                intent.putExtra("siloId","2013000100000000003");
+                                intent.putExtra("name","美妆");
+                                startActivity(intent);
+                            }
+                        }
+                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         },new Response.ErrorListener(){
             @Override
@@ -174,7 +192,6 @@ public class HomeBeautyFragment extends Fragment {
         final JsonObjectRequest objectRequest=new JsonObjectRequest(url,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
                  dataAll = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("eventList");
@@ -185,13 +202,9 @@ public class HomeBeautyFragment extends Fragment {
                         String discountText = jsonObject.getString("discountText");
                         String  imageUrl=jsonObject.getString("imageUrl");
                         String  categoryId=jsonObject.getString("categoryId");
-                        Log.i("beau",jsonObject.toString()+1);
-                        Log.i("furn",englishName+i);
-                        Log.i("furn",chineseName+i);
-                        Log.i("furn",discountText+i);
+
                         dataAll.add(new HomeContent(englishName,imageUrl,chineseName,discountText,categoryId));
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -202,7 +215,7 @@ public class HomeBeautyFragment extends Fragment {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent=new Intent(getContext(),SecondDetailsActivity.class);
 
-                        String secondUrl=Config.TODAY_SECOND_CONTENT+data.get(position).getEventId()+"&pageIndex=";
+                        String secondUrl=Config.TODAY_SECOND_CONTENT+dataAll.get(position).getEventId()+"&pageIndex=";
                         intent.putExtra("web",secondUrl);
                         intent.putExtra("id",dataAll.get(position).getEventId());
                         //Log.i("id",data.get(position-1).getEventId());
@@ -238,18 +251,15 @@ public class HomeBeautyFragment extends Fragment {
                         String picUrl=jsonObject.getString("picUrl");
                         String glsCode=jsonObject.getString("glsCode");
                         String marketPrice=jsonObject.getString("marketPrice");
-
                         data.add(new ScrollBean(eventId,productId,brandName,productName,marketPrice,price,picUrl,glsCode));
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 int size = data.size();
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((360*6), LinearLayout.LayoutParams.FILL_PARENT);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((280*6), LinearLayout.LayoutParams.FILL_PARENT);
                 horizontalGridView.setLayoutParams(params); //设置GirdView布局参数,横向布局的关键
-                horizontalGridView.setColumnWidth(350);
+                horizontalGridView.setColumnWidth(280);
                 horizontalGridView.setHorizontalSpacing(15);
                 horizontalGridView.setStretchMode(GridView.NO_STRETCH);
                 horizontalGridView.setNumColumns(size);
@@ -307,11 +317,19 @@ public class HomeBeautyFragment extends Fragment {
                             imageView.setImageResource(R.mipmap.bk_mybrand_default);
                             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                             imagesTop.add(imageView);
+
+                            RadioButton radioButton = new RadioButton(getActivity());
+                            radioButton.setButtonDrawable(R.drawable.radiobutton_selector);
+                            radioButton.setLayoutParams(new RadioGroup.LayoutParams(30, 30));
+                            radioButton.setPadding(20, 20, 20, 20);
+                            radioButton.setClickable(false);
+                            rg.addView(radioButton);
                         }
                     }
                     //Log.i("imagesTop",imagesTop.size()+"");
                     BasePagerAdapter adapter=new BasePagerAdapter(imagesTop);
                     viewPager.setAdapter(adapter);
+                    ((RadioButton) rg.getChildAt(0)).setChecked(true);
                     listView.addHeaderView(headView);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -334,7 +352,7 @@ public class HomeBeautyFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
 
-                //((RadioButton) rg.getChildAt(position)).setChecked(true);
+                ((RadioButton) rg.getChildAt(position)).setChecked(true);
             }
 
             @Override

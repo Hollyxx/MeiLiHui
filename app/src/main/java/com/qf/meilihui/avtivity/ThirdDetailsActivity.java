@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -155,8 +154,8 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                     //设置布局管理器
                     mRecycleView.setLayoutManager(manager);
 
-                    //设置增删数据的动画
-                    mRecycleView.setItemAnimator(new DefaultItemAnimator());
+//                    //设置增删数据的动画
+//                    mRecycleView.setItemAnimator(new DefaultItemAnimator());
 
                     adapter.setOnItemClickListener(new RecycleAdapter.OnItemClickListener() {
                         @Override
@@ -248,7 +247,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
 
                         //材质
                         String material_quality_img = description.getString("material_quality_img");
-                        if (material_quality_img.isEmpty() == true) {
+                        if (material_quality_img.length()<=3) {
                             thirddetails_component_iv.setVisibility(View.GONE);
                         } else {
                             Glide.with(getApplicationContext()).load(material_quality_img).into(thirddetails_component_iv);
@@ -287,7 +286,8 @@ public class ThirdDetailsActivity extends AppCompatActivity {
                             thirddetails_component_tv.setVisibility(View.GONE);
                         }
                     }
-
+//                    thirddetails_component_iv.setAnimation(null);
+                    //thirddetails_component_iv.setVisibility(View.GONE);
                     String priceImageUrl = infos.getString("priceImageUrl");
                     Glide.with(getApplicationContext()).load(priceImageUrl).into(thirddetails_Prompt);
 

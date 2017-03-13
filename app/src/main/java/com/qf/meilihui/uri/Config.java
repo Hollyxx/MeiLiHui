@@ -71,4 +71,5 @@ public class Config {
 
     public static  final  String  OverSea="http://www.mei.com/appapi/beauty/overseaEvents/v3?";
 
+    public static  final  String  Beautiful_Brands="http://www.mei.com/appapi/beauty/getProductListSeries/v3?series=%E6%89%80%E6%9C%89%E7%B3%BB%E5%88%97&pageIndex=1&eventId=";
 }

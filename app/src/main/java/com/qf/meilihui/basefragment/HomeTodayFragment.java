@@ -178,9 +178,9 @@ public class HomeTodayFragment extends Fragment implements SwipeRefreshLayout.On
                         });
                         imagesTop.add(imageView);
                         RadioButton radioButton = new RadioButton(getActivity());
-                        radioButton.setButtonDrawable(R.drawable.radiobutton_selector);
-                        radioButton.setLayoutParams(new RadioGroup.LayoutParams(20, 20));
-                        radioButton.setPadding(20, 0, 20, 5);
+                        radioButton.setButtonDrawable(R.drawable.radiobutton_selector2);
+                        radioButton.setLayoutParams(new RadioGroup.LayoutParams(30, 30));
+                        radioButton.setPadding(20, 20, 20, 20);
                         radioButton.setClickable(false);
                         rg.addView(radioButton);
                    }
@@ -188,6 +188,7 @@ public class HomeTodayFragment extends Fragment implements SwipeRefreshLayout.On
                    // Log.i("imagesTop",imagesTop.size()+"");
                     BasePagerAdapter  adapter=new BasePagerAdapter(imagesTop);
                     viewPager.setAdapter(adapter);
+                    ((RadioButton) rg.getChildAt(0)).setChecked(true);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -236,7 +237,7 @@ public class HomeTodayFragment extends Fragment implements SwipeRefreshLayout.On
                         }
                     });
                     try {
-                        Thread.sleep(4000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
