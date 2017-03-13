@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.qf.meilihui.R;
+import com.qf.meilihui.adapter.HomeSecondProductsAdapter;
 import com.qf.meilihui.adapter.ProductOfKindsGridAdapter;
 import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.bean.HomeSecondProductBean;
@@ -37,8 +38,8 @@ public class HomeSecondProductsActivity extends AppCompatActivity {
     private String url;
     private int page = 1;
     private boolean isBottom = false;
-    private List<ProductsOfCategory> data;
-    private ProductOfKindsGridAdapter adapter;
+    private List<HomeSecondProductBean.ProductsBrandDetailBean> data;
+    private HomeSecondProductsAdapter adapter;
     private String categoryId;
     private TextView popular_sort, discount_sort, price_sort;
     private ImageView icon_price_sort;
@@ -57,9 +58,9 @@ public class HomeSecondProductsActivity extends AppCompatActivity {
         categoryId = intent.getStringExtra("categoryId");
         String name = intent.getStringExtra("name");
         title.setText(name);
-        url = Config.Home_Second_products + categoryId + "&pageIndex =";
+        url = Config.Home_Second_products + categoryId + "&pageIndex=";
         data = new ArrayList<>();
-        adapter = new ProductOfKindsGridAdapter(this, data);
+        adapter = new HomeSecondProductsAdapter(this, data);
         grid.setAdapter(adapter);
         setListener();
         loadData(url, page);
@@ -86,10 +87,10 @@ public class HomeSecondProductsActivity extends AppCompatActivity {
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ProductsOfCategory product = data.get(position);
+                HomeSecondProductBean.ProductsBrandDetailBean product = data.get(position);
                 Intent intent1 = new Intent(HomeSecondProductsActivity.this, ThirdDetailsActivity.class);
                 String thirdAddress = Config.TODAY_THIRD_CONTENT + product.getProductId();
-                String Hot_recommendation = Config.Hot_recommendation + product.getProductId() + "&categoryId=" + product.getEvent_id();
+                String Hot_recommendation = Config.Hot_recommendation + product.getProductId() + "&categoryId=2040204090000002556";
                 intent1.putExtra("Hot_recommendation", Hot_recommendation);
                 intent1.putExtra("thirdAddress", thirdAddress);
                 intent1.putExtra("price", product.getPrice());
@@ -179,10 +180,9 @@ public class HomeSecondProductsActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 if (response != null) {
                     try {
-                        JSONObject o = new JSONObject(response);
-                        HomeSecondProductBean bean = new HomeSecondProductBean();
-                        bean.parseJson(o);
-                        List<ProductsOfCategory> items = bean.getItems();
+                        Gson gson = new Gson();
+                        HomeSecondProductBean bean = gson.fromJson(response, HomeSecondProductBean.class);
+                        List<HomeSecondProductBean.ProductsBrandDetailBean> items = bean.getProducts();
                         data.addAll(items);
                         adapter.notifyDataSetChanged();
                         loading.showLoadUi(true, 0);
