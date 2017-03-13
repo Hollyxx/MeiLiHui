@@ -24,14 +24,11 @@
         <activity android:name=".view.BeantifuHeadActivity" />
         <activity android:name=".avtivity.HeadViewDetailsActivity" />
         <activity android:name=".avtivity.SecondDetailsActivity" />
-        <activity android:name=".view.BeantifuHeadActivity" />
         <activity android:name=".avtivity.ProductsListActivity" />
         <activity android:name=".avtivity.ThirdDetailsActivity" />
         <activity android:name=".avtivity.EnsureActivity" />
         <activity android:name=".avtivity.RulerActivity" />
         <activity android:name=".avtivity.ViewPagerActivity" />
-        <activity android:name=".avtivity.SecondDetailsActivity" />
-        <activity android:name=".avtivity.ProductsListActivity" />
         <activity android:name=".avtivity.BrandDetailActivity" />
         <activity android:name=".avtivity.AllBrandActivity" />
         <activity android:name=".avtivity.SignActivity" />
@@ -43,6 +40,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <activity android:name=".avtivity.MailBoxActivity" />
+        <activity android:name=".avtivity.HomeSecondProductsActivity"></activity>
     </application>
 
 </manifest>

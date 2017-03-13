@@ -8,6 +8,14 @@
     android:orientation="vertical"
     tools:context="com.qf.meilihui.avtivity.BrandDetailActivity">
 
+    <com.qf.meilihui.customview.CustomLoadingLayout
+        android:id="@+id/loading_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"/>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_brand_detail_activity"

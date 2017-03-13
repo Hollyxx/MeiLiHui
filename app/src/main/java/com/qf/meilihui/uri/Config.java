@@ -60,6 +60,13 @@ public class Config {
     //http://www.mei.com/appapi/brand/more/v3?siloId=2013000100000000001
     public static final String All_Brand="http://www.mei.com/appapi/brand/more/v3?siloId=";
 
+    //分类页面商品列表折扣排序  拼接的属性为 siloId  sort   key    pageIndex   categoryId
+    //http://www.mei.com/appapi/secondcategory/product/v3?summary=756217611843dba127c0ebb1fee51a9b&siloId=2013000100000000001&sort=ASC&timeStamp=20170310182125&key=1&pageIndex=1&categoryId=1000000337
+    public static final String Kinds_Products_Sort_Discount = "http://www.mei.com/appapi/secondcategory/product/v3?siloId=";
+
+    //海外直销二级页面跳转 http://www.mei.com/appapi/event/product/v3?&categoryId=2040204090000002556&pageIndex=1
+    public static final String Home_Second_products="http://www.mei.com/appapi/event/product/v3?&categoryId=";
+
     public static final String Star= "http://www.mei.com/appapi/beauty/starProduct/v3?";
 
     public static  final  String  OverSea="http://www.mei.com/appapi/beauty/overseaEvents/v3?";

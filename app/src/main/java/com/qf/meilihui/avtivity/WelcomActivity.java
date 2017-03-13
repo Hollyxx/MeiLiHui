@@ -27,6 +27,6 @@ public class WelcomActivity extends AppCompatActivity {
                 finish();
             }
         };
-        timer.schedule(task, 1000 * 3); //3秒后跳转
+        timer.schedule(task, 1000 * 2); //3秒后跳转
     }
 }

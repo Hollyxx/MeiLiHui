@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_products_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#fff"
     tools:context="com.qf.meilihui.avtivity.ProductsListActivity">
 
+    <com.qf.meilihui.customview.CustomLoadingLayout
+        android:id="@+id/loading_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"/>
+
+
     <RelativeLayout
+        android:id="@+id/layout_title_id"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -16,11 +25,11 @@
             android:id="@+id/back_title_bar_products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:onClick="onClick"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/back"/>
+            android:layout_marginLeft="10dp"
+            android:onClick="onClick"
+            android:src="@mipmap/back" />
 
 
         <TextView
@@ -29,92 +38,130 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="服装"
-            android:textSize="20sp"
             android:textColor="@color/black"
-            />
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/share_title_bar_products"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/icon_share1"/>
+            android:src="@mipmap/icon_share1" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#e4e4e4"/>
+        android:background="#e4e4e4" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+        android:layout_below="@id/layout_title_id"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/popular_sort"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="人气"
             android:textColor="@color/tab_text_color"
             android:textSize="15sp"
-            android:gravity="center"
-            android:clickable="true"
-            android:text="人气"/>
+            android:onClick="sortClick"
+            />
 
         <TextView
             android:id="@+id/discount_sort"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@color/tab_text_color"
-            android:textSize="15sp"
-            android:gravity="center"
             android:clickable="true"
-            android:text="折扣"/>
+            android:gravity="center"
+            android:text="折扣"
+            android:onClick="sortClick"
+            android:textColor="@color/tab_text_color"
+            android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/price_sort"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textColor="@color/tab_text_color"
-            android:textSize="15sp"
-            android:gravity="center"
-            android:clickable="true"
-            android:drawableRight="@mipmap/up_grey"
-            android:text="价格"/>
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/price_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="sortClick"
+                android:text="价格"
+                android:textColor="@color/tab_text_color"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/icon_price_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/price_sort"
+                android:src="@mipmap/down_grey" />
+
+        </RelativeLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="38dp"
-            android:background="@color/gray"
             android:layout_gravity="center_vertical"
-            />
-        <TextView
-            android:id="@+id/filter_sort"
+            android:background="@color/gray" />
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textColor="@color/tab_text_color"
-            android:textSize="15sp"
-            android:gravity="center"
-            android:clickable="true"
-            android:drawableRight="@mipmap/filter_icon"
-            android:text="筛选"/>
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/filter_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="sortClick"
+                android:text="筛选"
+                android:textColor="@color/tab_text_color"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:id="@+id/icon_filter_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/filter_sort"
+                android:src="@mipmap/filter_icon" />
+
+        </RelativeLayout>
+
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#e4e4e4"/>
+        android:background="#e4e4e4" />
 
 
     <GridView
         android:id="@+id/grid_products"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/layout_title_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="2"/>
+        android:numColumns="2" />
 
-</LinearLayout>
+</RelativeLayout>
