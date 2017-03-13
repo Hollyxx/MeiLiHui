@@ -15,9 +15,11 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.qf.meilihui.R;
 import com.qf.meilihui.adapter.ProductOfKindsGridAdapter;
 import com.qf.meilihui.app.MyApp;
+import com.qf.meilihui.bean.HomeSecondProductBean;
 import com.qf.meilihui.bean.ProductsOfCategory;
 import com.qf.meilihui.bean.ProductsofCategoryBean;
 import com.qf.meilihui.customview.CustomLoadingLayout;
@@ -36,7 +38,6 @@ public class HomeSecondProductsActivity extends AppCompatActivity {
     private int page = 1;
     private boolean isBottom = false;
     private List<ProductsOfCategory> data;
-    private ProductsofCategoryBean bean;
     private ProductOfKindsGridAdapter adapter;
     private String categoryId;
     private TextView popular_sort, discount_sort, price_sort;
@@ -54,12 +55,14 @@ public class HomeSecondProductsActivity extends AppCompatActivity {
         setLoading();
         Intent intent = getIntent();
         categoryId = intent.getStringExtra("categoryId");
-        url = Config.Home_Second_products + categoryId+"&pageIndex =";
+        String name = intent.getStringExtra("name");
+        title.setText(name);
+        url = Config.Home_Second_products + categoryId + "&pageIndex =";
         data = new ArrayList<>();
         adapter = new ProductOfKindsGridAdapter(this, data);
         grid.setAdapter(adapter);
         setListener();
-        loadData(url,page);
+        loadData(url, page);
     }
 
     private void setListener() {
@@ -175,9 +178,9 @@ public class HomeSecondProductsActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if (response != null) {
-                    bean = new ProductsofCategoryBean();
                     try {
                         JSONObject o = new JSONObject(response);
+                        HomeSecondProductBean bean = new HomeSecondProductBean();
                         bean.parseJson(o);
                         List<ProductsOfCategory> items = bean.getItems();
                         data.addAll(items);
