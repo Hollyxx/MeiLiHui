@@ -3,8 +3,11 @@ package com.qf.meilihui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.avtivity.BagActivity;
 import com.qf.meilihui.avtivity.HeadViewDetailsActivity;
 import com.qf.meilihui.bean.MatchContent;
+import com.qf.meilihui.mylayout.RefreshLayout;
 import com.qf.meilihui.uri.Config;
 
 import org.json.JSONArray;
@@ -37,10 +41,15 @@ import static com.qf.meilihui.R.id.match_iv;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MatchFragment extends Fragment {
+public class MatchFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadingListener{
 
     private ImageView imageView;
+    private String path;
+    private int page=1;
+    private RefreshLayout refreshLayout;
+    private Handler handler = new Handler();
     private ListView listView;
+    private List<MatchContent> data,dataAll;
     public static final String TAG = "MatchFragment";
     public MatchFragment() {
         // Required empty public constructor
@@ -55,9 +64,15 @@ public class MatchFragment extends Fragment {
 
         listView= (ListView) view.findViewById(R.id.match_listview);
         imageView= (ImageView) view.findViewById(R.id.match_imageview);
-
+        dataAll=new ArrayList<>();
+        refreshLayout= (RefreshLayout) view.findViewById(R.id.match_layout);
+        path=Config.MATCH+page;
         volleyGet(Config.MATCH);
         replaceFragment();
+
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnLoadingListener(this);
+        refreshLayout.setColorSchemeColors(Color.BLUE,Color.YELLOW,Color.RED,Color.DKGRAY);
         return  view;
     }
     public void replaceFragment(){
@@ -78,7 +93,7 @@ public class MatchFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
 
-                final List<MatchContent> data = new ArrayList<>();
+                 data = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("eventdaysList");
                     for (int i=0;i<lists.length();i++){
@@ -90,13 +105,12 @@ public class MatchFragment extends Fragment {
                         String linkUrl=jsonObject.getString("linkUrl");
                         //Log.i("match",titleNew1);
                         data.add(new MatchContent(id,titleNew1,titleNew2,imgUrl,linkUrl));
-
                     }
-
+                     dataAll.addAll(data);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                MyAdapter adapter = new MyAdapter(getContext(),data);
+                MyAdapter adapter = new MyAdapter(getContext(),dataAll);
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -118,6 +132,34 @@ public class MatchFragment extends Fragment {
         //3, 将请求对象添加到请求队列中
         MyApp.getHttpQueue().add(objectRequest);
     }
+
+    @Override
+    public void onRefresh() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //下拉刷新
+                dataAll.clear();
+                volleyGet(path);
+                refreshLayout.setRefreshing(false);
+            }
+        },5000);
+    }
+
+    @Override
+    public void onLoad() {
+        //listView.setEnabled(false);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                page++;
+                volleyGet(path);
+                refreshLayout.setRefreshing(false);
+                //listView.setEnabled(true);
+            }
+        },5000);
+    }
+
     class MyAdapter extends BaseAdapter{
 
         private Context context;

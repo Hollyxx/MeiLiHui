@@ -38,7 +38,11 @@
         <activity android:name=".avtivity.RegisterActivity" />
         <activity android:name=".avtivity.MailBoxActivity" />
         <activity android:name=".avtivity.StarRecommendActivity" />
-        <activity android:name=".avtivity.OverseasBoutiqueActivity"></activity>
+        <activity android:name=".avtivity.OverseasBoutiqueActivity"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

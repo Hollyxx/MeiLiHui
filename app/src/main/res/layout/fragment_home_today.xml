@@ -5,10 +5,15 @@
     tools:context="com.qf.meilihui.basefragment.HomeTodayFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <com.qf.meilihui.mylayout.RefreshLayout
+        android:id="@+id/today_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/home_today_listview" />
+    </com.qf.meilihui.mylayout.RefreshLayout>
     <TextView
         android:layout_gravity="center"
         android:id="@+id/my_tv"

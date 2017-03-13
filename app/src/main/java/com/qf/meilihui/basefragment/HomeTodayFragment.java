@@ -2,11 +2,12 @@ package com.qf.meilihui.basefragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,6 +31,7 @@ import com.qf.meilihui.avtivity.HeadViewDetailsActivity;
 import com.qf.meilihui.avtivity.SecondDetailsActivity;
 import com.qf.meilihui.bean.HeadViewContent;
 import com.qf.meilihui.bean.HomeContent;
+import com.qf.meilihui.mylayout.RefreshLayout;
 import com.qf.meilihui.uri.Config;
 
 import org.json.JSONArray;
@@ -41,8 +44,10 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeTodayFragment extends Fragment {
+public class HomeTodayFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,RefreshLayout.OnLoadingListener{
     private List<ImageView> imagesTop;
+    private List<HomeContent>  data,dataAll;
+    private List<HeadViewContent> data2;
     private ListView  listView;
     private TextView  tv;
     private View headView;
@@ -51,6 +56,10 @@ public class HomeTodayFragment extends Fragment {
     private boolean isStop = false;
     private int position = 0;
     private Handler handler = new Handler();
+    private  int  page=1;
+    private String path;
+    private int total;
+    private RefreshLayout refreshLayout;
     //private List<HomeContent>  data;
     public HomeTodayFragment() {
         // Required empty public constructor
@@ -62,13 +71,19 @@ public class HomeTodayFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_home_today, container, false);
-
+        dataAll=new ArrayList<>();
         listView= (ListView) view.findViewById(R.id.home_today_listview);
-
+        refreshLayout= (RefreshLayout) view.findViewById(R.id.today_layout);
         tv=(TextView) view.findViewById(R.id.my_tv);
 
         listView.setEmptyView(tv);
-        volleyGet(Config.TODAY_CONTENT,Config.TODAY_HEADVIEW);
+        path=Config.TODAY_CONTENT;
+        volleyGet(path+1,Config.TODAY_HEADVIEW);
+
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnLoadingListener(this);
+        refreshLayout.setColorSchemeColors(Color.BLUE,Color.YELLOW,Color.RED,Color.DKGRAY);
+        listView.addHeaderView(headView);
         return  view;
 
     }
@@ -82,8 +97,10 @@ public class HomeTodayFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
 
-               final List<HomeContent> data = new ArrayList<>();
+               data = new ArrayList<>();
                 try {
+                    String num= response.getString("totalPages");
+                    total=Integer.parseInt(num);
                     JSONArray lists = response.getJSONArray("lists");
                    for (int i=0;i<lists.length();i++){
 
@@ -97,21 +114,22 @@ public class HomeTodayFragment extends Fragment {
 
                        data.add(new HomeContent(englishName,imageUrl,chineseName,discountText,categoryId));
                    }
+                    dataAll.addAll(data);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                HomeBaseAdapter adapter = new HomeBaseAdapter(getContext(),data);
+                HomeBaseAdapter adapter = new HomeBaseAdapter(getContext(),dataAll);
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent  intent=new Intent(getContext(),SecondDetailsActivity.class);
 
-                        String secondUrl=Config.TODAY_SECOND_CONTENT+data.get(position-1).getEventId()+"&pageIndex=1";
+                        String secondUrl=Config.TODAY_SECOND_CONTENT+dataAll.get(position-1).getEventId()+"&pageIndex=";
                         intent.putExtra("web",secondUrl);
-                        intent.putExtra("id",data.get(position-1).getEventId());
+                        intent.putExtra("id",dataAll.get(position-1).getEventId());
                         //Log.i("id",data.get(position-1).getEventId());
-                        intent.putExtra("englishName", data.get(position-1).getDiscountText());
+                        intent.putExtra("englishName", dataAll.get(position-1).getDiscountText());
                         //Log.i("englishName",data.get(position-1).getEventId());
                         startActivity(intent);
                     }
@@ -127,8 +145,8 @@ public class HomeTodayFragment extends Fragment {
         final JsonObjectRequest headRequest=new JsonObjectRequest(path,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("object",response.toString());
-                List<HeadViewContent> data = new ArrayList<>();
+                //Log.i("object",response.toString());
+                data2 = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("banners");
                     for (int i=0;i<lists.length();i++){
@@ -139,10 +157,10 @@ public class HomeTodayFragment extends Fragment {
                         final String  shareContent=jsonObject.getString("shareContent");
                         //Log.i("web",shareUrl);
 
-                        data.add(new HeadViewContent(imgUrl,shareUrl,shareContent,imgAndroid));
+                        data2.add(new HeadViewContent(imgUrl,shareUrl,shareContent,imgAndroid));
                     if(imgUrl.isEmpty()==false){
                         ImageView imageView = new ImageView(getActivity());
-                        Glide.with(getActivity()).load(data.get(i).getImgUrl()).into(imageView);
+                        Glide.with(getActivity()).load(data2.get(i).getImgUrl()).into(imageView);
                         imageView.setImageResource(R.mipmap.bk_mybrand_default);
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         imageView.setOnClickListener(new View.OnClickListener() {
@@ -167,10 +185,9 @@ public class HomeTodayFragment extends Fragment {
                         rg.addView(radioButton);
                    }
                     }
-                    Log.i("imagesTop",imagesTop.size()+"");
+                   // Log.i("imagesTop",imagesTop.size()+"");
                     BasePagerAdapter  adapter=new BasePagerAdapter(imagesTop);
                     viewPager.setAdapter(adapter);
-                    listView.addHeaderView(headView);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -232,4 +249,34 @@ public class HomeTodayFragment extends Fragment {
         MyApp.getHttpQueue().add(headRequest);
     }
 
+    @Override
+    public void onRefresh() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //下拉刷新
+                dataAll.clear();
+                data2.clear();
+                volleyGet(path+1,Config.TODAY_HEADVIEW);
+                refreshLayout.setRefreshing(false);
+            }
+        },3000);
+    }
+    @Override
+    public void onLoad() {
+        listView.setEnabled(false);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (page<total){
+                    page++;
+                    volleyGet(path+page,Config.TODAY_HEADVIEW);
+                    listView.setEnabled(true);
+                    refreshLayout.setRefreshing(false);
+                }else{
+                    Toast.makeText(getContext(),"加载到底部了", Toast.LENGTH_LONG).show();
+                }
+            }
+        },2000);
+    }
 }

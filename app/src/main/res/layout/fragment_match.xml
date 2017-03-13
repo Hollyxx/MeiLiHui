@@ -17,11 +17,17 @@
             android:layout_height="45dp"
             android:text="魅力志"
             />
-    <ListView
+    <com.qf.meilihui.mylayout.RefreshLayout
+        android:id="@+id/match_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
             android:layout_below="@+id/match_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/match_listview" />
+    </com.qf.meilihui.mylayout.RefreshLayout>
+
     <ImageView
             android:id="@+id/match_imageview"
             android:layout_width="wrap_content"

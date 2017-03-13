@@ -5,11 +5,16 @@
     tools:context="com.qf.meilihui.basefragment.HomeWomenFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ListView
+    <com.qf.meilihui.mylayout.RefreshLayout
+        android:id="@+id/ref_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/home_women_listview">
-    </ListView>
+        android:layout_height="match_parent">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/home_women_listview">
+        </ListView>
+    </com.qf.meilihui.mylayout.RefreshLayout>
 
     <TextView
         android:layout_gravity="center"

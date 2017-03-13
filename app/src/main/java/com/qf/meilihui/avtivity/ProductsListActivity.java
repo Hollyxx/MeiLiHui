@@ -3,7 +3,6 @@ package com.qf.meilihui.avtivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AbsListView;
@@ -50,7 +49,6 @@ public class ProductsListActivity extends AppCompatActivity {
         String summary = intent.getStringExtra("summary");
         String name = intent.getStringExtra("name");
         url = Config.Category_Second_Kinds + "siloId=" + siloId + "&categoryId=" + categoryId + "&summary=" + summary + "&pageIndex=";
-        Log.i("ad",url);
         title = (TextView) findViewById(R.id.title_title_bar_products);
         grid = (GridView) findViewById(R.id.grid_products);
         title.setText(name);

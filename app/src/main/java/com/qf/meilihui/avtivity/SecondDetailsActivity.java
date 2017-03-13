@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -32,7 +33,7 @@ import java.util.List;
 public class SecondDetailsActivity extends AppCompatActivity {
 
     private String path;
-    private int flag=0;
+    private int flag = 0;
     private ImageView price;
     private TextView title, tv1, tv2, tv3, tv4;
     private List<String> name;
@@ -40,7 +41,10 @@ public class SecondDetailsActivity extends AppCompatActivity {
     private LinearLayout layout;
     private String categoryId;
     private String web;
+    private int page = 1;
     private SecondDetailsAdapter adapter;
+    private boolean isBottom = false;
+    private List<TodaySecondDetails> data, dataAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +54,15 @@ public class SecondDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         web = intent.getStringExtra("web");
-        path=web;
+        path = web + page;
         categoryId = intent.getStringExtra("id");
         String englishName = intent.getStringExtra("englishName");
         init();
-
+        dataAll = new ArrayList<>();
         title.setText(englishName);
 
-        volleyGet(web);
+        volleyGet(path);
 
-        //Log.i("web",web);
 
     }
 
@@ -98,7 +101,7 @@ public class SecondDetailsActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.discount_sort:
-                web="http://www.mei.com/appapi/event/product/v3?&sort=ASC&key=1&pageIndex=1&categoryId="+categoryId;
+                web = "http://www.mei.com/appapi/event/product/v3?&sort=ASC&key=1&pageIndex=1&categoryId=" + categoryId;
                 volleyGet(web);
                 adapter.notifyDataSetChanged();
                 price.setImageResource(R.mipmap.up_grey);
@@ -112,17 +115,18 @@ public class SecondDetailsActivity extends AppCompatActivity {
                 tv2.setTextColor(Color.GRAY);
                 tv3.setTextColor(Color.BLACK);
                 flag++;
-               if(flag==1){
-                   web="http://www.mei.com/appapi/event/product/v3?&sort=ASC&pageIndex=1&categoryId="+categoryId;
-                   volleyGet(web);
-                   adapter.notifyDataSetChanged();
-                }if(flag==2){
-                  price.setImageResource(R.mipmap.down_black);
-                  web="http://www.mei.com/appapi/event/product/v3?&sort=DESC&pageIndex=1&categoryId="+categoryId;
-                  volleyGet(web);
-                  adapter.notifyDataSetChanged();
-                  flag=0;
-                 }
+                if (flag == 1) {
+                    web = "http://www.mei.com/appapi/event/product/v3?&sort=ASC&pageIndex=1&categoryId=" + categoryId;
+                    volleyGet(web);
+                    adapter.notifyDataSetChanged();
+                }
+                if (flag == 2) {
+                    price.setImageResource(R.mipmap.down_black);
+                    web = "http://www.mei.com/appapi/event/product/v3?&sort=DESC&pageIndex=1&categoryId=" + categoryId;
+                    volleyGet(web);
+                    adapter.notifyDataSetChanged();
+                    flag = 0;
+                }
                 break;
             case R.id.filter_sort:
                 tv4.setTextColor(Color.BLACK);
@@ -134,43 +138,58 @@ public class SecondDetailsActivity extends AppCompatActivity {
         final JsonObjectRequest objectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("object", response.toString());
-                final List<TodaySecondDetails> data = new ArrayList<>();
+                // Log.i("object", response.toString());
+                data = new ArrayList<>();
                 name = new ArrayList<>();
                 try {
                     JSONArray lists = response.getJSONArray("products");
                     for (int i = 0; i < lists.length(); i++) {
 
                         JSONObject jsonObject = lists.getJSONObject(i);
-                        // String  categoryId=jsonObject.getString(" categoryId");
                         String productId = jsonObject.getString("productId");
                         String productName = jsonObject.getString("productName");
 
                         String product_type = jsonObject.getString("product_type");
                         String brandName = jsonObject.getString("brandName");
                         String price = jsonObject.getString("price");
-                        Log.i("productName", price);
+                        // Log.i("productName", price);
                         String marketPrice = jsonObject.getString("marketPrice");
                         String imageUrl = jsonObject.getString("imageUrl");
                         String discount = jsonObject.getString("discount");
                         String isRecommend = jsonObject.getString("isRecommend");
                         String saleableQty = jsonObject.getString("saleableQty");
                         data.add(new TodaySecondDetails(productId, productName, price, brandName, price, marketPrice, imageUrl, discount, isRecommend, saleableQty));
-
                     }
+                    dataAll.addAll(data);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                 adapter = new SecondDetailsAdapter(getApplicationContext(), data, name);
+                adapter = new SecondDetailsAdapter(getApplicationContext(), dataAll, name);
                 gridView.setAdapter(adapter);
+                gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+                        if (isBottom && scrollState == SCROLL_STATE_IDLE) {
+                            page++;
+                            adapter.notifyDataSetChanged();
+                            volleyGet(web + page);
+                            gridView.smoothScrollToPositionFromTop((page - 1) * 10 * 200, 100, 1000);
+                            //gridView.setSelection(((page-1)*9));
+                        }
+                    }
 
+                    @Override
+                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                        isBottom = firstVisibleItem + visibleItemCount == totalItemCount;
+                    }
+                });
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(SecondDetailsActivity.this, ThirdDetailsActivity.class);
                         String thirdAddress = Config.TODAY_THIRD_CONTENT + data.get(position).getProductId();
                         String Hot_recommendation = Config.Hot_recommendation + data.get(position).getProductId() + "&categoryId=" + categoryId;
-                        Log.i("thirdAddress",thirdAddress);
+                        Log.i("thirdAddress", thirdAddress);
 
                         intent.putExtra("Hot_recommendation", Hot_recommendation);
                         intent.putExtra("thirdAddress", thirdAddress);
@@ -227,5 +246,4 @@ public class SecondDetailsActivity extends AppCompatActivity {
         MyApp.getHttpQueue().add(objectRequest);
         MyApp.getHttpQueue().add(objectRequest2);
     }
-
 }

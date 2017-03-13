@@ -5,10 +5,15 @@
     tools:context="com.qf.meilihui.basefragment.HomeMenFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/men_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/home_men_listview" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
         android:layout_gravity="center"

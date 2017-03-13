@@ -62,7 +62,7 @@ public class HomeUpcomingFragment extends Fragment {
         volleyGet(Config.TODAY_NEW);
 
         listView.addHeaderView(v);
-        inittime(v);
+        //inittime(v);
         return view;
     }
 
@@ -180,7 +180,7 @@ public class HomeUpcomingFragment extends Fragment {
                 viewHolder = (ViewHolder) view.getTag();
             }
             math=data.get(position).getEnglishName();
-            if(data.get(position).getEnglishName().length()>0){
+            if(data.get(position).getEnglishName().length()>2){
                 math=data.get(position).getEnglishName().substring(0,3);
                 Log.i("math",math);
                 //判断是否全为数字  不是就重新截取
@@ -211,7 +211,7 @@ public class HomeUpcomingFragment extends Fragment {
                     Intent intent=new Intent(getContext(),SecondDetailsActivity.class);
 //                    http://www.mei.com/appapi/event/product/v3?sort=&categoryId=
 //                     String path= http://www.mei.com/appapi/event/product/v3?summary=fe1b2dc51d27f447976a70a00fdcfe06&sort=&timeStamp=20170309140854&pageIndex=1&categoryId=2040204090000002399
-                    String secondUrl="http://www.mei.com/appapi/event/product/v3?&pageIndex=1"+"&categoryId="+data.get(position).getEventId();
+                    String secondUrl="http://www.mei.com/appapi/event/product/v3?"+"&categoryId="+data.get(position).getEventId()+"&pageIndex=";
                     intent.putExtra("web",secondUrl);
                     intent.putExtra("id",data.get(position).getEventId());
                     Log.i("secondUrl",secondUrl);
