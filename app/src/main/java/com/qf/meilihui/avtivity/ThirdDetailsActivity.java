@@ -222,7 +222,7 @@ public class ThirdDetailsActivity extends AppCompatActivity {
 
                         RadioButton radioButton = new RadioButton(getApplicationContext());
                         radioButton.setButtonDrawable(R.drawable.radiobutton_selector);
-                        radioButton.setLayoutParams(new RadioGroup.LayoutParams(20, 20));
+                        radioButton.setLayoutParams(new RadioGroup.LayoutParams(30, 30));
                         radioButton.setPadding(20, 10, 20, 10);//上  右  下  左
                         radioButton.setClickable(false);
                         rg.addView(radioButton);

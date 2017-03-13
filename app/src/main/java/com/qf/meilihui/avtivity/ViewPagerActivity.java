@@ -45,8 +45,8 @@ public class ViewPagerActivity extends AppCompatActivity {
             data.add(iv);
             RadioButton radioButton = new RadioButton(this);
             radioButton.setButtonDrawable(R.drawable.radiobutton_selector);
-            radioButton.setLayoutParams(new RadioGroup.LayoutParams(20, 20));
-            //radioButton.setPadding(50, 50, 50, 50);
+            radioButton.setLayoutParams(new RadioGroup.LayoutParams(30, 30));
+            radioButton.setPadding(20, 20, 20, 20);
             radioButton.setClickable(false);
             rg.addView(radioButton);
         }

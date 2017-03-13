@@ -319,7 +319,7 @@ public class HomeBeautyFragment extends Fragment {
                             imagesTop.add(imageView);
 
                             RadioButton radioButton = new RadioButton(getActivity());
-                            radioButton.setButtonDrawable(R.drawable.radiobutton_selector);
+                            radioButton.setButtonDrawable(R.drawable.radiobutton_selector2);
                             radioButton.setLayoutParams(new RadioGroup.LayoutParams(30, 30));
                             radioButton.setPadding(20, 20, 20, 20);
                             radioButton.setClickable(false);
