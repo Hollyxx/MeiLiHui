@@ -24,6 +24,7 @@ import com.qf.meilihui.app.MyApp;
 import com.qf.meilihui.bean.BrandDetailBean;
 import com.qf.meilihui.bean.HotProductsOfBrandDetailBean;
 import com.qf.meilihui.callback.LoadMoreCallBack;
+import com.qf.meilihui.customview.CustomLoadingLayout;
 import com.qf.meilihui.customview.PullToZoomListView;
 import com.qf.meilihui.uri.Config;
 
@@ -40,6 +41,7 @@ public class BrandDetailActivity extends AppCompatActivity{
     private List<Object> data;
     private int page = 1;
     private BrandDetailRecyclerAdapter adapter;
+    private CustomLoadingLayout loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,8 @@ public class BrandDetailActivity extends AppCompatActivity{
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_brand_detail_activity);
         title = (TextView) findViewById(R.id.logo_toolbar_brand_detail_activity);
+        loading = (CustomLoadingLayout) findViewById(R.id.loading_layout);
+        loading.showLoadUi(false,0);
         Intent intent = getIntent();
         logoId = intent.getStringExtra("logoId");
         String name = intent.getStringExtra("name");
@@ -107,6 +111,7 @@ public class BrandDetailActivity extends AppCompatActivity{
                 data.addAll(bean.getBody().getNewProduct());
                 adapter.notifyDataSetChanged();
                 updateData(page);
+                loading.showLoadUi(true,0);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -124,9 +129,9 @@ public class BrandDetailActivity extends AppCompatActivity{
         finish();
     }
 
-//    @Override
-//    public void update() {
-//        page++;
-//        updateData(page);
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        loading.release();
+    }
 }

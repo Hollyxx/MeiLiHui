@@ -152,16 +152,16 @@ public class HomeWomenFragment extends Fragment {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        String  math=data.get(position).getEnglishName().substring(0,3);
-        Log.i("math",math);
-        //判断是否全为数字  不是就重新截取
-        if(math.charAt(2)<48||math.charAt(2)>57){
-            // Log.i("math",math+"...."+2);
-            math=data.get(position).getEnglishName().substring(0,1);
-            //Log.i("math",math+"...."+2);
-        }
+//        String  math=data.get(position).getEnglishName().substring(0,3);
+//        Log.i("math",math);
+//        //判断是否全为数字  不是就重新截取
+//        if(math.charAt(2)<48||math.charAt(2)>57){
+//            // Log.i("math",math+"...."+2);
+//            math=data.get(position).getEnglishName().substring(0,1);
+//            //Log.i("math",math+"...."+2);
+//        }
 
-        viewHolder.englishName.setText(math);
+        viewHolder.englishName.setText(data.get(position).getEnglishName());
         viewHolder.chineseName.setText(data.get(position).getChineseName());
         viewHolder.discountText.setText(data.get(position).getDiscountText());
 

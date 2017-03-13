@@ -65,7 +65,7 @@ public class HomeBaseAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         math=data.get(position).getEnglishName();
-        if(data.get(position).getEnglishName().length()>0){
+        if(data.get(position).getEnglishName().length()>3){
             math=data.get(position).getEnglishName().substring(0,3);
             Log.i("math",math);
             //判断是否全为数字  不是就重新截取
